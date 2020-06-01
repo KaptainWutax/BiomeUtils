@@ -26,7 +26,7 @@ public class BaseBiomesLayer extends BiomeLayer {
 	@Override
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
-		int value = this.parent.sample(x, z);
+		int value = this.parent.get(x, z);
 		int i = (value & 3840) >> 8;
 		value &= -3841;
 

@@ -60,7 +60,7 @@ public class VoronoiLayer extends BiomeLayer {
 
 		v = (t & 4) == 0 ? l : l + 1;
 		ab = (t & 1) == 0 ? n : n + 1;
-		return this.parent.sample(v, ab);
+		return this.parent.get(v, ab);
 	}
 
 	private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {

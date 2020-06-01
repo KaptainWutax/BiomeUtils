@@ -18,8 +18,8 @@ public class HillsLayer extends MergingLayer {
 	@Override
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
-		int i = this.parents[0].sample(x, z);
-		int j = this.parents[1].sample(x, z);
+		int i = this.parents[0].get(x, z);
+		int j = this.parents[1].get(x, z);
 
 		int k = (j - 2) % 29;
 		Biome biome3;
@@ -85,10 +85,10 @@ public class HillsLayer extends MergingLayer {
 			if(l != i) {
 				int m = 0;
 				Biome b = Biome.REGISTRY.get(i);
-				if(BiomeSource.areSimilar(this.parents[0].sample(x, z - 1), b))m++;
-				if(BiomeSource.areSimilar(this.parents[0].sample(x + 1, z), b))m++;
-				if(BiomeSource.areSimilar(this.parents[0].sample(x - 1, z), b))m++;
-				if(BiomeSource.areSimilar(this.parents[0].sample(x, z + 1), b))m++;
+				if(BiomeSource.areSimilar(this.parents[0].get(x, z - 1), b))m++;
+				if(BiomeSource.areSimilar(this.parents[0].get(x + 1, z), b))m++;
+				if(BiomeSource.areSimilar(this.parents[0].get(x - 1, z), b))m++;
+				if(BiomeSource.areSimilar(this.parents[0].get(x, z + 1), b))m++;
 				if(m >= 3)return l;
 			}
 		}

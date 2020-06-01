@@ -17,8 +17,8 @@ public class RiverLayer extends MergingLayer {
 
 	@Override
 	public int sample(int x, int z) {
-		int i = this.parents[0].sample(x, z);
-		int j = this.parents[1].sample(x, z);
+		int i = this.parents[0].get(x, z);
+		int j = this.parents[1].get(x, z);
 
 		if(BiomeSource.isOcean(i))return i;
 		

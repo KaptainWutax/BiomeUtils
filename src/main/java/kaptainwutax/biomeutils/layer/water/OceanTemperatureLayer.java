@@ -46,13 +46,13 @@ public class OceanTemperatureLayer extends BiomeLayer {
 
 		@Override
 		public int sample(int x, int z) {
-			int i = this.parents[0].sample(x, z);
-			int j = this.parents[1].sample(x, z);
+			int i = this.parents[0].get(x, z);
+			int j = this.parents[1].get(x, z);
 			if (!BiomeSource.isOcean(i))return i;
 
 			for(int m = -8; m <= 8; m += 4) {
 				for(int n = -8; n <= 8; n += 4) {
-					int o = this.parents[0].sample(x + m, z + n);
+					int o = this.parents[0].get(x + m, z + n);
 
 					if (!BiomeSource.isOcean(o)) {
 						if (j == Biome.WARM_OCEAN.getId()) {
