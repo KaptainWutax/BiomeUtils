@@ -7,9 +7,9 @@ import java.util.Map;
 
 public abstract class BiomeLayer {
 
-	protected final BiomeLayer parent;
-	private final long layerSeed;
-	private long localSeed;
+	public final BiomeLayer parent;
+	public final long layerSeed;
+	public long localSeed;
 
 	private Map<Long, Integer> cache = new HashMap<>();
 
