@@ -1,5 +1,7 @@
 package kaptainwutax.biomeutils;
 
+import kaptainwutax.biomeutils.source.OverworldBiomeSource;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -124,8 +126,8 @@ public class Biome {
 			this.z = z;
 		}
 
-		public boolean test(BiomeSource source) {
-			return this.biome.test(source.voronoi.sampleBiome(this.x, this.z));
+		public boolean test(OverworldBiomeSource source) {
+			return this.biome.test(source.getBiome(this.x, this.z));
 		}
 	}
 

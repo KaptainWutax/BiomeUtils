@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.noise;
 
-import java.util.Random;
+import kaptainwutax.seedutils.prng.lcg.java.JRand;
 
 public class SimplexNoiseSampler {
 
@@ -18,17 +18,17 @@ public class SimplexNoiseSampler {
 	public final double originY;
 	public final double originZ;
 
-	public SimplexNoiseSampler(Random random) {
-		this.originX = random.nextDouble() * 256.0D;
-		this.originY = random.nextDouble() * 256.0D;
-		this.originZ = random.nextDouble() * 256.0D;
+	public SimplexNoiseSampler(JRand rand) {
+		this.originX = rand.nextDouble() * 256.0D;
+		this.originY = rand.nextDouble() * 256.0D;
+		this.originZ = rand.nextDouble() * 256.0D;
 
 		int j;
 		for(j = 0; j < 256; this.permutations[j] = j++) {
 		}
 
 		for(j = 0; j < 256; ++j) {
-			int k = random.nextInt(256 - j);
+			int k = rand.nextInt(256 - j);
 			int l = this.permutations[j];
 			this.permutations[j] = this.permutations[k + j];
 			this.permutations[k + j] = l;

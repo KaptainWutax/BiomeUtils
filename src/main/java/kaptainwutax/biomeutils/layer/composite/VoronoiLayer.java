@@ -1,21 +1,16 @@
 package kaptainwutax.biomeutils.layer.composite;
 
-import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.seedutils.mc.seed.WorldSeed;
 import kaptainwutax.seedutils.prng.SeedMixer;
 
 public class VoronoiLayer extends BiomeLayer {
 
-	public final long hashedSeed;
+	public final long seed;
 
 	public VoronoiLayer(long worldSeed, boolean doHashing, BiomeLayer parent) {
 		super(worldSeed, 0, parent);
-		this.hashedSeed = doHashing ? WorldSeed.toHash(worldSeed) : worldSeed;
-	}
-
-	public Biome sampleBiome(int x, int z) {
-		return Biome.REGISTRY.get(this.get(x, z));
+		this.seed = doHashing ? WorldSeed.toHash(worldSeed) : worldSeed;
 	}
 
 	@Override
@@ -44,7 +39,7 @@ public class VoronoiLayer extends BiomeLayer {
 			double g = bl ? d : d - 1.0D;
 			double h = bl2 ? e : e - 1.0D;
 			double s = bl3 ? f : f - 1.0D;
-			ds[t] = calcSquaredDistance(this.hashedSeed, aa, ab, r, g, h, s);
+			ds[t] = calcSquaredDistance(this.seed, aa, ab, r, g, h, s);
 		}
 
 		t = 0;
