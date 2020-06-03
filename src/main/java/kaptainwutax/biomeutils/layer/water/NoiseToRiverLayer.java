@@ -17,8 +17,7 @@ public class NoiseToRiverLayer extends CrossLayer {
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
 		int i = isValidForRiver(center);
-		return i == isValidForRiver(w) && i == isValidForRiver(n)
-				&& i == isValidForRiver(e) && i == isValidForRiver(s) ? -1 : Biome.RIVER.getId();
+		return i == isValidForRiver(w) && i == isValidForRiver(n) && i == isValidForRiver(e) && i == isValidForRiver(s) ? -1 : Biome.RIVER.getId();
 	}
 
 	private static int isValidForRiver(int value) {

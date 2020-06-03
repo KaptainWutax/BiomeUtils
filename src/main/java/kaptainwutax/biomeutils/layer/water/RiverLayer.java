@@ -25,8 +25,7 @@ public class RiverLayer extends MergingLayer {
 			if(i == Biome.SNOWY_TUNDRA.getId()) {
 				return Biome.FROZEN_RIVER.getId();
 			} else {
-				return i != Biome.MUSHROOM_FIELDS.getId() && i != Biome.MUSHROOM_FIELD_SHORE.getId()
-						? j & 255 : Biome.MUSHROOM_FIELD_SHORE.getId();
+				return i != Biome.MUSHROOM_FIELDS.getId() && i != Biome.MUSHROOM_FIELD_SHORE.getId() ? j & 255 : Biome.MUSHROOM_FIELD_SHORE.getId();
 			}
 		}
 		
