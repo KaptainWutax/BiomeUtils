@@ -3,13 +3,13 @@ package kaptainwutax.biomeutils.layer.land;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 
-public class SunflowerPlains extends BiomeLayer {
+public class SunflowerPlainsLayer extends BiomeLayer {
 
-	public SunflowerPlains(long worldSeed, long salt, BiomeLayer parent) {
+	public SunflowerPlainsLayer(long worldSeed, long salt, BiomeLayer parent) {
 		super(worldSeed, salt, parent);
 	}
 
-	public SunflowerPlains(long worldSeed, long salt) {
+	public SunflowerPlainsLayer(long worldSeed, long salt) {
 		this(worldSeed, salt, null);
 	}
 

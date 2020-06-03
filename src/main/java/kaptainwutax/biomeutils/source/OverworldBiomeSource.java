@@ -92,7 +92,7 @@ public class OverworldBiomeSource extends BiomeSource {
         this.noise = new NoiseToRiverLayer(this.getWorldSeed(), 1L, this.noise);
         this.noise = new SmoothenShorelineLayer(this.getWorldSeed(), 1000L, this.noise);
 
-        this.full = new SunflowerPlains(this.getWorldSeed(), 1001L, this.full);
+        this.full = new SunflowerPlainsLayer(this.getWorldSeed(), 1001L, this.full);
 
         for (int i = 0; i < this.biomeSize; i++) {
             this.full = new ScaleLayer(this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.full);
