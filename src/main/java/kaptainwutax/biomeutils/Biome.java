@@ -135,7 +135,7 @@ public class Biome {
         }
 
         public boolean test(OverworldBiomeSource source) {
-            return this.biome.test(source.getBiome(this.x, this.z));
+            return this.biome.test(source.getBiome(this.x,0, this.z));
         }
     }
 
