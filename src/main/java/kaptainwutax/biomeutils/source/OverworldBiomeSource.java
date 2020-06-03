@@ -7,7 +7,7 @@ import kaptainwutax.biomeutils.layer.land.*;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.biomeutils.layer.shore.EaseEdgeLayer;
 import kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer;
-import kaptainwutax.biomeutils.layer.shore.SmoothenShorelineLayer;
+import kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.layer.water.DeepOceanLayer;
 import kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer;
@@ -33,8 +33,8 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource(MCVersion version, long worldSeed) {
         this(version, worldSeed, 4, 4);
 
-        if (version.isOlderThan(MCVersion.v1_14)) {
-            throw new UnsupportedVersion(version, "overworld biomes");
+        if (this.getVersion().isOlderThan(MCVersion.v1_14)) {
+            throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
         }
     }
 
@@ -90,9 +90,9 @@ public class OverworldBiomeSource extends BiomeSource {
         this.noise = stack(1000L, NORMAL_SCALE, this.noise, 2);
         this.noise = stack(1000L, NORMAL_SCALE, this.noise, this.riverSize);
         this.noise = new NoiseToRiverLayer(this.getWorldSeed(), 1L, this.noise);
-        this.noise = new SmoothenShorelineLayer(this.getWorldSeed(), 1000L, this.noise);
+        this.noise = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.noise);
 
-        this.full = new SunflowerPlains(this.getWorldSeed(), 1001L, this.full);
+        this.full = new SunflowerPlainsLayer(this.getWorldSeed(), 1001L, this.full);
 
         for (int i = 0; i < this.biomeSize; i++) {
             this.full = new ScaleLayer(this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.full);
@@ -103,7 +103,7 @@ public class OverworldBiomeSource extends BiomeSource {
             }
         }
 
-        this.full = new SmoothenShorelineLayer(this.getWorldSeed(), 1000L, this.full);
+        this.full = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.full);
         this.full = new RiverLayer(this.getWorldSeed(), 100L, this.full, this.noise);
 
         this.ocean = new OceanTemperatureLayer(this.getWorldSeed(), 2L);

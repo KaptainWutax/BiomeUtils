@@ -1,15 +1,15 @@
-package kaptainwutax.biomeutils.layer.shore;
+package kaptainwutax.biomeutils.layer.scale;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 
-public class SmoothenShorelineLayer extends CrossLayer {
+public class SmoothScaleLayer extends CrossLayer {
 
-	public SmoothenShorelineLayer(long worldSeed, long salt, BiomeLayer parent) {
+	public SmoothScaleLayer(long worldSeed, long salt, BiomeLayer parent) {
 		super(worldSeed, salt, parent);
 	}
 
-	public SmoothenShorelineLayer(long worldSeed, long salt) {
+	public SmoothScaleLayer(long worldSeed, long salt) {
 		this(worldSeed, salt, null);
 	}
 

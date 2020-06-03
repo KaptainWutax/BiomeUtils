@@ -135,7 +135,7 @@ public class Biome {
         }
 
         public boolean test(OverworldBiomeSource source) {
-            return this.biome.test(source.getBiome(this.x,0, this.z));
+            return this.biome.test(source.getBiome(this.x, 0, this.z));
         }
     }
 
@@ -175,7 +175,6 @@ public class Biome {
         Precipitation(String name) {
             this.name = name;
         }
-
         public String getName() {
             return this.name;
         }
