@@ -1,7 +1,6 @@
 package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.BiomeSource;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 
 public class BaseBiomesLayer extends BiomeLayer {
@@ -27,10 +26,10 @@ public class BaseBiomesLayer extends BiomeLayer {
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
 		int value = this.parent.get(x, z);
-		int i = (value & 3840) >> 8;
-		value &= -3841;
+		int i = (value >> 8) & 15;
+		value &= -0xF01;
 
-		if(!BiomeSource.isOcean(value) && value != Biome.MUSHROOM_FIELDS.getId()) {
+		if(!Biome.isOcean(value) && value != Biome.MUSHROOM_FIELDS.getId()) {
 			switch(value) {
 				case 1:
 					if(i > 0) {

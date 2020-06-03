@@ -22,7 +22,7 @@ public abstract class CrossLayer extends BiomeLayer {
 				this.parent.get(x, z + 1),
 				this.parent.get(x - 1, z),
 				this.parent.get(x, z)
-		);
+			);
 	}
 
 	public abstract int sample(int n, int e, int s, int w, int center);

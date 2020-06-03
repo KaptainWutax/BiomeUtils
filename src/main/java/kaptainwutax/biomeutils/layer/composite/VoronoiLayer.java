@@ -7,7 +7,7 @@ import kaptainwutax.seedutils.prng.SeedMixer;
 
 public class VoronoiLayer extends BiomeLayer {
 
-	private final long hashedSeed;
+	public final long hashedSeed;
 
 	public VoronoiLayer(long worldSeed, boolean doHashing, BiomeLayer parent) {
 		super(worldSeed, 0, parent);
@@ -15,7 +15,7 @@ public class VoronoiLayer extends BiomeLayer {
 	}
 
 	public Biome sampleBiome(int x, int z) {
-		return Biome.REGISTRY.get(this.sample(x, z));
+		return Biome.REGISTRY.get(this.get(x, z));
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class VoronoiLayer extends BiomeLayer {
 	}
 
 	private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {
-		long l = SeedMixer.mixSeed(seed, (long)x);
-		l = SeedMixer.mixSeed(l, (long)y);
-		l = SeedMixer.mixSeed(l, (long)z);
-		l = SeedMixer.mixSeed(l, (long)x);
-		l = SeedMixer.mixSeed(l, (long)y);
-		l = SeedMixer.mixSeed(l, (long)z);
+		long l = SeedMixer.mixSeed(seed, x);
+		l = SeedMixer.mixSeed(l, y);
+		l = SeedMixer.mixSeed(l, z);
+		l = SeedMixer.mixSeed(l, x);
+		l = SeedMixer.mixSeed(l, y);
+		l = SeedMixer.mixSeed(l, z);
 		double d = distribute(l);
 		l = SeedMixer.mixSeed(l, seed);
 		double e = distribute(l);

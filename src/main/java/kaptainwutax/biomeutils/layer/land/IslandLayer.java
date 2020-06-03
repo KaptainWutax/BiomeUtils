@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer.land;
 
-import kaptainwutax.biomeutils.BiomeSource;
+import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 
@@ -16,9 +16,9 @@ public class IslandLayer extends CrossLayer {
 
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
-		return BiomeSource.isShallowOcean(center) && BiomeSource.isShallowOcean(n)
-				&& BiomeSource.isShallowOcean(e) && BiomeSource.isShallowOcean(w)
-				&& BiomeSource.isShallowOcean(s) && this.nextInt(2) == 0 ? 1 : center;
+		return Biome.isShallowOcean(center) && Biome.isShallowOcean(n)
+				&& Biome.isShallowOcean(e) && Biome.isShallowOcean(w)
+				&& Biome.isShallowOcean(s) && this.nextInt(2) == 0 ? Biome.PLAINS.getId() : center;
 	}
 
 }

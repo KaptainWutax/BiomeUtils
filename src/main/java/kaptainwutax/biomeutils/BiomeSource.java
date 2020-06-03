@@ -104,35 +104,4 @@ public class BiomeSource {
 		return parent;
 	}
 
-	public static boolean isShallowOcean(int id) {
-		return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
-				|| id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId();
-	}
-
-	public static boolean isOcean(int id) {
-		return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
-				|| id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId() || id == Biome.DEEP_WARM_OCEAN.getId()
-				|| id == Biome.DEEP_LUKEWARM_OCEAN.getId() || id == Biome.DEEP_OCEAN.getId()
-				|| id == Biome.DEEP_COLD_OCEAN.getId() || id == Biome.DEEP_FROZEN_OCEAN.getId();
-	}
-
-	public static boolean areSimilar(int id, Biome b2) {
-		if(b2 == null)return false;
-		if(id == b2.getId())return true;
-
-		Biome b = Biome.REGISTRY.get(id);
-		if(b == null)return false;
-
-		if(id != Biome.WOODED_BADLANDS_PLATEAU.getId() && id != Biome.BADLANDS_PLATEAU.getId()) {
-			if(b.getCategory() != Biome.Category.NONE && b2.getCategory() != Biome.Category.NONE
-					&& b.getCategory() == b2.getCategory()) {
-				return true;
-			}
-
-			return b == b2;
-		}
-
-		return b2 == Biome.WOODED_BADLANDS_PLATEAU || b2 == Biome.BADLANDS_PLATEAU;
-	}
-
 }

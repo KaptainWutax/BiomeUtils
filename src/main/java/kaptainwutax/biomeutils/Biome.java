@@ -2,6 +2,7 @@ package kaptainwutax.biomeutils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class Biome {
 
@@ -71,6 +72,61 @@ public class Biome {
 
 	public Biome getChild() {
 		return this.child;
+	}
+
+	public static boolean isShallowOcean(int id) {
+		return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
+				|| id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId();
+	}
+
+	public static boolean isOcean(int id) {
+		return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
+				|| id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId() || id == Biome.DEEP_WARM_OCEAN.getId()
+				|| id == Biome.DEEP_LUKEWARM_OCEAN.getId() || id == Biome.DEEP_OCEAN.getId()
+				|| id == Biome.DEEP_COLD_OCEAN.getId() || id == Biome.DEEP_FROZEN_OCEAN.getId();
+	}
+
+	public static boolean areSimilar(int id, Biome b2) {
+		if(b2 == null)return false;
+		if(id == b2.getId())return true;
+
+		Biome b = Biome.REGISTRY.get(id);
+		if(b == null)return false;
+
+		if(id != Biome.WOODED_BADLANDS_PLATEAU.getId() && id != Biome.BADLANDS_PLATEAU.getId()) {
+			if(b.getCategory() != Biome.Category.NONE && b2.getCategory() != Biome.Category.NONE
+					&& b.getCategory() == b2.getCategory()) {
+				return true;
+			}
+
+			return b == b2;
+		}
+
+		return b2 == Biome.WOODED_BADLANDS_PLATEAU || b2 == Biome.BADLANDS_PLATEAU;
+	}
+
+	public Biome.Data at(int x, int z) {
+		return new Biome.Data(this, x, z);
+	}
+
+	public static class Data {
+		public final Predicate<Biome> biome;
+		public final int x;
+		public final int z;
+
+		public Data(Biome biome, int x, int z) {
+			this(b -> b == biome, x, z);
+		}
+
+		public Data(Predicate<Biome> biome, int x, int z) {
+			this.biome = biome;
+			this.x = x;
+			this.z = z;
+		}
+
+		public boolean test(BiomeSource source) {
+			return this.biome.test(source.voronoi.sampleBiome(this.x, this.z));
+		}
 	}
 
 	public enum Category {

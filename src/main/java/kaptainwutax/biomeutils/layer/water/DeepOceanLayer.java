@@ -1,7 +1,6 @@
 package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.BiomeSource;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 
@@ -17,15 +16,15 @@ public class DeepOceanLayer extends CrossLayer {
 
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
-		if(!BiomeSource.isShallowOcean(center)) {
+		if(!Biome.isShallowOcean(center)) {
 			return center;
 		}
 
 		int i = 0;
-		if(BiomeSource.isShallowOcean(n))i++;
-		if(BiomeSource.isShallowOcean(e))i++;
-		if(BiomeSource.isShallowOcean(w))i++;
-		if(BiomeSource.isShallowOcean(s))i++;
+		if(Biome.isShallowOcean(n))i++;
+		if(Biome.isShallowOcean(e))i++;
+		if(Biome.isShallowOcean(w))i++;
+		if(Biome.isShallowOcean(s))i++;
 
 		if(i > 3) {
 			if(center == Biome.WARM_OCEAN.getId())return Biome.DEEP_WARM_OCEAN.getId();

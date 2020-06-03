@@ -1,7 +1,6 @@
 package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.BiomeSource;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.MergingLayer;
 import kaptainwutax.biomeutils.noise.PerlinNoiseSampler;
@@ -48,13 +47,13 @@ public class OceanTemperatureLayer extends BiomeLayer {
 		public int sample(int x, int z) {
 			int i = this.parents[0].get(x, z);
 			int j = this.parents[1].get(x, z);
-			if (!BiomeSource.isOcean(i))return i;
+			if (!Biome.isOcean(i))return i;
 
 			for(int m = -8; m <= 8; m += 4) {
 				for(int n = -8; n <= 8; n += 4) {
 					int o = this.parents[0].get(x + m, z + n);
 
-					if (!BiomeSource.isOcean(o)) {
+					if (!Biome.isOcean(o)) {
 						if (j == Biome.WARM_OCEAN.getId()) {
 							return Biome.LUKEWARM_OCEAN.getId();
 						}

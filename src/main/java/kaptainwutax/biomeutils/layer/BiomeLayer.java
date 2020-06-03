@@ -23,7 +23,7 @@ public abstract class BiomeLayer {
 	}
 
 	public int get(int x, int z) {
-		long v = (long)x << 32 | z;
+		long v = x & 0xFFFFFFFFL | ((long)z & 0xFFFFFFFFL) << 32;
 		Integer r = this.cache.get(v);
 
 		if(r == null) {
@@ -37,11 +37,11 @@ public abstract class BiomeLayer {
 
 	public abstract int sample(int x, int z);
 
-	public static long getLayerSeed(long seed, long salt) {
+	public static long getLayerSeed(long worldSeed, long salt) {
 		long midSalt = SeedMixer.mixSeed(salt, salt);
 		midSalt = SeedMixer.mixSeed(midSalt, salt);
 		midSalt = SeedMixer.mixSeed(midSalt, salt);
-		long layerSeed = SeedMixer.mixSeed(seed, midSalt);
+		long layerSeed = SeedMixer.mixSeed(worldSeed, midSalt);
 		layerSeed = SeedMixer.mixSeed(layerSeed, midSalt);
 		layerSeed = SeedMixer.mixSeed(layerSeed, midSalt);
 		return layerSeed;
@@ -53,6 +53,10 @@ public abstract class BiomeLayer {
 		layerSeed = SeedMixer.mixSeed(layerSeed, x);
 		layerSeed = SeedMixer.mixSeed(layerSeed, z);
 		return layerSeed;
+	}
+
+	public static long getLocalSeed(long worldSeed, long salt, int x, int z) {
+		return getLocalSeed(getLayerSeed(worldSeed, salt), x, z);
 	}
 
 	public void setSeed(int x, int z) {

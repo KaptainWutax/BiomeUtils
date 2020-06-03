@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer.land;
 
-import kaptainwutax.biomeutils.BiomeSource;
+import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 
 public class SimpleLandNoiseLayer extends BiomeLayer {
@@ -17,7 +17,7 @@ public class SimpleLandNoiseLayer extends BiomeLayer {
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
 		int i = this.parent.get(x, z);
-		return BiomeSource.isShallowOcean(i) ? i : this.nextInt(299999) + 2;
+		return Biome.isShallowOcean(i) ? i : this.nextInt(299999) + 2;
 	}
 
 }

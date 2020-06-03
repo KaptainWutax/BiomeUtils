@@ -1,7 +1,6 @@
 package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.BiomeSource;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.MergingLayer;
 
@@ -24,7 +23,7 @@ public class HillsLayer extends MergingLayer {
 		int k = (j - 2) % 29;
 		Biome biome3;
 
-		if (!BiomeSource.isShallowOcean(i) && j >= 2 && k == 1) {
+		if(!Biome.isShallowOcean(i) && j >= 2 && k == 1) {
 			Biome biome = Biome.REGISTRY.get(i);
 
 			if(biome == null || !biome.hasParent()) {
@@ -51,27 +50,27 @@ public class HillsLayer extends MergingLayer {
 				l = Biome.SNOWY_TAIGA_HILLS.getId();
 			} else if(i == Biome.PLAINS.getId()) {
 				l = this.nextInt(3) == 0 ? Biome.WOODED_HILLS.getId() : Biome.FOREST.getId();
-			} else if (i == Biome.SNOWY_TUNDRA.getId()) {
+			} else if(i == Biome.SNOWY_TUNDRA.getId()) {
 				l = Biome.SNOWY_MOUNTAINS.getId();
-			} else if (i == Biome.JUNGLE.getId()) {
+			} else if(i == Biome.JUNGLE.getId()) {
 				l = Biome.JUNGLE_HILLS.getId();
-			} else if (i == Biome.BAMBOO_JUNGLE.getId()) {
+			} else if(i == Biome.BAMBOO_JUNGLE.getId()) {
 				l = Biome.BAMBOO_JUNGLE_HILLS.getId();
-			} else if (i == Biome.OCEAN.getId()) {
+			} else if(i == Biome.OCEAN.getId()) {
 				l = Biome.DEEP_OCEAN.getId();
-			} else if (i == Biome.LUKEWARM_OCEAN.getId()) {
+			} else if(i == Biome.LUKEWARM_OCEAN.getId()) {
 				l = Biome.DEEP_LUKEWARM_OCEAN.getId();
-			} else if (i == Biome.COLD_OCEAN.getId()) {
+			} else if(i == Biome.COLD_OCEAN.getId()) {
 				l = Biome.DEEP_COLD_OCEAN.getId();
-			} else if (i == Biome.FROZEN_OCEAN.getId()) {
+			} else if(i == Biome.FROZEN_OCEAN.getId()) {
 				l = Biome.DEEP_FROZEN_OCEAN.getId();
-			} else if (i == Biome.MOUNTAINS.getId()) {
+			} else if(i == Biome.MOUNTAINS.getId()) {
 				l = Biome.WOODED_MOUNTAINS.getId();
-			} else if (i == Biome.SAVANNA.getId()) {
+			} else if(i == Biome.SAVANNA.getId()) {
 				l = Biome.SAVANNA_PLATEAU.getId();
-			} else if (BiomeSource.areSimilar(i, Biome.WOODED_BADLANDS_PLATEAU)) {
+			} else if(Biome.areSimilar(i, Biome.WOODED_BADLANDS_PLATEAU)) {
 				l = Biome.BADLANDS.getId();
-			} else if ((i == Biome.DEEP_OCEAN.getId() || i == Biome.DEEP_LUKEWARM_OCEAN.getId()
+			} else if((i == Biome.DEEP_OCEAN.getId() || i == Biome.DEEP_LUKEWARM_OCEAN.getId()
 					|| i == Biome.DEEP_COLD_OCEAN.getId() || i == Biome.DEEP_FROZEN_OCEAN.getId())
 					&& this.nextInt(3) == 0) {
 				l = this.nextInt(2) == 0 ? Biome.PLAINS.getId() : Biome.FOREST.getId();
@@ -85,10 +84,10 @@ public class HillsLayer extends MergingLayer {
 			if(l != i) {
 				int m = 0;
 				Biome b = Biome.REGISTRY.get(i);
-				if(BiomeSource.areSimilar(this.parents[0].get(x, z - 1), b))m++;
-				if(BiomeSource.areSimilar(this.parents[0].get(x + 1, z), b))m++;
-				if(BiomeSource.areSimilar(this.parents[0].get(x - 1, z), b))m++;
-				if(BiomeSource.areSimilar(this.parents[0].get(x, z + 1), b))m++;
+				if(Biome.areSimilar(this.parents[0].get(x, z - 1), b))m++;
+				if(Biome.areSimilar(this.parents[0].get(x + 1, z), b))m++;
+				if(Biome.areSimilar(this.parents[0].get(x - 1, z), b))m++;
+				if(Biome.areSimilar(this.parents[0].get(x, z + 1), b))m++;
 				if(m >= 3)return l;
 			}
 		}

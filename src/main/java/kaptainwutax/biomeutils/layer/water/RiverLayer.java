@@ -1,7 +1,6 @@
 package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.BiomeSource;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.MergingLayer;
 
@@ -20,7 +19,7 @@ public class RiverLayer extends MergingLayer {
 		int i = this.parents[0].get(x, z);
 		int j = this.parents[1].get(x, z);
 
-		if(BiomeSource.isOcean(i))return i;
+		if(Biome.isOcean(i))return i;
 		
 		if(j == Biome.RIVER.getId()) {
 			if(i == Biome.SNOWY_TUNDRA.getId()) {

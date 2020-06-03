@@ -1,7 +1,6 @@
 package kaptainwutax.biomeutils.layer.shore;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.BiomeSource;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 
@@ -18,10 +17,10 @@ public class EaseEdgeLayer extends CrossLayer {
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
 		int[] is = new int[1];
-		if (!this.method_15841(is, n, e, s, w, center, Biome.MOUNTAINS, Biome.MOUNTAIN_EDGE)
-				&& !this.method_15840(is, n, e, s, w, center, Biome.WOODED_BADLANDS_PLATEAU, Biome.BADLANDS)
-				&& !this.method_15840(is, n, e, s, w, center, Biome.BADLANDS_PLATEAU, Biome.BADLANDS)
-				&& !this.method_15840(is, n, e, s, w, center, Biome.GIANT_TREE_TAIGA, Biome.TAIGA)) {
+		if (!this.replaceEdgeIfNeeded(is, n, e, s, w, center, Biome.MOUNTAINS, Biome.MOUNTAIN_EDGE)
+				&& !this.replaceEdge(is, n, e, s, w, center, Biome.WOODED_BADLANDS_PLATEAU, Biome.BADLANDS)
+				&& !this.replaceEdge(is, n, e, s, w, center, Biome.BADLANDS_PLATEAU, Biome.BADLANDS)
+				&& !this.replaceEdge(is, n, e, s, w, center, Biome.GIANT_TREE_TAIGA, Biome.TAIGA)) {
 
 			if(center == Biome.DESERT.getId() && anyMatch(Biome.SNOWY_TUNDRA, n, e, w, s)) {
 				return Biome.WOODED_MOUNTAINS.getId();
@@ -51,11 +50,12 @@ public class EaseEdgeLayer extends CrossLayer {
 		return false;
 	}
 
-	private boolean method_15841(int[] is, int i, int j, int k, int l, int m, Biome n, Biome o) {
-		if (!BiomeSource.areSimilar(m, n)) {
+	private boolean replaceEdgeIfNeeded(int[] is, int i, int j, int k, int l, int m, Biome n, Biome o) {
+		if (!Biome.areSimilar(m, n)) {
 			return false;
 		} else {
-			if (this.method_15839(i, n) && this.method_15839(j, n) && this.method_15839(l, n) && this.method_15839(k, n)) {
+			if (this.canBeNeighbors(i, n) && this.canBeNeighbors(j, n)
+					&& this.canBeNeighbors(l, n) && this.canBeNeighbors(k, n)) {
 				is[0] = m;
 			} else {
 				is[0] = o.getId();
@@ -65,11 +65,11 @@ public class EaseEdgeLayer extends CrossLayer {
 		}
 	}
 
-	private boolean method_15840(int[] is, int i, int j, int k, int l, int m, Biome n, Biome o) {
+	private boolean replaceEdge(int[] is, int i, int j, int k, int l, int m, Biome n, Biome o) {
 		if(m != n.getId())return false;
 
-		if(BiomeSource.areSimilar(i, n) && BiomeSource.areSimilar(j, n)
-				&& BiomeSource.areSimilar(l, n) && BiomeSource.areSimilar(k, n)) {
+		if(Biome.areSimilar(i, n) && Biome.areSimilar(j, n)
+				&& Biome.areSimilar(l, n) && Biome.areSimilar(k, n)) {
 			is[0] = m;
 		} else {
 			is[0] = o.getId();
@@ -78,8 +78,8 @@ public class EaseEdgeLayer extends CrossLayer {
 		return true;
 	}
 
-	private boolean method_15839(int id, Biome b2) {
-		if (BiomeSource.areSimilar(id, b2))return true;
+	private boolean canBeNeighbors(int id, Biome b2) {
+		if (Biome.areSimilar(id, b2))return true;
 
 		Biome biome = Biome.REGISTRY.get(id);
 
