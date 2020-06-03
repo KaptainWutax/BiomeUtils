@@ -23,4 +23,9 @@ public class NetherBiomeSource extends BiomeSource {
 		return null;
 	}
 
+	@Override
+	public Biome getBiomeForNoiseGen(int x, int y, int z) {
+		return this.getBiome(x, y, z);
+	}
+
 }

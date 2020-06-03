@@ -25,9 +25,11 @@ public abstract class BiomeSource {
 		return this.worldSeed;
 	}
 
-	public abstract Biome getBiome(int blockX, int blockY, int blockZ);
+	public abstract Biome getBiome(int x, int y, int z);
 
-	public void iterateUniqueBiomes(int x, int y, int z, int radius, BiomeSupplier supplier, Predicate<Biome> shouldContinue) {
+	public abstract Biome getBiomeForNoiseGen(int x, int y, int z);
+
+	public void iterateUniqueBiomes(int x, int y, int z, int radius, Predicate<Biome> shouldContinue) {
 		int i = x - radius >> 2;
 		int j = y - radius >> 2;
 		int k = z - radius >> 2;
@@ -47,7 +49,7 @@ public abstract class BiomeSource {
 					int v = j + t;
 					int w = k + r;
 
-					Biome b = supplier.getBiome(u, v, w);
+					Biome b = this.getBiomeForNoiseGen(u, v, w);
 
 					if(!set.contains(b.getId())) {
 						if(!shouldContinue.test(b))return;

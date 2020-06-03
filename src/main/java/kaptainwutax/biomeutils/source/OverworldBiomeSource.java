@@ -45,12 +45,13 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     @Override
-    public Biome getBiome(int blockX, int blockY, int blockZ) {
-        return Biome.REGISTRY.get(this.voronoi.get(blockX, blockZ));
+    public Biome getBiome(int x, int y, int z) {
+        return Biome.REGISTRY.get(this.voronoi.get(x, z));
     }
 
-    public Biome getBiomeForNoiseGen(int blockX, int blockZ) {
-        return Biome.REGISTRY.get(this.full.get(blockX, blockZ));
+    @Override
+    public Biome getBiomeForNoiseGen(int x, int y, int z) {
+        return Biome.REGISTRY.get(this.full.get(x, z));
     }
 
     public OverworldBiomeSource build() {

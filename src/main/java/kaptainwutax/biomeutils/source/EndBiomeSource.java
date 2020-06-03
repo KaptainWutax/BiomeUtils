@@ -37,6 +37,11 @@ public class EndBiomeSource extends BiomeSource {
 		}
 	}
 
+	@Override
+	public Biome getBiomeForNoiseGen(int x, int y, int z) {
+		return this.getBiome(x, y, z);
+	}
+
 	public static float getNoiseAt(SimplexNoiseSampler simplexNoiseSampler, int i, int j) {
 		int k = i / 2;
 		int l = j / 2;
