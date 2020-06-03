@@ -61,6 +61,32 @@ public abstract class BiomeSource {
 		}
 	}
 
+	public void iterateUniqueBiomes(int x, int z, int radius, Predicate<Biome> shouldContinue) {
+		int i = x - radius >> 2;
+		int k = z - radius >> 2;
+		int l = x + radius >> 2;
+		int n = z + radius >> 2;
+		int o = l - i + 1;
+		int q = n - k + 1;
+
+		Set<Integer> set = new HashSet<>();
+
+		for(int r = 0; r < q; ++r) {
+			for(int s = 0; s < o; ++s) {
+				int u = i + s;
+				int w = k + r;
+
+				Biome b = this.getBiomeForNoiseGen(u, 0, w);
+
+				if(!set.contains(b.getId())) {
+					if(!shouldContinue.test(b))return;
+				}
+
+				set.add(b.getId());
+			}
+		}
+	}
+
 	public interface BiomeSupplier {
 		Biome getBiome(int x, int y, int z);
 	}
