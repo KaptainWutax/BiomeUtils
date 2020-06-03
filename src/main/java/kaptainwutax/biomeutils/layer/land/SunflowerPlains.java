@@ -17,7 +17,7 @@ public class SunflowerPlains extends BiomeLayer {
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
 		int value = this.parent.get(x, z);
-		return this.nextInt(57) == 0 && value == Biome.PLAINS.getId() ? Biome.SUNFLOWER_PLAINS.getId() : value;
+		return value == Biome.PLAINS.getId() && this.nextInt(57) == 0 ? Biome.SUNFLOWER_PLAINS.getId() : value;
 	}
 
 }

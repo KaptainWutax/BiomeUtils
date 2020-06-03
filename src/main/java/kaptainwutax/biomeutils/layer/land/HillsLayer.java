@@ -17,8 +17,8 @@ public class HillsLayer extends MergingLayer {
 	@Override
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
-		int i = this.parents[0].get(x, z);
-		int j = this.parents[1].get(x, z);
+		int i = this.parents[0].get(x, z); // biomes
+		int j = this.parents[1].get(x, z); // noise (river)
 
 		int k = (j - 2) % 29;
 		Biome biome3;
