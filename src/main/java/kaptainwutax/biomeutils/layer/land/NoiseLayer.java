@@ -3,13 +3,13 @@ package kaptainwutax.biomeutils.layer.land;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 
-public class SimpleLandNoiseLayer extends BiomeLayer {
+public class NoiseLayer extends BiomeLayer {
 
-	public SimpleLandNoiseLayer(long worldSeed, long salt, BiomeLayer parent) {
+	public NoiseLayer(long worldSeed, long salt, BiomeLayer parent) {
 		super(worldSeed, salt, parent);
 	}
 
-	public SimpleLandNoiseLayer(long worldSeed, long salt) {
+	public NoiseLayer(long worldSeed, long salt) {
 		this(worldSeed, salt, null);
 	}
 

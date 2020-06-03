@@ -1,23 +1,23 @@
-package kaptainwutax.biomeutils.layer.scale;
+package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.XCrossLayer;
 
-public class CurveLayer extends XCrossLayer {
+public class LandLayer extends XCrossLayer {
 
-    public CurveLayer(long worldSeed, long salt, BiomeLayer parent) {
+    public LandLayer(long worldSeed, long salt, BiomeLayer parent) {
         super(worldSeed, salt, parent);
     }
 
-    public CurveLayer(long worldSeed, long salt) {
+    public LandLayer(long worldSeed, long salt) {
         this(worldSeed, salt, null);
     }
 
     @Override
     public int sample(int sw, int se, int ne, int nw, int center) {
         if (!Biome.isShallowOcean(center) || Biome.applyAll(Biome::isShallowOcean, sw, se, ne, nw )) {
-            if (Biome.isShallowOcean(center) || (Biome.applyAll(e -> !Biome.isShallowOcean(e), sw, se, ne, nw)) || this.nextInt(5) != 0) {
+            if (Biome.isShallowOcean(center) || (Biome.applyAll(v -> !Biome.isShallowOcean(v), sw, se, ne, nw)) || this.nextInt(5) != 0) {
                 return center;
             }
             if (Biome.isShallowOcean(nw)) {
