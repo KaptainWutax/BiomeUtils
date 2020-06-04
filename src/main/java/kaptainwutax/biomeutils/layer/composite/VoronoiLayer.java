@@ -9,7 +9,7 @@ public class VoronoiLayer extends BiomeLayer {
 	public final long seed;
 
 	public VoronoiLayer(long worldSeed, boolean doHashing, BiomeLayer parent) {
-		super(worldSeed, 0, parent);
+		super(worldSeed, doHashing?0L:10L, parent);
 		this.seed = doHashing ? WorldSeed.toHash(worldSeed) : worldSeed;
 	}
 
