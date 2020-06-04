@@ -26,50 +26,46 @@ public class VoronoiLayer extends BiomeLayer {
 		double f = (double)(k & 3) / 4.0D;
 		double[] ds = new double[8];
 
-		int t;
-		int aa;
-		int ab;
-		for(t = 0; t < 8; ++t) {
-			boolean bl = (t & 4) == 0;
-			boolean bl2 = (t & 2) == 0;
-			boolean bl3 = (t & 1) == 0;
-			aa = bl ? l : l + 1;
-			ab = bl2 ? m : m + 1;
-			int r = bl3 ? n : n + 1;
+		for(int cell = 0; cell < 8; ++cell) {
+			boolean bl = (cell & 4) == 0;
+			boolean bl2 = (cell & 2) == 0;
+			boolean bl3 = (cell & 1) == 0;
+			int aa = bl ? l : l + 1;
+			int ab = bl2 ? m : m + 1;
+			int ac = bl3 ? n : n + 1;
 			double g = bl ? d : d - 1.0D;
 			double h = bl2 ? e : e - 1.0D;
 			double s = bl3 ? f : f - 1.0D;
-			ds[t] = calcSquaredDistance(this.seed, aa, ab, r, g, h, s);
+			ds[cell] = calcSquaredDistance(this.seed, aa, ab, ac, g, h, s);
 		}
 
-		t = 0;
-		double u = ds[0];
+		int index = 0;
+		double min = ds[0];
 
-		int v;
-		for(v = 1; v < 8; ++v) {
-			if (u > ds[v]) {
-				t = v;
-				u = ds[v];
+		for(int cell = 1; cell < 8; ++cell) {
+			if (min > ds[cell]) {
+				index = cell;
+				min = ds[cell];
 			}
 		}
 
-		v = (t & 4) == 0 ? l : l + 1;
-		ab = (t & 1) == 0 ? n : n + 1;
-		return this.parent.get(v, ab);
+		int xFinal = (index & 4) == 0 ? l : l + 1;
+		int zFinal = (index & 1) == 0 ? n : n + 1;
+		return this.parent.get(xFinal, zFinal);
 	}
 
 	private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {
-		long l = SeedMixer.mixSeed(seed, x);
-		l = SeedMixer.mixSeed(l, y);
-		l = SeedMixer.mixSeed(l, z);
-		l = SeedMixer.mixSeed(l, x);
-		l = SeedMixer.mixSeed(l, y);
-		l = SeedMixer.mixSeed(l, z);
-		double d = distribute(l);
-		l = SeedMixer.mixSeed(l, seed);
-		double e = distribute(l);
-		l = SeedMixer.mixSeed(l, seed);
-		double f = distribute(l);
+		long mixedSeed = SeedMixer.mixSeed(seed, x);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, y);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, x);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, y);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
+		double d = distribute(mixedSeed);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, seed);
+		double e = distribute(mixedSeed);
+		mixedSeed = SeedMixer.mixSeed(mixedSeed, seed);
+		double f = distribute(mixedSeed);
 		return square(zFraction + f) + square(yFraction + e) + square(xFraction + d);
 	}
 
