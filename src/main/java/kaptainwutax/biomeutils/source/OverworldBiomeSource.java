@@ -23,7 +23,9 @@ public class OverworldBiomeSource extends BiomeSource {
     public BiomeLayer base;
     public BiomeLayer ocean;
     public BiomeLayer noise;
-    public BiomeLayer hills;
+    public BiomeLayer variants;
+    public BiomeLayer biomes;
+    public BiomeLayer river;
     public BiomeLayer full;
     public VoronoiLayer voronoi;
 
@@ -57,6 +59,7 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource build() {
         BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
 
+        // first legacy stack
         this.base = new ContinentLayer(this.getWorldSeed(), 1L);
         this.base = new ScaleLayer(this.getWorldSeed(), 2000L, ScaleLayer.Type.FUZZY, this.base);
         this.base = new LandLayer(this.getWorldSeed(), 1L, this.base);
@@ -75,41 +78,43 @@ public class OverworldBiomeSource extends BiomeSource {
         this.base = new LandLayer(this.getWorldSeed(), 4L, this.base);
         this.base = new MushroomLayer(this.getWorldSeed(), 5L, this.base);
         this.base = new DeepOceanLayer(this.getWorldSeed(), 4L, this.base);
-        this.base = stack(1000L, NORMAL_SCALE, this.base, 0);
 
-        this.noise = stack(1000L, NORMAL_SCALE, this.base, 0);
+        // new biomes chain
+        this.biomes = new BaseBiomesLayer(this.getWorldSeed(), 200L, this.base);
+        this.biomes = new BambooJungleLayer(this.getWorldSeed(), 1001L, this.biomes);
+        this.biomes = stack(1000L, NORMAL_SCALE, this.biomes, 2);
+        this.biomes = new EaseEdgeLayer(this.getWorldSeed(), 1000L, this.biomes);
+
+        // noise generation for variant and river
         this.noise = new NoiseLayer(this.getWorldSeed(), 100L, this.base);
-
-        this.full = new BaseBiomesLayer(this.getWorldSeed(), 200L, this.base);
-        this.full = new BambooJungleLayer(this.getWorldSeed(), 1001L, this.full);
-        this.full = stack(1000L, NORMAL_SCALE, this.full, 2);
-        this.full = new EaseEdgeLayer(this.getWorldSeed(), 1000L, this.full);
-
-        this.hills = stack(1000L, NORMAL_SCALE, this.noise, 2);
-        this.full = new HillsLayer(this.getWorldSeed(), 1000L, this.full, this.hills);
-
         this.noise = stack(1000L, NORMAL_SCALE, this.noise, 2);
-        this.noise = stack(1000L, NORMAL_SCALE, this.noise, this.riverSize);
-        this.noise = new NoiseToRiverLayer(this.getWorldSeed(), 1L, this.noise);
-        this.noise = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.noise);
 
-        this.full = new SunflowerPlainsLayer(this.getWorldSeed(), 1001L, this.full);
-
+        // hills and variants chain
+        this.variants = new HillsLayer(this.getWorldSeed(), 1000L, this.biomes, this.noise);
+        this.variants = new SunflowerPlainsLayer(this.getWorldSeed(), 1001L, this.variants);
         for (int i = 0; i < this.biomeSize; i++) {
-            this.full = new ScaleLayer(this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.full);
-            if (i == 0) this.full = new LandLayer(this.getWorldSeed(), 3L, this.full);
+            this.variants = new ScaleLayer(this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants);
+            if (i == 0) this.variants = new LandLayer(this.getWorldSeed(), 3L, this.variants);
 
             if (i == 1 || this.biomeSize == 1) {
-                this.full = new EdgeBiomesLayer(this.getWorldSeed(), 1000L, this.full);
+                this.variants = new EdgeBiomesLayer(this.getWorldSeed(), 1000L, this.variants);
             }
         }
+        this.variants = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.variants);
 
-        this.full = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.full);
-        this.full = new RiverLayer(this.getWorldSeed(), 100L, this.full, this.noise);
+        // river chain
+        this.river = stack(1000L, NORMAL_SCALE, this.noise, 4);
+        this.river = new NoiseToRiverLayer(this.getWorldSeed(), 1L, this.river);
+        this.river = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.river);
 
-        this.ocean = new OceanTemperatureLayer(this.getWorldSeed(), 2L);
+        // mixing of the river with the hills and variants
+        this.full = new RiverLayer(this.getWorldSeed(), 100L, this.variants, this.river);
+
+        // ocean chains
+        this.ocean = new OceanTemperatureLayer(this.getWorldSeed(), 2L,null);
         this.ocean = stack(2001L, NORMAL_SCALE, this.ocean, 6);
 
+        // mixing of the two firsts stacks with the ocean chain
         this.full = new OceanTemperatureLayer.Apply(this.getWorldSeed(), 100L, this.full, this.ocean);
         this.voronoi = new VoronoiLayer(this.getWorldSeed(), !this.getVersion().isOlderThan(MCVersion.v1_15), this.full);
         return this;
