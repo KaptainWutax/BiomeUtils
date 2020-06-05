@@ -2,22 +2,18 @@ package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.biomeutils.layer.composite.MergingLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
-public class RiverLayer extends MergingLayer {
+public class RiverLayer extends BiomeLayer {
 
-	public RiverLayer(long worldSeed, long salt, BiomeLayer... parents) {
-		super(worldSeed, salt, parents);
-	}
-
-	public RiverLayer(long worldSeed, long salt) {
-		this(worldSeed, salt, (BiomeLayer[])null);
+	public RiverLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+		super(version, worldSeed, salt, parents);
 	}
 
 	@Override
 	public int sample(int x, int z) {
-		int i = this.parents[0].get(x, z);
-		int j = this.parents[1].get(x, z);
+		int i = this.getParent(0).get(x, z);
+		int j = this.getParent(1).get(x, z);
 
 		if(Biome.isOcean(i))return i;
 		

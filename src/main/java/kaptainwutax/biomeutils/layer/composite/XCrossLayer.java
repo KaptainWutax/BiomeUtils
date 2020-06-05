@@ -1,15 +1,12 @@
 package kaptainwutax.biomeutils.layer.composite;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 public abstract class XCrossLayer extends BiomeLayer {
 
-	public XCrossLayer(long worldSeed, long salt, BiomeLayer parent) {
-		super(worldSeed, salt, parent);
-	}
-
-	public XCrossLayer(long worldSeed, long salt) {
-		this(worldSeed, salt, null);
+	public XCrossLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+		super(version, worldSeed, salt, parent);
 	}
 
 	@Override
@@ -17,11 +14,11 @@ public abstract class XCrossLayer extends BiomeLayer {
 		this.setSeed(x, z);
 
 		return this.sample(
-				this.parent.get(x - 1, z + 1),
-				this.parent.get(x + 1, z + 1),
-				this.parent.get(x + 1, z - 1),
-				this.parent.get(x - 1, z - 1),
-				this.parent.get(x, z)
+				this.getParent().get(x - 1, z + 1),
+				this.getParent().get(x + 1, z + 1),
+				this.getParent().get(x + 1, z - 1),
+				this.getParent().get(x - 1, z - 1),
+				this.getParent().get(x, z)
 			);
 	}
 

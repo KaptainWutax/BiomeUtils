@@ -1,9 +1,9 @@
 package kaptainwutax.biomeutils.layer;
 
-import kaptainwutax.biomeutils.layer.composite.MergingLayer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.prng.SeedMixer;
 
 import java.util.HashMap;
@@ -14,28 +14,49 @@ public abstract class BiomeLayer {
     public static int oceanScaleCounter = -100;
     public static int layerIdCounter = 0;
 
-    protected final BiomeLayer[] parents;
-    protected final BiomeLayer parent;
-    public final long layerSeed;
-    public long localSeed;
+    private final MCVersion version;
+    private final BiomeLayer[] parents;
+    private final long layerSeed;
+    private long localSeed;
+
     protected int scale;
     protected int layerId;
 
     private Map<Long, Integer> cache = new HashMap<>();
 
-    public BiomeLayer(long worldSeed, long salt, BiomeLayer parent, BiomeLayer[] parents) {
+    public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+        this.version = version;
         this.layerSeed = getLayerSeed(worldSeed, salt);
-        this.parent = parent;
         this.parents = parents;
         setScaleAndId();
     }
 
-    public BiomeLayer(long worldSeed, long salt, BiomeLayer parent) {
-        this(worldSeed, salt, parent, null);
+    public BiomeLayer(MCVersion version, long worldSeed, long salt) {
+        this(version, worldSeed, salt, (BiomeLayer)null);
     }
 
-    public BiomeLayer(long worldSeed, long salt) {
-        this(worldSeed, salt, null);
+    public MCVersion getVersion() {
+        return this.version;
+    }
+
+    public boolean hasParent() {
+        return this.parents.length > 0;
+    }
+
+    public BiomeLayer getParent() {
+        return this.getParent(0);
+    }
+
+    public BiomeLayer getParent(int id) {
+        return this.parents[id];
+    }
+
+    public boolean isMergingLayer() {
+        return this.parents.length > 1;
+    }
+
+    public BiomeLayer[] getParents() {
+        return this.parents;
     }
 
     public int get(int x, int z) {
@@ -75,26 +96,19 @@ public abstract class BiomeLayer {
         return getLocalSeed(getLayerSeed(worldSeed, salt), x, z);
     }
 
-    public BiomeLayer getParent() {
-        return parent;
-    }
-
-    public BiomeLayer[] getParents() {
-        return parents;
-    }
-
     public int getLayerId() {
-        return layerId;
+        return this.layerId;
     }
 
     public int getScaleIndex() {
-        return scale;
+        return this.scale;
     }
 
     public int getScale() {
-        if (scale<0){
+        if(this.scale < 0) {
             return getPow2(scaleCounter-(scale-oceanScaleCounter)-4);
         }
+
         return getPow2(scaleCounter - scale);
     }
 
@@ -113,18 +127,20 @@ public abstract class BiomeLayer {
         }
         return res;
     }
+
     public void setScaleAndId(){
         this.layerId = layerIdCounter;
         layerIdCounter++;
-        if (this.parent == null) {
+        if (this.getParent() == null) {
             this.scale = (this instanceof OceanTemperatureLayer)?-100: 0;
-            if (this instanceof MergingLayer && parents != null && parents.length > 0) {
-                for (BiomeLayer biomeLayer : parents) {
+
+            if(this.isMergingLayer()) {
+                for (BiomeLayer biomeLayer : this.getParents()) {
                     this.scale = Math.max(biomeLayer.getScaleIndex(), this.scale);
                 }
             }
         } else {
-            this.scale = (this instanceof VoronoiLayer)?this.parent.getScaleIndex()+2: (this instanceof ScaleLayer) ? this.parent.getScaleIndex() + 1 : this.parent.getScaleIndex();
+            this.scale = (this instanceof VoronoiLayer)?this.getParent().getScaleIndex()+2: (this instanceof ScaleLayer) ? this.getParent().getScaleIndex() + 1 : this.getParent().getScaleIndex();
         }
         oceanScaleCounter=Math.min(oceanScaleCounter,scale);
         scaleCounter = Math.max(scaleCounter, scale);

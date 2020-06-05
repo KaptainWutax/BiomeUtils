@@ -3,15 +3,12 @@ package kaptainwutax.biomeutils.layer.shore;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 public class EdgeBiomesLayer extends CrossLayer {
 
-    public EdgeBiomesLayer(long worldSeed, long salt, BiomeLayer parent) {
-        super(worldSeed, salt, parent);
-    }
-
-    public EdgeBiomesLayer(long worldSeed, long salt) {
-        this(worldSeed, salt, null);
+    public EdgeBiomesLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+        super(version, worldSeed, salt, parent);
     }
 
     @Override

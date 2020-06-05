@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.composite;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.seed.WorldSeed;
 import kaptainwutax.seedutils.prng.SeedMixer;
 
@@ -8,9 +9,9 @@ public class VoronoiLayer extends BiomeLayer {
 
 	public final long seed;
 
-	public VoronoiLayer(long worldSeed, boolean doHashing, BiomeLayer parent) {
-		super(worldSeed, doHashing?0L:10L, parent);
-		this.seed = doHashing ? WorldSeed.toHash(worldSeed) : worldSeed;
+	public VoronoiLayer(MCVersion version, long worldSeed, BiomeLayer parent) {
+		super(version, worldSeed, version.isOlderThan(MCVersion.v1_15) ? 0L : 10L, parent);
+		this.seed = version.isOlderThan(MCVersion.v1_15) ? WorldSeed.toHash(worldSeed) : worldSeed;
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class VoronoiLayer extends BiomeLayer {
 
 		int xFinal = (index & 4) == 0 ? l : l + 1;
 		int zFinal = (index & 1) == 0 ? n : n + 1;
-		return this.parent.get(xFinal, zFinal);
+		return this.getParent().get(xFinal, zFinal);
 	}
 
 	private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {

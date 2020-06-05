@@ -3,15 +3,12 @@ package kaptainwutax.biomeutils.layer.land;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.XCrossLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 public class LandLayer extends XCrossLayer {
 
-    public LandLayer(long worldSeed, long salt, BiomeLayer parent) {
-        super(worldSeed, salt, parent);
-    }
-
-    public LandLayer(long worldSeed, long salt) {
-        this(worldSeed, salt, null);
+    public LandLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+        super(version, worldSeed, salt, parent);
     }
 
     @Override

@@ -3,15 +3,12 @@ package kaptainwutax.biomeutils.layer.land;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 public class IslandLayer extends CrossLayer {
 
-	public IslandLayer(long worldSeed, long salt, BiomeLayer parent) {
-		super(worldSeed, salt, parent);
-	}
-
-	public IslandLayer(long worldSeed, long salt) {
-		this(worldSeed, salt, null);
+	public IslandLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+		super(version, worldSeed, salt, parent);
 	}
 
 	@Override

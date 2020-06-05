@@ -57,66 +57,70 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     public OverworldBiomeSource build() {
-        BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
+        BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
 
         // first legacy stack
-        this.base = new ContinentLayer(this.getWorldSeed(), 1L);
-        this.base = new ScaleLayer(this.getWorldSeed(), 2000L, ScaleLayer.Type.FUZZY, this.base);
-        this.base = new LandLayer(this.getWorldSeed(), 1L, this.base);
-        this.base = new ScaleLayer(this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base);
-        this.base = new LandLayer(this.getWorldSeed(), 2L, this.base);
-        this.base = new LandLayer(this.getWorldSeed(), 50L, this.base);
-        this.base = new LandLayer(this.getWorldSeed(), 70L, this.base);
-        this.base = new IslandLayer(this.getWorldSeed(), 2L, this.base);
-        this.base = new ClimateLayer.Cold(this.getWorldSeed(), 2L, this.base);
-        this.base = new LandLayer(this.getWorldSeed(), 3L, this.base);
-        this.base = new ClimateLayer.Temperate(this.getWorldSeed(), 2L, this.base);
-        this.base = new ClimateLayer.Cool(this.getWorldSeed(), 2L, this.base);
-        this.base = new ClimateLayer.Special(this.getWorldSeed(), 3L, this.base);
-        this.base = new ScaleLayer(this.getWorldSeed(), 2002L, ScaleLayer.Type.NORMAL, this.base);
-        this.base = new ScaleLayer(this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base);
-        this.base = new LandLayer(this.getWorldSeed(), 4L, this.base);
-        this.base = new MushroomLayer(this.getWorldSeed(), 5L, this.base);
-        this.base = new DeepOceanLayer(this.getWorldSeed(), 4L, this.base);
+        this.base = new ContinentLayer(this.getVersion(), this.getWorldSeed(), 1L);
+        this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2000L, ScaleLayer.Type.FUZZY, this.base);
+        this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 1L, this.base);
+        this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base);
+        this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base);
+        this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base);
+        this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base);
+        this.base = new IslandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base);
+        this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base);
+        this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base);
+        this.base = new ClimateLayer.Temperate(this.getVersion(), this.getWorldSeed(), 2L, this.base);
+        this.base = new ClimateLayer.Cool(this.getVersion(), this.getWorldSeed(), 2L, this.base);
+        this.base = new ClimateLayer.Special(this.getVersion(), this.getWorldSeed(), 3L, this.base);
+        this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2002L, ScaleLayer.Type.NORMAL, this.base);
+        this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base);
+        this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base);
+        this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base);
+        this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base);
 
         // new biomes chain
-        this.biomes = new BaseBiomesLayer(this.getWorldSeed(), 200L, this.base);
-        this.biomes = new BambooJungleLayer(this.getWorldSeed(), 1001L, this.biomes);
+        this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base);
+
+        if(!this.getVersion().isOlderThan(MCVersion.v1_14)) {
+            this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes);
+        }
+
         this.biomes = stack(1000L, NORMAL_SCALE, this.biomes, 2);
-        this.biomes = new EaseEdgeLayer(this.getWorldSeed(), 1000L, this.biomes);
+        this.biomes = new EaseEdgeLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes);
 
         // noise generation for variant and river
-        this.noise = new NoiseLayer(this.getWorldSeed(), 100L, this.base);
+        this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base);
         this.noise = stack(1000L, NORMAL_SCALE, this.noise, 2);
 
         // hills and variants chain
-        this.variants = new HillsLayer(this.getWorldSeed(), 1000L, this.biomes, this.noise);
-        this.variants = new SunflowerPlainsLayer(this.getWorldSeed(), 1001L, this.variants);
+        this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise);
+        this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants);
         for (int i = 0; i < this.biomeSize; i++) {
-            this.variants = new ScaleLayer(this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants);
-            if (i == 0) this.variants = new LandLayer(this.getWorldSeed(), 3L, this.variants);
+            this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants);
+            if (i == 0) this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants);
 
             if (i == 1 || this.biomeSize == 1) {
-                this.variants = new EdgeBiomesLayer(this.getWorldSeed(), 1000L, this.variants);
+                this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants);
             }
         }
-        this.variants = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.variants);
+        this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants);
 
         // river chain
         this.river = stack(1000L, NORMAL_SCALE, this.noise, 4);
-        this.river = new NoiseToRiverLayer(this.getWorldSeed(), 1L, this.river);
-        this.river = new SmoothScaleLayer(this.getWorldSeed(), 1000L, this.river);
+        this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river);
+        this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river);
 
         // mixing of the river with the hills and variants
-        this.full = new RiverLayer(this.getWorldSeed(), 100L, this.variants, this.river);
+        this.full = new RiverLayer(this.getVersion(), this.getWorldSeed(), 100L, this.variants, this.river);
 
         // ocean chains
-        this.ocean = new OceanTemperatureLayer(this.getWorldSeed(), 2L,null);
+        this.ocean = new OceanTemperatureLayer(this.getVersion(), this.getWorldSeed(), 2L,null);
         this.ocean = stack(2001L, NORMAL_SCALE, this.ocean, 6);
 
         // mixing of the two firsts stacks with the ocean chain
-        this.full = new OceanTemperatureLayer.Apply(this.getWorldSeed(), 100L, this.full, this.ocean);
-        this.voronoi = new VoronoiLayer(this.getWorldSeed(), !this.getVersion().isOlderThan(MCVersion.v1_15), this.full);
+        this.full = new OceanTemperatureLayer.Apply(this.getVersion(), this.getWorldSeed(), 100L, this.full, this.ocean);
+        this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full);
         return this;
     }
 

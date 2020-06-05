@@ -3,21 +3,18 @@ package kaptainwutax.biomeutils.layer.temperature;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 public class ClimateLayer {
 
 	public static class Cold extends BiomeLayer {
-		public Cold(long worldSeed, long salt, BiomeLayer parent) {
-			super(worldSeed, salt, parent);
-		}
-
-		public Cold(long worldSeed, long salt) {
-			this(worldSeed, salt, null);
+		public Cold(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
 		public int sample(int x, int z) {
-			int value = this.parent.get(x, z);
+			int value = this.getParent().get(x, z);
 
 			if(Biome.isShallowOcean(value)) {
 				return value;
@@ -31,12 +28,8 @@ public class ClimateLayer {
 	}
 
 	public static class Temperate extends CrossLayer {
-		public Temperate(long worldSeed, long salt, BiomeLayer parent) {
-			super(worldSeed, salt, parent);
-		}
-
-		public Temperate(long worldSeed, long salt) {
-			this(worldSeed, salt, null);
+		public Temperate(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
@@ -49,12 +42,8 @@ public class ClimateLayer {
 	}
 
 	public static class Cool extends CrossLayer {
-		public Cool(long worldSeed, long salt, BiomeLayer parent) {
-			super(worldSeed, salt, parent);
-		}
-
-		public Cool(long worldSeed, long salt) {
-			this(worldSeed, salt, null);
+		public Cool(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
@@ -67,17 +56,13 @@ public class ClimateLayer {
 	}
 
 	public static class Special extends BiomeLayer {
-		public Special(long worldSeed, long salt, BiomeLayer parent) {
-			super(worldSeed, salt, parent);
-		}
-
-		public Special(long worldSeed, long salt) {
-			this(worldSeed, salt, null);
+		public Special(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
 		public int sample(int x, int z) {
-			int i = this.parent.get(x, z);
+			int i = this.getParent().get(x, z);
 
 			if(Biome.isShallowOcean(i))return i;
 			this.setSeed(x, z);

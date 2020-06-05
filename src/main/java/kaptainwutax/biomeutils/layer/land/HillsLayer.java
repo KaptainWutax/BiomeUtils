@@ -2,23 +2,19 @@ package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.biomeutils.layer.composite.MergingLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
-public class HillsLayer extends MergingLayer {
+public class HillsLayer extends BiomeLayer {
 
-	public HillsLayer(long worldSeed, long salt, BiomeLayer... parents) {
-		super(worldSeed, salt, parents);
-	}
-
-	public HillsLayer(long worldSeed, long salt) {
-		this(worldSeed, salt, (BiomeLayer[])null);
+	public HillsLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+		super(version, worldSeed, salt, parents);
 	}
 
 	@Override
 	public int sample(int x, int z) {
 		this.setSeed(x, z);
-		int i = this.parents[0].get(x, z); // biomes
-		int j = this.parents[1].get(x, z); // noise (river)
+		int i = this.getParent(0).get(x, z); // biomes
+		int j = this.getParent(1).get(x, z); // noise (river)
 
 		int k = (j - 2) % 29;
 		Biome biome3;
@@ -84,10 +80,10 @@ public class HillsLayer extends MergingLayer {
 			if(l != i) {
 				int m = 0;
 				Biome b = Biome.REGISTRY.get(i);
-				if(Biome.areSimilar(this.parents[0].get(x, z - 1), b))m++;
-				if(Biome.areSimilar(this.parents[0].get(x + 1, z), b))m++;
-				if(Biome.areSimilar(this.parents[0].get(x - 1, z), b))m++;
-				if(Biome.areSimilar(this.parents[0].get(x, z + 1), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x, z - 1), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x + 1, z), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x - 1, z), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x, z + 1), b))m++;
 				if(m >= 3)return l;
 			}
 		}

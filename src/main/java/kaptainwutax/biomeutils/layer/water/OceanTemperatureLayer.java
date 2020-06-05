@@ -2,21 +2,17 @@ package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.biomeutils.layer.composite.MergingLayer;
 import kaptainwutax.biomeutils.noise.PerlinNoiseSampler;
+import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.prng.lcg.java.JRand;
 
 public class OceanTemperatureLayer extends BiomeLayer {
 
 	private final PerlinNoiseSampler perlin;
 
-	public OceanTemperatureLayer(long worldSeed, long salt, BiomeLayer parent) {
-		super(worldSeed, salt, parent);
+	public OceanTemperatureLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+		super(version, worldSeed, salt, parent);
 		this.perlin = new PerlinNoiseSampler(new JRand(worldSeed));
-	}
-
-	public OceanTemperatureLayer(long worldSeed, long salt) {
-		this(worldSeed, salt, null);
 	}
 
 	@Override
@@ -34,24 +30,20 @@ public class OceanTemperatureLayer extends BiomeLayer {
 		}
 	}
 
-	public static class Apply extends MergingLayer {
-		public Apply(long worldSeed, long salt, BiomeLayer... parents) {
-			super(worldSeed, salt, parents);
-		}
-
-		public Apply(long worldSeed, long salt) {
-			this(worldSeed, salt, (BiomeLayer[])null);
+	public static class Apply extends BiomeLayer {
+		public Apply(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+			super(version, worldSeed, salt, parents);
 		}
 
 		@Override
 		public int sample(int x, int z) {
-			int i = this.parents[0].get(x, z);
-			int j = this.parents[1].get(x, z);
+			int i = this.getParent(0).get(x, z);
+			int j = this.getParent(1).get(x, z);
 			if (!Biome.isOcean(i))return i;
 
 			for(int m = -8; m <= 8; m += 4) {
 				for(int n = -8; n <= 8; n += 4) {
-					int o = this.parents[0].get(x + m, z + n);
+					int o = this.getParent(0).get(x + m, z + n);
 
 					if (!Biome.isOcean(o)) {
 						if (j == Biome.WARM_OCEAN.getId()) {

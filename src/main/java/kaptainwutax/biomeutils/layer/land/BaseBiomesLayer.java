@@ -2,6 +2,7 @@ package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 public class BaseBiomesLayer extends BiomeLayer {
 
@@ -13,18 +14,14 @@ public class BaseBiomesLayer extends BiomeLayer {
     public static final Biome[] SNOWY_BIOMES = new Biome[]{Biome.SNOWY_TUNDRA, Biome.SNOWY_TUNDRA, Biome.SNOWY_TUNDRA, Biome.SNOWY_TAIGA
     };
 
-    public BaseBiomesLayer(long worldSeed, long salt, BiomeLayer parent) {
-        super(worldSeed, salt, parent);
-    }
-
-    public BaseBiomesLayer(long worldSeed, long salt) {
-        this(worldSeed, salt, null);
+    public BaseBiomesLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+        super(version, worldSeed, salt, parent);
     }
 
     @Override
     public int sample(int x, int z) {
         this.setSeed(x, z);
-        int center = this.parent.get(x, z);
+        int center = this.getParent().get(x, z);
         int highBit = (center >> 8) & 15;
         center &= -0xF01;
 
