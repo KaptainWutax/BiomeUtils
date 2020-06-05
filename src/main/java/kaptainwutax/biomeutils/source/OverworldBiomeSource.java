@@ -35,7 +35,7 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource(MCVersion version, long worldSeed) {
         this(version, worldSeed, 4, 4);
 
-        if (this.getVersion().isOlderThan(MCVersion.v1_14)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
             throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
         }
     }

@@ -164,4 +164,5 @@ public abstract class BiomeLayer {
         int i = this.nextInt(4);
         return i == 0 ? a : i == 1 ? b : i == 2 ? c : d;
     }
+
 }
