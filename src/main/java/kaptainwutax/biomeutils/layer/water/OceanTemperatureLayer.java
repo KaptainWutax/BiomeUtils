@@ -10,8 +10,8 @@ public class OceanTemperatureLayer extends BiomeLayer {
 
 	private final PerlinNoiseSampler perlin;
 
-	public OceanTemperatureLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
-		super(version, worldSeed, salt, parent);
+	public OceanTemperatureLayer(MCVersion version, long worldSeed, long salt) {
+		super(version, worldSeed, salt);
 		this.perlin = new PerlinNoiseSampler(new JRand(worldSeed));
 	}
 
@@ -77,6 +77,11 @@ public class OceanTemperatureLayer extends BiomeLayer {
 
 			return j;
 		}
+	}
+
+	@Override
+	public int getScale() {
+		return this.scale == -1 ? this.scale = 256 : this.scale;
 	}
 
 }

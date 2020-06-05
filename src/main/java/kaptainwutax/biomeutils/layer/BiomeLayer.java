@@ -1,8 +1,5 @@
 package kaptainwutax.biomeutils.layer;
 
-import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
-import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
-import kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.prng.SeedMixer;
 
@@ -10,16 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BiomeLayer {
-    public static int scaleCounter = 1;
-    public static int oceanScaleCounter = -100;
-    public static int layerIdCounter = 0;
-
     private final MCVersion version;
     private final BiomeLayer[] parents;
     private final long layerSeed;
     private long localSeed;
 
-    protected int scale;
+    protected int scale = -1;
     protected int layerId;
 
     private Map<Long, Integer> cache = new HashMap<>();
@@ -28,7 +21,6 @@ public abstract class BiomeLayer {
         this.version = version;
         this.layerSeed = getLayerSeed(worldSeed, salt);
         this.parents = parents;
-        setScaleAndId();
     }
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt) {
@@ -37,6 +29,14 @@ public abstract class BiomeLayer {
 
     public MCVersion getVersion() {
         return this.version;
+    }
+
+    public int getLayerId() {
+        return this.layerId;
+    }
+
+    public int getScale() {
+        return this.scale == -1 ? this.scale = this.getParent().getScale() : this.scale;
     }
 
     public boolean hasParent() {
@@ -94,56 +94,6 @@ public abstract class BiomeLayer {
 
     public static long getLocalSeed(long worldSeed, long salt, int x, int z) {
         return getLocalSeed(getLayerSeed(worldSeed, salt), x, z);
-    }
-
-    public int getLayerId() {
-        return this.layerId;
-    }
-
-    public int getScaleIndex() {
-        return this.scale;
-    }
-
-    public int getScale() {
-        if(this.scale < 0) {
-            return getPow2(scaleCounter-(scale-oceanScaleCounter)-4);
-        }
-
-        return getPow2(scaleCounter - scale);
-    }
-
-    public int getMaxScale() {
-        return getPow2(scaleCounter);
-    }
-
-    public int getStackSize() {
-        return layerIdCounter;
-    }
-
-    public int getPow2(int power) {
-        int res = 1;
-        for (int i = 0; i < power; i++) {
-            res *= 2;
-        }
-        return res;
-    }
-
-    public void setScaleAndId(){
-        this.layerId = layerIdCounter;
-        layerIdCounter++;
-        if (this.getParent() == null) {
-            this.scale = (this instanceof OceanTemperatureLayer)?-100: 0;
-
-            if(this.isMergingLayer()) {
-                for (BiomeLayer biomeLayer : this.getParents()) {
-                    this.scale = Math.max(biomeLayer.getScaleIndex(), this.scale);
-                }
-            }
-        } else {
-            this.scale = (this instanceof VoronoiLayer)?this.getParent().getScaleIndex()+2: (this instanceof ScaleLayer) ? this.getParent().getScaleIndex() + 1 : this.getParent().getScaleIndex();
-        }
-        oceanScaleCounter=Math.min(oceanScaleCounter,scale);
-        scaleCounter = Math.max(scaleCounter, scale);
     }
 
     public void setSeed(int x, int z) {

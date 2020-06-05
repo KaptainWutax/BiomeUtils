@@ -17,4 +17,9 @@ public class ContinentLayer extends BiomeLayer {
         return this.nextInt(10) == 0 ? Biome.PLAINS.getId() : Biome.OCEAN.getId();
     }
 
+    @Override
+    public int getScale() {
+        return this.scale == -1 ? 4096 : this.scale;
+    }
+
 }

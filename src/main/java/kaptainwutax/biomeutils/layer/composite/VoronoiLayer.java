@@ -79,4 +79,9 @@ public class VoronoiLayer extends BiomeLayer {
 		return d * d;
 	}
 
+	@Override
+	public int getScale() {
+		return this.scale == -1 ? this.scale = this.getParent().getScale() >> 2 : this.scale;
+	}
+
 }
