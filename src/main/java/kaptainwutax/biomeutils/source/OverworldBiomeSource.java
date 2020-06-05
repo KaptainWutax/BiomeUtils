@@ -17,7 +17,6 @@ import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.util.UnsupportedVersion;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiFunction;
 
 public class OverworldBiomeSource extends BiomeSource {
@@ -34,7 +33,7 @@ public class OverworldBiomeSource extends BiomeSource {
     public final int biomeSize;
     public final int riverSize;
 
-    public final List<BiomeLayer> layers = new ArrayList<>();
+    public final LayerStack<BiomeLayer> layers = new LayerStack<>();
 
     public OverworldBiomeSource(MCVersion version, long worldSeed) {
         this(version, worldSeed, 4, 4);
@@ -86,11 +85,11 @@ public class OverworldBiomeSource extends BiomeSource {
         // new biomes chain
         this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
 
-        if(!this.getVersion().isOlderThan(MCVersion.v1_14)) {
+        if (!this.getVersion().isOlderThan(MCVersion.v1_14)) {
             this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));
         }
 
-       this.biomes = this.stack(1000L, NORMAL_SCALE, this.biomes, 2);
+        this.biomes = this.stack(1000L, NORMAL_SCALE, this.biomes, 2);
         this.layers.add(this.biomes = new EaseEdgeLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes));
 
         // noise generation for variant and river
@@ -102,7 +101,7 @@ public class OverworldBiomeSource extends BiomeSource {
         this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
         for (int i = 0; i < this.biomeSize; i++) {
             this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
-            if (i == 0)this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
+            if (i == 0) this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
 
             if (i == 1 || this.biomeSize == 1) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
@@ -125,6 +124,8 @@ public class OverworldBiomeSource extends BiomeSource {
         // mixing of the two firsts stacks with the ocean chain
         this.layers.add(this.full = new OceanTemperatureLayer.Apply(this.getVersion(), this.getWorldSeed(), 100L, this.full, this.ocean));
         this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full));
+
+        this.layers.setScales();
         return this;
     }
 
@@ -134,6 +135,31 @@ public class OverworldBiomeSource extends BiomeSource {
         }
 
         return parent;
+    }
+
+    public static class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
+        protected int layerIdCounter = 0;
+
+        @Override
+        public boolean add(T layer) {
+            layer.setLayerId(layerIdCounter++);
+            return super.add(layer);
+        }
+
+        public void setScales() {
+            setRecursiveScale(this.get(this.size() - 1), 1);
+        }
+
+        public void setRecursiveScale(BiomeLayer last, int scale) {
+            if (last != null) {
+                int max = 0;
+                for (BiomeLayer biomeLayer : last.getParents()) {
+                    setRecursiveScale(biomeLayer, scale << ((last instanceof VoronoiLayer) ? 2 : (last instanceof ScaleLayer) ? 1 : 0));
+                    max = Math.max(max, scale);
+                }
+                last.setScale(max);
+            }
+        }
     }
 
 }

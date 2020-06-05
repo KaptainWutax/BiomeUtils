@@ -13,6 +13,7 @@ public abstract class BiomeLayer {
     private long localSeed;
 
     protected int scale = -1;
+    protected int layerId = -1;
 
     private Map<Long, Integer> cache = new HashMap<>();
 
@@ -30,12 +31,24 @@ public abstract class BiomeLayer {
         return this.version;
     }
 
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public void setLayerId(int layerId) {
+        this.layerId = layerId;
+    }
+
     public int getScale() {
-        return this.scale == -1 ? this.scale = this.getParent().getScale() : this.scale;
+        return this.scale;
     }
 
     public boolean hasParent() {
         return this.parents.length > 0;
+    }
+
+    public int getLayerId() {
+        return layerId;
     }
 
     public BiomeLayer getParent() {
