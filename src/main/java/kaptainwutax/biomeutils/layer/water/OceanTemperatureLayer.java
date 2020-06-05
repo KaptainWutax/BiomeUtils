@@ -79,9 +79,4 @@ public class OceanTemperatureLayer extends BiomeLayer {
 		}
 	}
 
-	@Override
-	public int getScale() {
-		return this.scale == -1 ? this.scale = 256 : this.scale;
-	}
-
 }

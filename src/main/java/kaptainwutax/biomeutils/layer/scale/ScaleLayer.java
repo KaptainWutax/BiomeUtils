@@ -53,11 +53,6 @@ public class ScaleLayer extends BiomeLayer {
         return ret;
     }
 
-    @Override
-    public int getScale() {
-        return this.scale == -1 ? this.scale = this.getParent().getScale() >> 1 : this.scale;
-    }
-
     public enum Type {
         NORMAL, FUZZY
     }
