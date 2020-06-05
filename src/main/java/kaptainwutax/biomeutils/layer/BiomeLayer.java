@@ -13,7 +13,6 @@ public abstract class BiomeLayer {
     private long localSeed;
 
     protected int scale = -1;
-    protected int layerId;
 
     private Map<Long, Integer> cache = new HashMap<>();
 
@@ -29,10 +28,6 @@ public abstract class BiomeLayer {
 
     public MCVersion getVersion() {
         return this.version;
-    }
-
-    public int getLayerId() {
-        return this.layerId;
     }
 
     public int getScale() {
