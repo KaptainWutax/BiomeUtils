@@ -1,7 +1,7 @@
 package kaptainwutax.biomeutils.layer;
 
 import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.prng.SeedMixer;
+import kaptainwutax.seedutils.mc.seed.SeedMixer;
 
 import java.util.HashMap;
 import java.util.Map;

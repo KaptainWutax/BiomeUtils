@@ -104,11 +104,13 @@ public class Biome {
     }
 
     public static boolean applyAll(Function<Integer, Boolean> function, int... ints) {
-        boolean res = true;
-        for (int i : ints) {
-            res = res && function.apply(i);
+        for(int i : ints) {
+            if(!function.apply(i)) {
+                return false;
+            }
         }
-        return res;
+
+        return true;
     }
 
     public static int equalsOrDefault(int comparator, int comparable, int fallback) {
@@ -175,9 +177,14 @@ public class Biome {
         Precipitation(String name) {
             this.name = name;
         }
+
         public String getName() {
             return this.name;
         }
+    }
+
+    public static void main(String[] args) {
+        //x(ax + b) + c
     }
 
     public static final Biome OCEAN = new Biome(0, "ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);

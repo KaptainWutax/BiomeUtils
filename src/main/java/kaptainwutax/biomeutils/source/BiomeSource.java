@@ -2,8 +2,11 @@ package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.seedutils.mc.pos.BPos;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -89,6 +92,46 @@ public abstract class BiomeSource {
 		}
 
 		return true;
+	}
+
+	public BPos locateBiome(int x, int y, int z, int radius, List<Biome> list, Random random) {
+		return this.method_24385(x, y, z, radius, 1, list, random, false);
+	}
+
+	public BPos method_24385(int centerX, int centerY, int centerZ, int radius, int increment, List<Biome> list, Random random, boolean checkByLayer) {
+		centerX >>= 2; centerZ >>= 2; centerY >>= 2; radius >>= 2;
+		BPos blockPos = null;
+		int r = 0;
+		int s = checkByLayer ? 0 : radius;
+
+		for(int depth = s; depth <= radius; depth += increment) {
+			for(int oz = -depth; oz <= depth; oz += increment) {
+				boolean isZEdge = Math.abs(oz) == depth;
+
+				for(int ox = -depth; ox <= depth; ox += increment) {
+					if(checkByLayer) {
+						boolean isXEdge = Math.abs(ox) == depth;
+						if(!isXEdge && !isZEdge)continue;
+					}
+
+					int x = centerX + ox;
+					int z = centerZ + oz;
+
+					if(list.contains(this.getBiomeForNoiseGen(x, centerY, z))) {
+						if(blockPos == null || random.nextInt(r + 1) == 0) {
+							blockPos = new BPos(x << 2, centerY, z << 2);
+							if (checkByLayer) {
+								return blockPos;
+							}
+						}
+
+						++r;
+					}
+				}
+			}
+		}
+
+		return blockPos;
 	}
 
 	public interface BiomeSupplier {

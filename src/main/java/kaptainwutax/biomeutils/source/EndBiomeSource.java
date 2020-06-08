@@ -2,9 +2,9 @@ package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.noise.SimplexNoiseSampler;
+import kaptainwutax.seedutils.lcg.LCG;
+import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.prng.lcg.LCG;
-import kaptainwutax.seedutils.prng.lcg.java.JRand;
 
 public class EndBiomeSource extends BiomeSource {
 

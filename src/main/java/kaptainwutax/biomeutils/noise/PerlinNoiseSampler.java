@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.noise;
 
-import kaptainwutax.seedutils.prng.lcg.java.JRand;
+import kaptainwutax.seedutils.lcg.rand.JRand;
 
 public class PerlinNoiseSampler {
 
