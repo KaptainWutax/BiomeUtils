@@ -6,11 +6,12 @@ import kaptainwutax.seedutils.mc.MCVersion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IceSpikesTest {
 
 	public static void main(String[] args) {
-		long min = 100_000_000L, max = min + 100_000L;
+		long min = 200_000_000L, max = min + 200_000L;
 
 		List<Long> naiveSeeds = new ArrayList<>();
 		long start = System.nanoTime();
@@ -18,7 +19,7 @@ public class IceSpikesTest {
 		for(long seed = min; seed < max; seed++) {
 			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed).build();
 
-			if(layers.getBiome(0,0,0) == Biome.ICE_SPIKES) {
+			if(layers.getBiome(200,0,200) == Biome.ICE_SPIKES) {
 				naiveSeeds.add(seed);
 			}
 		}
@@ -28,7 +29,7 @@ public class IceSpikesTest {
 		List<Long> fastSeeds = new ArrayList<>();
 		start = System.nanoTime();
 
-		BiomeDevice device = new BiomeDevice().restrict(IceSpikes.at(0, 0));
+		BiomeDevice device = new BiomeDevice().restrict(IceSpikes.at(200, 200));
 		device.findSeeds(min, max).forEach(fastSeeds::add);
 
 		System.out.println("Fast took " + (double)(System.nanoTime() - start) / 1_000_000_000.0D + " seconds.");
@@ -41,6 +42,9 @@ public class IceSpikesTest {
 			System.out.println("Fast list has " + fastSeeds.size() + " elements.");
 			System.out.println(naiveSeeds);
 			System.out.println(fastSeeds);
+
+			List<Long> difference = naiveSeeds.stream().filter(s -> !fastSeeds.contains(s)).collect(Collectors.toList());
+			System.out.println("The difference is: " + difference);
 		}
 	}
 

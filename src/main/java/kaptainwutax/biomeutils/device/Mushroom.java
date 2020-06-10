@@ -15,7 +15,7 @@ public class Mushroom extends BiomeRestriction {
 	protected Mushroom(BPos min, BPos max) {
 		this.min = min;
 		this.max = max;
-		this.minRegion = this.getRegion(min.getX(), min.getZ(), 256).add(0, 0);
+		this.minRegion = this.getRegion(min.getX(), min.getZ(), 256).add(-1, -1);
 		this.maxRegion = this.getRegion(max.getX(), max.getZ(), 256).add(1, 1);
 	}
 

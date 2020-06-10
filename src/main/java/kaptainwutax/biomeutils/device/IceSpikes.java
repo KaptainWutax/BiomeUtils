@@ -17,9 +17,9 @@ public class IceSpikes extends BiomeRestriction {
 	protected IceSpikes(BPos min, BPos max) {
 		this.min = min;
 		this.max = max;
-		this.minRegionSmall = this.getRegion(min.getX(), min.getZ(), 256);
+		this.minRegionSmall = this.getRegion(min.getX(), min.getZ(), 256).add(-1, -1);
 		this.maxRegionSmall = this.getRegion(max.getX(), max.getZ(), 256).add(1, 1);
-		this.minRegionLarge = this.getRegion(min.getX(), min.getZ(), 1024);
+		this.minRegionLarge = this.getRegion(min.getX(), min.getZ(), 1024).add(-1, -1);
 		this.maxRegionLarge = this.getRegion(max.getX(), max.getZ(), 1024).add(1, 1);
 	}
 
@@ -33,10 +33,11 @@ public class IceSpikes extends BiomeRestriction {
 
 		boolean valid = false;
 
+		/*
 		for(int regionX = this.minRegionLarge.getX(); regionX <= this.maxRegionLarge.getX(); regionX++) {
 			for(int regionZ = this.minRegionLarge.getZ(); regionZ <= this.maxRegionLarge.getZ(); regionZ++) {
 				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 2L);
-				localSeed = BiomeLayer.getLocalSeed(layerSeed, 0, 0);
+				localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
 				if((int)Math.floorMod(localSeed >> 24, 6) != 0)continue;
 				valid = true;
 				break;
@@ -47,16 +48,17 @@ public class IceSpikes extends BiomeRestriction {
 
 		if(!valid)return false;
 		valid = false;
+		*/
 
 		for(int regionX = this.minRegionSmall.getX(); regionX <= this.maxRegionSmall.getX(); regionX++) {
 			for(int regionZ = this.minRegionSmall.getZ(); regionZ <= this.maxRegionSmall.getZ(); regionZ++) {
 				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 200L);
-				localSeed = BiomeLayer.getLocalSeed(layerSeed, 0, 0);
+				localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
 				if((int)Math.floorMod(localSeed >> 24, 4) == 3)continue;
 
 				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 100L);
-				localSeed = BiomeLayer.getLocalSeed(layerSeed, 0, 0);
-				if(((int)Math.floorMod(localSeed >> 24, 299999) % 29) != 1)continue;
+				localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
+				if((int)Math.floorMod(localSeed >> 24, 299999) % 29 != 1)continue;
 				valid = true;
 				break;
 			}

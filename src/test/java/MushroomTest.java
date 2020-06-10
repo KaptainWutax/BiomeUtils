@@ -10,7 +10,7 @@ import java.util.List;
 public class MushroomTest {
 
 	public static void main(String[] args) {
-		long min = 100_000_000L, max = min + 100_000L;
+		long min = 200_000_000L, max = min + 200_000L;
 
 		List<Long> naiveSeeds = new ArrayList<>();
 		long start = System.nanoTime();
@@ -18,7 +18,7 @@ public class MushroomTest {
 		for(long seed = min; seed < max; seed++) {
 			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed).build();
 
-			if(layers.getBiome(0,0,0).getCategory() == Biome.Category.MUSHROOM) {
+			if(layers.getBiome(200,0,200).getCategory() == Biome.Category.MUSHROOM) {
 				naiveSeeds.add(seed);
 			}
 		}
@@ -28,7 +28,7 @@ public class MushroomTest {
 		List<Long> fastSeeds = new ArrayList<>();
 		start = System.nanoTime();
 
-		BiomeDevice device = new BiomeDevice().restrict(Mushroom.at(0, 0));
+		BiomeDevice device = new BiomeDevice().restrict(Mushroom.at(200, 200));
 		device.findSeeds(min, max).forEach(fastSeeds::add);
 
 		System.out.println("Fast took " + (double)(System.nanoTime() - start) / 1_000_000_000.0D + " seconds.");
