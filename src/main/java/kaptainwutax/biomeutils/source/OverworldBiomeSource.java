@@ -63,9 +63,12 @@ public class OverworldBiomeSource extends BiomeSource {
         BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
 
         // first legacy stack
+        //4096
         this.layers.add(this.base = new ContinentLayer(this.getVersion(), this.getWorldSeed(), 1L));
+        //2048
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2000L, ScaleLayer.Type.FUZZY, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 1L, this.base));
+        //1024
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base));
@@ -76,7 +79,9 @@ public class OverworldBiomeSource extends BiomeSource {
         this.layers.add(this.base = new ClimateLayer.Temperate(this.getVersion(), this.getWorldSeed(), 2L, this.base));
         this.layers.add(this.base = new ClimateLayer.Cool(this.getVersion(), this.getWorldSeed(), 2L, this.base));
         this.layers.add(this.base = new ClimateLayer.Special(this.getVersion(), this.getWorldSeed(), 3L, this.base));
+        //512
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2002L, ScaleLayer.Type.NORMAL, this.base));
+        //256
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
         this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));

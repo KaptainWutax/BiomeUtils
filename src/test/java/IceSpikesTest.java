@@ -1,13 +1,12 @@
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.device.BiomeDevice;
-import kaptainwutax.biomeutils.device.Mushroom;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.seedutils.mc.MCVersion;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MushroomTest {
+public class IceSpikesTest {
 
 	public static void main(String[] args) {
 		long min = 100_000_000L, max = min + 100_000L;
@@ -18,7 +17,7 @@ public class MushroomTest {
 		for(long seed = min; seed < max; seed++) {
 			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed).build();
 
-			if(layers.getBiome(0,0,0).getCategory() == Biome.Category.MUSHROOM) {
+			if(layers.getBiome(0,0,0) == Biome.ICE_SPIKES) {
 				naiveSeeds.add(seed);
 			}
 		}
@@ -28,7 +27,7 @@ public class MushroomTest {
 		List<Long> fastSeeds = new ArrayList<>();
 		start = System.nanoTime();
 
-		BiomeDevice device = new BiomeDevice().restrict(Mushroom.at(0, 0));
+		BiomeDevice device = new BiomeDevice().restrict(kaptainwutax.biomeutils.device.IceSpikes.at(0, 0));
 		device.findSeeds(min, max).forEach(fastSeeds::add);
 
 		System.out.println("Fast took " + (double)(System.nanoTime() - start) / 1_000_000_000.0D + " seconds.");
