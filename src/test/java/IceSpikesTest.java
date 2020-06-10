@@ -1,5 +1,6 @@
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.device.BiomeDevice;
+import kaptainwutax.biomeutils.device.IceSpikes;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.seedutils.mc.MCVersion;
 
@@ -27,7 +28,7 @@ public class IceSpikesTest {
 		List<Long> fastSeeds = new ArrayList<>();
 		start = System.nanoTime();
 
-		BiomeDevice device = new BiomeDevice().restrict(kaptainwutax.biomeutils.device.IceSpikes.at(0, 0));
+		BiomeDevice device = new BiomeDevice().restrict(IceSpikes.at(0, 0));
 		device.findSeeds(min, max).forEach(fastSeeds::add);
 
 		System.out.println("Fast took " + (double)(System.nanoTime() - start) / 1_000_000_000.0D + " seconds.");

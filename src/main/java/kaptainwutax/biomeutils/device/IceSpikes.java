@@ -17,10 +17,10 @@ public class IceSpikes extends BiomeRestriction {
 	protected IceSpikes(BPos min, BPos max) {
 		this.min = min;
 		this.max = max;
-		this.minRegionSmall = this.getRegion(min.getX(), min.getZ(), 256).add(-10, -10);
-		this.maxRegionSmall = this.getRegion(max.getX(), max.getZ(), 256).add(10, 10);
-		this.minRegionLarge = this.getRegion(min.getX(), min.getZ(), 1024).add(-10, -10);
-		this.maxRegionLarge = this.getRegion(max.getX(), max.getZ(), 1024).add(10, 10);
+		this.minRegionSmall = this.getRegion(min.getX(), min.getZ(), 256);
+		this.maxRegionSmall = this.getRegion(max.getX(), max.getZ(), 256).add(1, 1);
+		this.minRegionLarge = this.getRegion(min.getX(), min.getZ(), 1024);
+		this.maxRegionLarge = this.getRegion(max.getX(), max.getZ(), 1024).add(1, 1);
 	}
 
 	public static IceSpikes at(int blockX, int blockZ) {
@@ -33,7 +33,7 @@ public class IceSpikes extends BiomeRestriction {
 
 		boolean valid = false;
 
-		for(int regionX = this.minRegionLarge.getX(); regionX <= this.maxRegionLarge.getX() && !valid; regionX++) {
+		for(int regionX = this.minRegionLarge.getX(); regionX <= this.maxRegionLarge.getX(); regionX++) {
 			for(int regionZ = this.minRegionLarge.getZ(); regionZ <= this.maxRegionLarge.getZ(); regionZ++) {
 				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 2L);
 				localSeed = BiomeLayer.getLocalSeed(layerSeed, 0, 0);
@@ -41,12 +41,14 @@ public class IceSpikes extends BiomeRestriction {
 				valid = true;
 				break;
 			}
+
+			if(valid)break;
 		}
 
 		if(!valid)return false;
 		valid = false;
 
-		for(int regionX = this.minRegionSmall.getX(); regionX <= this.maxRegionSmall.getX() && !valid; regionX++) {
+		for(int regionX = this.minRegionSmall.getX(); regionX <= this.maxRegionSmall.getX(); regionX++) {
 			for(int regionZ = this.minRegionSmall.getZ(); regionZ <= this.maxRegionSmall.getZ(); regionZ++) {
 				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 200L);
 				localSeed = BiomeLayer.getLocalSeed(layerSeed, 0, 0);
@@ -58,6 +60,8 @@ public class IceSpikes extends BiomeRestriction {
 				valid = true;
 				break;
 			}
+
+			if(valid)break;
 		}
 
 		if(!valid)return false;
