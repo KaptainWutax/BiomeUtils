@@ -20,7 +20,7 @@ public class BiomeDevice {
 		return LongStream.range(min, max).filter(this::testSeed);
 	}
 
-	private boolean testSeed(long worldSeed) {
+	public boolean testSeed(long worldSeed) {
 		for(BiomeRestriction call: this.restrictions) {
 			if(!call.testSeed(worldSeed))return false;
 		}

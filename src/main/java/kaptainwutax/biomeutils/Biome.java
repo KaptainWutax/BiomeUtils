@@ -52,13 +52,15 @@ public class Biome {
     }
 
     public Temperature getTemperatureGroup() {
-        if (this.category == Biome.Category.OCEAN) {
+        if(this.category == Biome.Category.OCEAN) {
             return Temperature.OCEAN;
-        } else if (this.getTemperature() < 0.2F) {
+        } else if(this.getTemperature() < 0.2F) {
             return Temperature.COLD;
+        } else if(this.getTemperature() < 1.0F) {
+            return Temperature.MEDIUM;
         }
 
-        return this.getTemperature() < 1.0F ? Temperature.MEDIUM : Temperature.WARM;
+        return Temperature.WARM;
     }
 
     public boolean hasParent() {
@@ -78,11 +80,16 @@ public class Biome {
     }
 
     public static boolean isShallowOcean(int id) {
-        return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId() || id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId();
+        return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
+                || id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId();
     }
 
     public static boolean isOcean(int id) {
-        return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId() || id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId() || id == Biome.DEEP_WARM_OCEAN.getId() || id == Biome.DEEP_LUKEWARM_OCEAN.getId() || id == Biome.DEEP_OCEAN.getId() || id == Biome.DEEP_COLD_OCEAN.getId() || id == Biome.DEEP_FROZEN_OCEAN.getId();
+        return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
+                || id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId()
+                || id == Biome.DEEP_WARM_OCEAN.getId() || id == Biome.DEEP_LUKEWARM_OCEAN.getId()
+                || id == Biome.DEEP_OCEAN.getId() || id == Biome.DEEP_COLD_OCEAN.getId()
+                || id == Biome.DEEP_FROZEN_OCEAN.getId();
     }
 
     public static boolean areSimilar(int id, Biome b2) {
@@ -181,10 +188,6 @@ public class Biome {
         public String getName() {
             return this.name;
         }
-    }
-
-    public static void main(String[] args) {
-        //x(ax + b) + c
     }
 
     public static final Biome OCEAN = new Biome(0, "ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);

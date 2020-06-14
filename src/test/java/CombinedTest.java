@@ -1,26 +1,27 @@
-import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.device.BiomeDevice;
+import kaptainwutax.biomeutils.device.IceSpikes;
 import kaptainwutax.biomeutils.device.Mushroom;
-import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.seedutils.mc.MCVersion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class MushroomTest {
+public class CombinedTest {
 
 	public static void main(String[] args) {
-		long min = 500_000_000L, max = min + 200_000L;
+		long min = 0L, max = min + 2_000_000L;
 
 		List<Long> naiveSeeds = new ArrayList<>();
+
+
+		BiomeDevice device = new BiomeDevice()
+				.restrict(Mushroom.around(0, 0, 100))
+				.restrict(IceSpikes.around(0, 0, 100));
+
 		long start = System.nanoTime();
 
 		for(long seed = min; seed < max; seed++) {
-			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed).build();
-
-			if(layers.getBiome(-4000,0,-4000).getCategory() == Biome.Category.MUSHROOM) {
-				naiveSeeds.add(seed);
-			}
+			if(device.testSeed(seed))System.out.println(seed);
 		}
 
 		System.out.println("Naive took " + (double)(System.nanoTime() - start) / 1_000_000_000.0D + " seconds.");
@@ -28,8 +29,7 @@ public class MushroomTest {
 		List<Long> fastSeeds = new ArrayList<>();
 		start = System.nanoTime();
 
-		BiomeDevice device = new BiomeDevice().restrict(Mushroom.at(-4000, -4000));
-		device.findSeeds(min, max).forEach(fastSeeds::add);
+		device.findSeeds(min, max).forEach(System.out::println);
 
 		System.out.println("Fast took " + (double)(System.nanoTime() - start) / 1_000_000_000.0D + " seconds.");
 
@@ -41,6 +41,9 @@ public class MushroomTest {
 			System.out.println("Fast list has " + fastSeeds.size() + " elements.");
 			System.out.println(naiveSeeds);
 			System.out.println(fastSeeds);
+
+			List<Long> difference = naiveSeeds.stream().filter(s -> !fastSeeds.contains(s)).collect(Collectors.toList());
+			System.out.println("The difference is: " + difference);
 		}
 	}
 

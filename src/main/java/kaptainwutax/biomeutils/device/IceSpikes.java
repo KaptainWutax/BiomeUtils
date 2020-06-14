@@ -27,47 +27,58 @@ public class IceSpikes extends BiomeRestriction {
 		return new IceSpikes(new BPos(blockX, 0, blockZ), new BPos(blockX, 0, blockZ));
 	}
 
+	public static IceSpikes around(int blockX, int blockZ, int radius) {
+		return new IceSpikes(
+				new BPos(blockX - radius, 0, blockZ + radius),
+				new BPos(blockX + radius, 0, blockZ + radius)
+		);
+	}
+
 	@Override
 	public boolean testSeed(long worldSeed) {
-		long layerSeed, localSeed;
+		if(!this.testNoise(worldSeed))return false;
+		if(!this.testCold(worldSeed))return false;
+		if(!this.testBase(worldSeed))return false;
+		return true;
+	}
 
-		boolean valid = false;
+	public boolean testCold(long worldSeed) {
+		long layerSeed = BiomeLayer.getLayerSeed(worldSeed, 2L);
 
-		/*
 		for(int regionX = this.minRegionLarge.getX(); regionX <= this.maxRegionLarge.getX(); regionX++) {
 			for(int regionZ = this.minRegionLarge.getZ(); regionZ <= this.maxRegionLarge.getZ(); regionZ++) {
-				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 2L);
-				localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
-				if((int)Math.floorMod(localSeed >> 24, 6) != 0)continue;
-				valid = true;
-				break;
+				long localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
+				if((int)Math.floorMod(localSeed >> 24, 6) == 0)return true;
 			}
-
-			if(valid)break;
 		}
 
-		if(!valid)return false;
-		valid = false;
-		*/
+		return false;
+	}
+
+	public boolean testBase(long worldSeed) {
+		long layerSeed = BiomeLayer.getLayerSeed(worldSeed, 200L);
 
 		for(int regionX = this.minRegionSmall.getX(); regionX <= this.maxRegionSmall.getX(); regionX++) {
 			for(int regionZ = this.minRegionSmall.getZ(); regionZ <= this.maxRegionSmall.getZ(); regionZ++) {
-				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 200L);
-				localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
-				if((int)Math.floorMod(localSeed >> 24, 4) == 3)continue;
-
-				layerSeed = BiomeLayer.getLayerSeed(worldSeed, 100L);
-				localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
-				if((int)Math.floorMod(localSeed >> 24, 299999) % 29 != 1)continue;
-				valid = true;
-				break;
+				long localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
+				if((int)Math.floorMod(localSeed >> 24, 4) != 3)return true;
 			}
-
-			if(valid)break;
 		}
 
-		if(!valid)return false;
-		return true;
+		return false;
+	}
+
+	public boolean testNoise(long worldSeed) {
+		long layerSeed = BiomeLayer.getLayerSeed(worldSeed, 100L);
+
+		for(int regionX = this.minRegionSmall.getX(); regionX <= this.maxRegionSmall.getX(); regionX++) {
+			for(int regionZ = this.minRegionSmall.getZ(); regionZ <= this.maxRegionSmall.getZ(); regionZ++) {
+				long localSeed = BiomeLayer.getLocalSeed(layerSeed, regionX, regionZ);
+				if((int)Math.floorMod(localSeed >> 24, 299999) % 29 == 1)return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

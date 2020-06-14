@@ -23,6 +23,13 @@ public class Mushroom extends BiomeRestriction {
 		return new Mushroom(new BPos(blockX, 0, blockZ), new BPos(blockX, 0, blockZ));
 	}
 
+	public static Mushroom around(int blockX, int blockZ, int radius) {
+		return new Mushroom(
+				new BPos(blockX - radius, 0, blockZ + radius),
+				new BPos(blockX + radius, 0, blockZ + radius)
+		);
+	}
+
 	@Override
 	public boolean testSeed(long worldSeed) {
 		long layerSeed = BiomeLayer.getLayerSeed(worldSeed, 5L);
