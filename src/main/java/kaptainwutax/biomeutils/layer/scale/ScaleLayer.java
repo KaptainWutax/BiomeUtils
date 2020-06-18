@@ -38,11 +38,13 @@ public class ScaleLayer extends BiomeLayer {
         return this.sample(i, n, l, p);
     }
 
-    protected int sample(int center, int e, int s, int se) {
+    public int sample(int center, int e, int s, int se) {
         int ret = this.choose(center, e, s, se);
+
         if (this.type == Type.FUZZY) {
             return ret;
         }
+
         if (e == s && e == se) return e;
         if (center == e && (center == se || s != se)) return center;
         if (center == s && (center == se || e != se)) return center;

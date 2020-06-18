@@ -104,14 +104,19 @@ public class OverworldBiomeSource extends BiomeSource {
         // hills and variants chain
         this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
         this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
-        for (int i = 0; i < this.biomeSize; i++) {
-            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
-            if (i == 0) this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
 
-            if (i == 1 || this.biomeSize == 1) {
+        for(int i = 0; i < this.biomeSize; i++) {
+            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
+
+            if(i == 0) {
+                this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
+            }
+
+            if(i == 1 || this.biomeSize == 1) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
             }
         }
+
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
         // river chain

@@ -10,8 +10,8 @@ public class VoronoiLayer extends BiomeLayer {
     public final long seed;
 
     public VoronoiLayer(MCVersion version, long worldSeed, BiomeLayer parent) {
-        super(version, worldSeed, version.isOlderThan(MCVersion.v1_15) ? 0L : 10L, parent);
-        this.seed = version.isOlderThan(MCVersion.v1_15) ? WorldSeed.toHash(worldSeed) : worldSeed;
+        super(version, worldSeed, version.isOlderThan(MCVersion.v1_15) ? 10L : 0L, parent);
+        this.seed = version.isOlderThan(MCVersion.v1_15) ? worldSeed : WorldSeed.toHash(worldSeed);
     }
 
     @Override

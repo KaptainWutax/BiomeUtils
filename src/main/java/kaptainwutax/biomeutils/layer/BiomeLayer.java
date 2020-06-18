@@ -9,8 +9,8 @@ import java.util.Map;
 public abstract class BiomeLayer {
     private final MCVersion version;
     private final BiomeLayer[] parents;
-    private final long layerSeed;
-    private long localSeed;
+    public final long layerSeed;
+    public long localSeed;
 
     protected int scale = -1;
     protected int layerId = -1;

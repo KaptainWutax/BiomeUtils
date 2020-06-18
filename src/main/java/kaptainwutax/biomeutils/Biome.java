@@ -92,6 +92,11 @@ public class Biome {
                 || id == Biome.DEEP_FROZEN_OCEAN.getId();
     }
 
+
+    public static boolean isRiver(int id) {
+        return id == Biome.RIVER.getId() || id == Biome.FROZEN_RIVER.getId();
+    }
+
     public static boolean areSimilar(int id, Biome b2) {
         if (b2 == null) return false;
         if (id == b2.getId()) return true;
