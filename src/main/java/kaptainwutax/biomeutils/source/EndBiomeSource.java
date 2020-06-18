@@ -1,6 +1,8 @@
 package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.noise.SimplexNoiseSampler;
 import kaptainwutax.seedutils.lcg.LCG;
 import kaptainwutax.seedutils.lcg.rand.JRand;
@@ -11,35 +13,31 @@ public class EndBiomeSource extends BiomeSource {
 	public static final LCG SIMPLEX_SKIP = LCG.JAVA.combine(17292);
 	public final SimplexNoiseSampler simplex;
 
+	public EndBiomeSource.Layer full;
+	public VoronoiLayer voronoi;
+
 	public EndBiomeSource(MCVersion version, long worldSeed) {
 		super(version, worldSeed);
 		JRand rand = new JRand(worldSeed);
 		rand.advance(SIMPLEX_SKIP);
 		this.simplex = new SimplexNoiseSampler(rand);
+		this.build();
 	}
 
 	@Override
-	public Biome getBiome(int blockX, int blockY, int blockZ) {
-		int i = blockX >> 2;
-		int j = blockZ >> 2;
+	protected void build() {
+		this.full = new EndBiomeSource.Layer(this.getVersion());
+		this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full);
+	}
 
-		if ((long)i * (long)i + (long)j * (long)j <= 4096L) {
-			return Biome.THE_END;
-		}
-
-		float f = getNoiseAt(this.simplex, i * 2 + 1, j * 2 + 1);
-		if (f > 40.0F) {
-			return Biome.END_HIGHLANDS;
-		} else if (f >= 0.0F) {
-			return Biome.END_MIDLANDS;
-		} else {
-			return f < -20.0F ? Biome.SMALL_END_ISLANDS : Biome.END_BARRENS;
-		}
+	@Override
+	public Biome getBiome(int x, int y, int z) {
+		return Biome.REGISTRY.get(this.voronoi.get(x >> 2, z >> 2));
 	}
 
 	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z) {
-		return this.getBiome(x, y, z);
+		return Biome.REGISTRY.get(this.full.get(x >> 4, z >> 4));
 	}
 
 	public static float getNoiseAt(SimplexNoiseSampler simplexNoiseSampler, int i, int j) {
@@ -52,8 +50,8 @@ public class EndBiomeSource extends BiomeSource {
 
 		for(int o = -12; o <= 12; ++o) {
 			for(int p = -12; p <= 12; ++p) {
-				long q = (long)(k + o);
-				long r = (long)(l + p);
+				long q = k + o;
+				long r = l + p;
 				if (q * q + r * r > 4096L && simplexNoiseSampler.sample((double)q, (double)r) < -0.8999999761581421D) {
 					float g = (Math.abs((float)q) * 3439.0F + Math.abs((float)r) * 147.0F) % 13.0F + 9.0F;
 					float h = (float)(m - o * 2);
@@ -71,6 +69,30 @@ public class EndBiomeSource extends BiomeSource {
 	public static float clamp(float value, float min, float max) {
 		if(value < min)return min;
 		return Math.min(value, max);
+	}
+
+	public class Layer extends BiomeLayer {
+		public Layer(MCVersion version) {
+			super(version, -1, -1, (BiomeLayer)null);
+		}
+
+		@Override
+		public int sample(int x, int z) {
+			System.out.println(x + ", " + z);
+			System.out.println((long)x * (long)x + (long)z * (long)z);
+			if ((long)x * (long)x + (long)z * (long)z <= 4096L) {
+				return Biome.THE_END.getId();
+			}
+
+			float f = getNoiseAt(EndBiomeSource.this.simplex, x * 2 + 1, z * 2 + 1);
+			if (f > 40.0F) {
+				return Biome.END_HIGHLANDS.getId();
+			} else if (f >= 0.0F) {
+				return Biome.END_MIDLANDS.getId();
+			} else {
+				return f < -20.0F ? Biome.SMALL_END_ISLANDS.getId() : Biome.END_BARRENS.getId();
+			}
+		}
 	}
 
 }

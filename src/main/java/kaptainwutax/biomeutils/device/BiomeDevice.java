@@ -25,7 +25,7 @@ public class BiomeDevice {
 			if(!call.testSeed(worldSeed))return false;
 		}
 
-		OverworldBiomeSource source = new OverworldBiomeSource(MCVersion.v1_15, worldSeed).build();
+		OverworldBiomeSource source = new OverworldBiomeSource(MCVersion.v1_15, worldSeed);
 
 		for(BiomeRestriction call: this.restrictions) {
 			if(!call.testSource(source))return false;

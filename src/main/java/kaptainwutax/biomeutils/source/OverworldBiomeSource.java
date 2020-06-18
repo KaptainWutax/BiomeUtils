@@ -37,29 +37,22 @@ public class OverworldBiomeSource extends BiomeSource {
 
     public OverworldBiomeSource(MCVersion version, long worldSeed) {
         this(version, worldSeed, 4, 4);
-
-        if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
-            throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
-        }
     }
 
     public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
         super(version, worldSeed);
+
+        if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
+            throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
+        }
+
         this.biomeSize = biomeSize;
         this.riverSize = riverSize;
+        this.build();
     }
 
     @Override
-    public Biome getBiome(int x, int y, int z) {
-        return Biome.REGISTRY.get(this.voronoi.get(x, z));
-    }
-
-    @Override
-    public Biome getBiomeForNoiseGen(int x, int y, int z) {
-        return Biome.REGISTRY.get(this.full.get(x, z));
-    }
-
-    public OverworldBiomeSource build() {
+    public void build() {
         BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
 
         // first legacy stack
@@ -136,7 +129,6 @@ public class OverworldBiomeSource extends BiomeSource {
         this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full));
 
         this.layers.setScales();
-        return this;
     }
 
     public BiomeLayer stack(long salt, BiFunction<Long, BiomeLayer, BiomeLayer> layer, BiomeLayer parent, int count) {
@@ -146,6 +138,17 @@ public class OverworldBiomeSource extends BiomeSource {
 
         return parent;
     }
+
+    @Override
+    public Biome getBiome(int x, int y, int z) {
+        return Biome.REGISTRY.get(this.voronoi.get(x, z));
+    }
+
+    @Override
+    public Biome getBiomeForNoiseGen(int x, int y, int z) {
+        return Biome.REGISTRY.get(this.full.get(x, z));
+    }
+
 
     public static class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
         protected int layerIdCounter = 0;

@@ -12,6 +12,13 @@ public class NetherBiomeSource extends BiomeSource {
 		if(!this.getVersion().isOlderThan(MCVersion.v1_16)) {
 			throw new UnsupportedVersion(this.getVersion(), "nether biomes");
 		}
+
+		this.build();
+	}
+
+	@Override
+	protected void build() {
+
 	}
 
 	@Override

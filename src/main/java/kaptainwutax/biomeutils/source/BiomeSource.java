@@ -26,6 +26,8 @@ public abstract class BiomeSource {
 		return this.worldSeed;
 	}
 
+	protected abstract void build();
+
 	public abstract Biome getBiome(int x, int y, int z);
 
 	public abstract Biome getBiomeForNoiseGen(int x, int y, int z);
