@@ -4,6 +4,7 @@ import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.seed.SeedMixer;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class BiomeLayer {
@@ -15,7 +16,7 @@ public abstract class BiomeLayer {
     protected int scale = -1;
     protected int layerId = -1;
 
-    private Map<Long, Integer> cache = new HashMap<>();
+    private Map<Long, Integer> cache = new LinkedHashMap<>();
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
         this.version = version;
@@ -74,6 +75,12 @@ public abstract class BiomeLayer {
         if (r == null) {
             r = this.sample(x, z);
             this.cache.put(v, r);
+
+            //TODO: Quick hack to stop memory leaks.
+            if(this.cache.size() > 512) {
+                this.cache.clear();
+            }
+
             return r;
         }
 
