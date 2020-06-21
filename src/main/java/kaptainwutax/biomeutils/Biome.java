@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils;
 
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
+import kaptainwutax.seedutils.mc.MCVersion;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,9 @@ public class Biome {
     private final Biome parent;
     private Biome child;
 
-    public Biome(int id, String name, Category category, Precipitation precipitation, float temperature, Biome parent) {
+    private final MCVersion version;
+
+    public Biome(MCVersion version, int id, String name, Category category, Precipitation precipitation, float temperature, Biome parent) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -29,6 +32,7 @@ public class Biome {
         this.parent = parent;
         if (this.parent != null) this.parent.child = this;
         REGISTRY.put(this.id, this);
+        this.version = version;
     }
 
     public int getId() {
@@ -49,6 +53,10 @@ public class Biome {
 
     public float getTemperature() {
         return this.temperature;
+    }
+
+    public MCVersion getVersion(){
+        return this.version;
     }
 
     public Temperature getTemperatureGroup() {
@@ -195,84 +203,84 @@ public class Biome {
         }
     }
 
-    public static final Biome OCEAN = new Biome(0, "ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome PLAINS = new Biome(1, "plains", Category.PLAINS, Precipitation.RAIN, 0.8F, null);
-    public static final Biome DESERT = new Biome(2, "desert", Category.DESERT, Precipitation.NONE, 2.0F, null);
-    public static final Biome MOUNTAINS = new Biome(3, "mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, null);
-    public static final Biome FOREST = new Biome(4, "forest", Category.FOREST, Precipitation.RAIN, 0.7F, null);
-    public static final Biome TAIGA = new Biome(5, "taiga", Category.TAIGA, Precipitation.RAIN, 0.25F, null);
-    public static final Biome SWAMP = new Biome(6, "swamp", Category.SWAMP, Precipitation.RAIN, 0.8F, null);
-    public static final Biome RIVER = new Biome(7, "river", Category.RIVER, Precipitation.RAIN, 0.5F, null);
-    public static final Biome NETHER_WASTES = new Biome(8, "nether_wastes", Category.NETHER, Precipitation.NONE, 2.0F, null);
-    public static final Biome THE_END = new Biome(9, "the_end", Category.THE_END, Precipitation.NONE, 0.5F, null);
-    public static final Biome FROZEN_OCEAN = new Biome(10, "frozen_ocean", Category.OCEAN, Precipitation.SNOW, 0.0F, null);
-    public static final Biome FROZEN_RIVER = new Biome(11, "frozen_river", Category.RIVER, Precipitation.SNOW, 0.0F, null);
-    public static final Biome SNOWY_TUNDRA = new Biome(12, "snowy_tundra", Category.ICY, Precipitation.SNOW, 0.0F, null);
-    public static final Biome SNOWY_MOUNTAINS = new Biome(13, "snowy_mountains", Category.ICY, Precipitation.SNOW, 0.0F, null);
-    public static final Biome MUSHROOM_FIELDS = new Biome(14, "mushroom_fields", Category.MUSHROOM, Precipitation.RAIN, 0.9F, null);
-    public static final Biome MUSHROOM_FIELD_SHORE = new Biome(15, "mushroom_field_shore", Category.MUSHROOM, Precipitation.RAIN, 0.9F, null);
-    public static final Biome BEACH = new Biome(16, "beach", Category.BEACH, Precipitation.RAIN, 0.8F, null);
-    public static final Biome DESERT_HILLS = new Biome(17, "desert_hills", Category.DESERT, Precipitation.NONE, 2.0F, null);
-    public static final Biome WOODED_HILLS = new Biome(18, "wooded_hills", Category.FOREST, Precipitation.RAIN, 0.7F, null);
-    public static final Biome TAIGA_HILLS = new Biome(19, "taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.25F, null);
-    public static final Biome MOUNTAIN_EDGE = new Biome(20, "mountain_edge", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, null);
-    public static final Biome JUNGLE = new Biome(21, "jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
-    public static final Biome JUNGLE_HILLS = new Biome(22, "jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
-    public static final Biome JUNGLE_EDGE = new Biome(23, "jungle_edge", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
-    public static final Biome DEEP_OCEAN = new Biome(24, "deep_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome STONE_SHORE = new Biome(25, "stone_shore", Category.NONE, Precipitation.RAIN, 0.2F, null);
-    public static final Biome SNOWY_BEACH = new Biome(26, "snowy_beach", Category.BEACH, Precipitation.SNOW, 0.05F, null);
-    public static final Biome BIRCH_FOREST = new Biome(27, "birch_forest", Category.FOREST, Precipitation.RAIN, 0.6F, null);
-    public static final Biome BIRCH_FOREST_HILLS = new Biome(28, "birch_forest_hills", Category.FOREST, Precipitation.RAIN, 0.6F, null);
-    public static final Biome DARK_FOREST = new Biome(29, "dark_forest", Category.FOREST, Precipitation.RAIN, 0.7F, null);
-    public static final Biome SNOWY_TAIGA = new Biome(30, "snowy_taiga", Category.TAIGA, Precipitation.SNOW, -0.5F, null);
-    public static final Biome SNOWY_TAIGA_HILLS = new Biome(31, "snowy_taiga_hills", Category.TAIGA, Precipitation.SNOW, -0.5F, null);
-    public static final Biome GIANT_TREE_TAIGA = new Biome(32, "giant_tree_taiga", Category.TAIGA, Precipitation.RAIN, 0.3F, null);
-    public static final Biome GIANT_TREE_TAIGA_HILLS = new Biome(33, "giant_tree_taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.3F, null);
-    public static final Biome WOODED_MOUNTAINS = new Biome(34, "wooded_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, null);
-    public static final Biome SAVANNA = new Biome(35, "savanna", Category.SAVANNA, Precipitation.NONE, 1.2F, null);
-    public static final Biome SAVANNA_PLATEAU = new Biome(36, "savanna_plateau", Category.SAVANNA, Precipitation.NONE, 1.0F, null);
-    public static final Biome BADLANDS = new Biome(37, "badlands", Category.MESA, Precipitation.NONE, 2.0F, null);
-    public static final Biome WOODED_BADLANDS_PLATEAU = new Biome(38, "wooded_badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, null);
-    public static final Biome BADLANDS_PLATEAU = new Biome(39, "badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, null);
-    public static final Biome SMALL_END_ISLANDS = new Biome(40, "small_end_islands", Category.THE_END, Precipitation.NONE, 0.5F, null);
-    public static final Biome END_MIDLANDS = new Biome(41, "end_midlands", Category.THE_END, Precipitation.NONE, 0.5F, null);
-    public static final Biome END_HIGHLANDS = new Biome(42, "end_highlands", Category.THE_END, Precipitation.NONE, 0.5F, null);
-    public static final Biome END_BARRENS = new Biome(43, "end_barrens", Category.THE_END, Precipitation.NONE, 0.5F, null);
-    public static final Biome WARM_OCEAN = new Biome(44, "warm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome LUKEWARM_OCEAN = new Biome(45, "lukewarm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome COLD_OCEAN = new Biome(46, "cold_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome DEEP_WARM_OCEAN = new Biome(47, "deep_warm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome DEEP_LUKEWARM_OCEAN = new Biome(48, "deep_lukewarm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome DEEP_COLD_OCEAN = new Biome(49, "deep_cold_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome DEEP_FROZEN_OCEAN = new Biome(50, "deep_frozen_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
-    public static final Biome THE_VOID = new Biome(127, "the_void", Category.NONE, Precipitation.NONE, 0.5F, null);
-    public static final Biome SUNFLOWER_PLAINS = new Biome(129, "sunflower_plains", Category.PLAINS, Precipitation.RAIN, 0.8F, Biome.PLAINS);
-    public static final Biome DESERT_LAKES = new Biome(130, "desert_lakes", Category.DESERT, Precipitation.NONE, 2.0F, Biome.DESERT);
-    public static final Biome GRAVELLY_MOUNTAINS = new Biome(131, "gravelly_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, Biome.MOUNTAINS);
-    public static final Biome FLOWER_FOREST = new Biome(132, "flower_forest", Category.FOREST, Precipitation.RAIN, 0.7F, Biome.FOREST);
-    public static final Biome TAIGA_MOUNTAINS = new Biome(133, "taiga_mountains", Category.TAIGA, Precipitation.RAIN, 0.25F, Biome.TAIGA);
-    public static final Biome SWAMP_HILLS = new Biome(134, "swamp_hills", Category.SWAMP, Precipitation.RAIN, 0.8F, Biome.SWAMP);
-    public static final Biome ICE_SPIKES = new Biome(140, "ice_spikes", Category.ICY, Precipitation.SNOW, 0.0F, Biome.SNOWY_TUNDRA);
-    public static final Biome MODIFIED_JUNGLE = new Biome(149, "modified_jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, Biome.JUNGLE);
-    public static final Biome MODIFIED_JUNGLE_EDGE = new Biome(151, "modified_jungle_edge", Category.JUNGLE, Precipitation.RAIN, 0.95F, Biome.JUNGLE_EDGE);
-    public static final Biome TALL_BIRCH_FOREST = new Biome(155, "tall_birch_forest", Category.FOREST, Precipitation.RAIN, 0.6F, Biome.BIRCH_FOREST);
-    public static final Biome TALL_BIRCH_HILLS = new Biome(156, "tall_birch_hills", Category.FOREST, Precipitation.RAIN, 0.6F, Biome.BIRCH_FOREST_HILLS);
-    public static final Biome DARK_FOREST_HILLS = new Biome(157, "dark_forest_hills", Category.FOREST, Precipitation.RAIN, 0.7F, Biome.DARK_FOREST);
-    public static final Biome SNOWY_TAIGA_MOUNTAINS = new Biome(158, "snowy_taiga_mountains", Category.TAIGA, Precipitation.SNOW, -0.5F, Biome.SNOWY_TAIGA);
-    public static final Biome GIANT_SPRUCE_TAIGA = new Biome(160, "giant_spruce_taiga", Category.TAIGA, Precipitation.RAIN, 0.25F, Biome.GIANT_TREE_TAIGA);
-    public static final Biome GIANT_SPRUCE_TAIGA_HILLS = new Biome(161, "giant_spruce_taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.25F, Biome.GIANT_TREE_TAIGA_HILLS);
-    public static final Biome MODIFIED_GRAVELLY_MOUNTAINS = new Biome(162, "modified_gravelly_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, Biome.WOODED_MOUNTAINS);
-    public static final Biome SHATTERED_SAVANNA = new Biome(163, "shattered_savanna", Category.SAVANNA, Precipitation.NONE, 1.1F, Biome.SAVANNA);
-    public static final Biome SHATTERED_SAVANNA_PLATEAU = new Biome(164, "shattered_savanna_plateau", Category.SAVANNA, Precipitation.NONE, 1.0F, Biome.SAVANNA_PLATEAU);
-    public static final Biome ERODED_BADLANDS = new Biome(165, "eroded_badlands", Category.MESA, Precipitation.NONE, 2.0F, Biome.BADLANDS);
-    public static final Biome MODIFIED_WOODED_BADLANDS_PLATEAU = new Biome(166, "modified_wooded_badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, Biome.WOODED_BADLANDS_PLATEAU);
-    public static final Biome MODIFIED_BADLANDS_PLATEAU = new Biome(167, "modified_badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, Biome.BADLANDS_PLATEAU);
-    public static final Biome BAMBOO_JUNGLE = new Biome(168, "bamboo_jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
-    public static final Biome BAMBOO_JUNGLE_HILLS = new Biome(169, "bamboo_jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
-    public static final Biome SOUL_SAND_VALLEY = new Biome(170, "soul_sand_valley", Category.NETHER, Precipitation.NONE, 2.0F, null);
-    public static final Biome CRIMSON_FOREST = new Biome(171, "crimson_forest", Category.NETHER, Precipitation.NONE, 2.0F, null);
-    public static final Biome WARPED_FOREST = new Biome(172, "warped_forest", Category.NETHER, Precipitation.NONE, 2.0F, null);
-    public static final Biome BASALT_DELTAS = new Biome(173, "basalt_deltas", Category.NETHER, Precipitation.NONE, 2.0F, null);
+    public static final Biome OCEAN = new Biome(MCVersion.v1_7, 0, "ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome PLAINS = new Biome(MCVersion.v1_7, 1, "plains", Category.PLAINS, Precipitation.RAIN, 0.8F, null);
+    public static final Biome DESERT = new Biome(MCVersion.v1_7, 2, "desert", Category.DESERT, Precipitation.NONE, 2.0F, null);
+    public static final Biome MOUNTAINS = new Biome(MCVersion.v1_7, 3, "mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, null);
+    public static final Biome FOREST = new Biome(MCVersion.v1_7, 4, "forest", Category.FOREST, Precipitation.RAIN, 0.7F, null);
+    public static final Biome TAIGA = new Biome(MCVersion.v1_7, 5, "taiga", Category.TAIGA, Precipitation.RAIN, 0.25F, null);
+    public static final Biome SWAMP = new Biome(MCVersion.v1_7, 6, "swamp", Category.SWAMP, Precipitation.RAIN, 0.8F, null);
+    public static final Biome RIVER = new Biome(MCVersion.v1_7, 7, "river", Category.RIVER, Precipitation.RAIN, 0.5F, null);
+    public static final Biome NETHER_WASTES = new Biome(MCVersion.v1_7, 8, "nether_wastes", Category.NETHER, Precipitation.NONE, 2.0F, null);
+    public static final Biome THE_END = new Biome(MCVersion.v1_7, 9, "the_end", Category.THE_END, Precipitation.NONE, 0.5F, null);
+    public static final Biome FROZEN_OCEAN = new Biome(MCVersion.v1_13, 10, "frozen_ocean", Category.OCEAN, Precipitation.SNOW, 0.0F, null);
+    public static final Biome FROZEN_RIVER = new Biome(MCVersion.v1_7, 11, "frozen_river", Category.RIVER, Precipitation.SNOW, 0.0F, null);
+    public static final Biome SNOWY_TUNDRA = new Biome(MCVersion.v1_7, 12, "snowy_tundra", Category.ICY, Precipitation.SNOW, 0.0F, null);
+    public static final Biome SNOWY_MOUNTAINS = new Biome(MCVersion.v1_7, 13, "snowy_mountains", Category.ICY, Precipitation.SNOW, 0.0F, null);
+    public static final Biome MUSHROOM_FIELDS = new Biome(MCVersion.v1_7, 14, "mushroom_fields", Category.MUSHROOM, Precipitation.RAIN, 0.9F, null);
+    public static final Biome MUSHROOM_FIELD_SHORE = new Biome(MCVersion.v1_7, 15, "mushroom_field_shore", Category.MUSHROOM, Precipitation.RAIN, 0.9F, null);
+    public static final Biome BEACH = new Biome(MCVersion.v1_7, 16, "beach", Category.BEACH, Precipitation.RAIN, 0.8F, null);
+    public static final Biome DESERT_HILLS = new Biome(MCVersion.v1_7, 17, "desert_hills", Category.DESERT, Precipitation.NONE, 2.0F, null);
+    public static final Biome WOODED_HILLS = new Biome(MCVersion.v1_7, 18, "wooded_hills", Category.FOREST, Precipitation.RAIN, 0.7F, null);
+    public static final Biome TAIGA_HILLS = new Biome(MCVersion.v1_7, 19, "taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.25F, null);
+    public static final Biome MOUNTAIN_EDGE = new Biome(MCVersion.v1_7, 20, "mountain_edge", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, null);
+    public static final Biome JUNGLE = new Biome(MCVersion.v1_7, 21, "jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
+    public static final Biome JUNGLE_HILLS = new Biome(MCVersion.v1_7, 22, "jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
+    public static final Biome JUNGLE_EDGE = new Biome(MCVersion.v1_7, 23, "jungle_edge", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
+    public static final Biome DEEP_OCEAN = new Biome(MCVersion.v1_13, 24, "deep_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome STONE_SHORE = new Biome(MCVersion.v1_7, 25, "stone_shore", Category.NONE, Precipitation.RAIN, 0.2F, null);
+    public static final Biome SNOWY_BEACH = new Biome(MCVersion.v1_7, 26, "snowy_beach", Category.BEACH, Precipitation.SNOW, 0.05F, null);
+    public static final Biome BIRCH_FOREST = new Biome(MCVersion.v1_7, 27, "birch_forest", Category.FOREST, Precipitation.RAIN, 0.6F, null);
+    public static final Biome BIRCH_FOREST_HILLS = new Biome(MCVersion.v1_7, 28, "birch_forest_hills", Category.FOREST, Precipitation.RAIN, 0.6F, null);
+    public static final Biome DARK_FOREST = new Biome(MCVersion.v1_7, 29, "dark_forest", Category.FOREST, Precipitation.RAIN, 0.7F, null);
+    public static final Biome SNOWY_TAIGA = new Biome(MCVersion.v1_7, 30, "snowy_taiga", Category.TAIGA, Precipitation.SNOW, -0.5F, null);
+    public static final Biome SNOWY_TAIGA_HILLS = new Biome(MCVersion.v1_7, 31, "snowy_taiga_hills", Category.TAIGA, Precipitation.SNOW, -0.5F, null);
+    public static final Biome GIANT_TREE_TAIGA = new Biome(MCVersion.v1_7, 32, "giant_tree_taiga", Category.TAIGA, Precipitation.RAIN, 0.3F, null);
+    public static final Biome GIANT_TREE_TAIGA_HILLS = new Biome(MCVersion.v1_7, 33, "giant_tree_taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.3F, null);
+    public static final Biome WOODED_MOUNTAINS = new Biome(MCVersion.v1_7, 34, "wooded_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, null);
+    public static final Biome SAVANNA = new Biome(MCVersion.v1_7, 35, "savanna", Category.SAVANNA, Precipitation.NONE, 1.2F, null);
+    public static final Biome SAVANNA_PLATEAU = new Biome(MCVersion.v1_7, 36, "savanna_plateau", Category.SAVANNA, Precipitation.NONE, 1.0F, null);
+    public static final Biome BADLANDS = new Biome(MCVersion.v1_7, 37, "badlands", Category.MESA, Precipitation.NONE, 2.0F, null);
+    public static final Biome WOODED_BADLANDS_PLATEAU = new Biome(MCVersion.v1_7, 38, "wooded_badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, null);
+    public static final Biome BADLANDS_PLATEAU = new Biome(MCVersion.v1_7, 39, "badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, null);
+    public static final Biome SMALL_END_ISLANDS = new Biome(MCVersion.v1_13, 40, "small_end_islands", Category.THE_END, Precipitation.NONE, 0.5F, null);
+    public static final Biome END_MIDLANDS = new Biome(MCVersion.v1_13, 41, "end_midlands", Category.THE_END, Precipitation.NONE, 0.5F, null);
+    public static final Biome END_HIGHLANDS = new Biome(MCVersion.v1_13, 42, "end_highlands", Category.THE_END, Precipitation.NONE, 0.5F, null);
+    public static final Biome END_BARRENS = new Biome(MCVersion.v1_13, 43, "end_barrens", Category.THE_END, Precipitation.NONE, 0.5F, null);
+    public static final Biome WARM_OCEAN = new Biome(MCVersion.v1_13, 44, "warm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome LUKEWARM_OCEAN = new Biome(MCVersion.v1_13, 45, "lukewarm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome COLD_OCEAN = new Biome(MCVersion.v1_13, 46, "cold_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome DEEP_WARM_OCEAN = new Biome(MCVersion.v1_13, 47, "deep_warm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome DEEP_LUKEWARM_OCEAN = new Biome(MCVersion.v1_13, 48, "deep_lukewarm_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome DEEP_COLD_OCEAN = new Biome(MCVersion.v1_13, 49, "deep_cold_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome DEEP_FROZEN_OCEAN = new Biome(MCVersion.v1_13, 50, "deep_frozen_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, null);
+    public static final Biome THE_VOID = new Biome(MCVersion.v1_7, 127, "the_void", Category.NONE, Precipitation.NONE, 0.5F, null);
+    public static final Biome SUNFLOWER_PLAINS = new Biome(MCVersion.v1_7, 129, "sunflower_plains", Category.PLAINS, Precipitation.RAIN, 0.8F, Biome.PLAINS);
+    public static final Biome DESERT_LAKES = new Biome(MCVersion.v1_7, 130, "desert_lakes", Category.DESERT, Precipitation.NONE, 2.0F, Biome.DESERT);
+    public static final Biome GRAVELLY_MOUNTAINS = new Biome(MCVersion.v1_7, 131, "gravelly_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, Biome.MOUNTAINS);
+    public static final Biome FLOWER_FOREST = new Biome(MCVersion.v1_7, 132, "flower_forest", Category.FOREST, Precipitation.RAIN, 0.7F, Biome.FOREST);
+    public static final Biome TAIGA_MOUNTAINS = new Biome(MCVersion.v1_7, 133, "taiga_mountains", Category.TAIGA, Precipitation.RAIN, 0.25F, Biome.TAIGA);
+    public static final Biome SWAMP_HILLS = new Biome(MCVersion.v1_7, 134, "swamp_hills", Category.SWAMP, Precipitation.RAIN, 0.8F, Biome.SWAMP);
+    public static final Biome ICE_SPIKES = new Biome(MCVersion.v1_7, 140, "ice_spikes", Category.ICY, Precipitation.SNOW, 0.0F, Biome.SNOWY_TUNDRA);
+    public static final Biome MODIFIED_JUNGLE = new Biome(MCVersion.v1_7, 149, "modified_jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, Biome.JUNGLE);
+    public static final Biome MODIFIED_JUNGLE_EDGE = new Biome(MCVersion.v1_7, 151, "modified_jungle_edge", Category.JUNGLE, Precipitation.RAIN, 0.95F, Biome.JUNGLE_EDGE);
+    public static final Biome TALL_BIRCH_FOREST = new Biome(MCVersion.v1_7, 155, "tall_birch_forest", Category.FOREST, Precipitation.RAIN, 0.6F, Biome.BIRCH_FOREST);
+    public static final Biome TALL_BIRCH_HILLS = new Biome(MCVersion.v1_7, 156, "tall_birch_hills", Category.FOREST, Precipitation.RAIN, 0.6F, Biome.BIRCH_FOREST_HILLS);
+    public static final Biome DARK_FOREST_HILLS = new Biome(MCVersion.v1_7, 157, "dark_forest_hills", Category.FOREST, Precipitation.RAIN, 0.7F, Biome.DARK_FOREST);
+    public static final Biome SNOWY_TAIGA_MOUNTAINS = new Biome(MCVersion.v1_7, 158, "snowy_taiga_mountains", Category.TAIGA, Precipitation.SNOW, -0.5F, Biome.SNOWY_TAIGA);
+    public static final Biome GIANT_SPRUCE_TAIGA = new Biome(MCVersion.v1_7, 160, "giant_spruce_taiga", Category.TAIGA, Precipitation.RAIN, 0.25F, Biome.GIANT_TREE_TAIGA);
+    public static final Biome GIANT_SPRUCE_TAIGA_HILLS = new Biome(MCVersion.v1_7, 161, "giant_spruce_taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.25F, Biome.GIANT_TREE_TAIGA_HILLS);
+    public static final Biome MODIFIED_GRAVELLY_MOUNTAINS = new Biome(MCVersion.v1_7, 162, "modified_gravelly_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, Biome.WOODED_MOUNTAINS);
+    public static final Biome SHATTERED_SAVANNA = new Biome(MCVersion.v1_7, 163, "shattered_savanna", Category.SAVANNA, Precipitation.NONE, 1.1F, Biome.SAVANNA);
+    public static final Biome SHATTERED_SAVANNA_PLATEAU = new Biome(MCVersion.v1_7, 164, "shattered_savanna_plateau", Category.SAVANNA, Precipitation.NONE, 1.0F, Biome.SAVANNA_PLATEAU);
+    public static final Biome ERODED_BADLANDS = new Biome(MCVersion.v1_7, 165, "eroded_badlands", Category.MESA, Precipitation.NONE, 2.0F, Biome.BADLANDS);
+    public static final Biome MODIFIED_WOODED_BADLANDS_PLATEAU = new Biome(MCVersion.v1_7, 166, "modified_wooded_badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, Biome.WOODED_BADLANDS_PLATEAU);
+    public static final Biome MODIFIED_BADLANDS_PLATEAU = new Biome(MCVersion.v1_7, 167, "modified_badlands_plateau", Category.MESA, Precipitation.NONE, 2.0F, Biome.BADLANDS_PLATEAU);
+    public static final Biome BAMBOO_JUNGLE = new Biome(MCVersion.v1_14, 168, "bamboo_jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
+    public static final Biome BAMBOO_JUNGLE_HILLS = new Biome(MCVersion.v1_14, 169, "bamboo_jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, null);
+    public static final Biome SOUL_SAND_VALLEY = new Biome(MCVersion.v1_16, 170, "soul_sand_valley", Category.NETHER, Precipitation.NONE, 2.0F, null);
+    public static final Biome CRIMSON_FOREST = new Biome(MCVersion.v1_16, 171, "crimson_forest", Category.NETHER, Precipitation.NONE, 2.0F, null);
+    public static final Biome WARPED_FOREST = new Biome(MCVersion.v1_16, 172, "warped_forest", Category.NETHER, Precipitation.NONE, 2.0F, null);
+    public static final Biome BASALT_DELTAS = new Biome(MCVersion.v1_16, 173, "basalt_deltas", Category.NETHER, Precipitation.NONE, 2.0F, null);
 
 }
