@@ -149,13 +149,12 @@ public class OverworldBiomeSource extends BiomeSource {
         return Biome.REGISTRY.get(this.full.get(x, z));
     }
 
-
     public static class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
         protected int layerIdCounter = 0;
 
         @Override
         public boolean add(T layer) {
-            layer.setLayerId(layerIdCounter++);
+            layer.setLayerId(this.layerIdCounter++);
             return super.add(layer);
         }
 
@@ -164,12 +163,14 @@ public class OverworldBiomeSource extends BiomeSource {
         }
 
         public void setRecursiveScale(BiomeLayer last, int scale) {
-            if (last != null) {
+            if(last != null) {
                 int max = 0;
-                for (BiomeLayer biomeLayer : last.getParents()) {
+
+                for(BiomeLayer biomeLayer: last.getParents()) {
                     setRecursiveScale(biomeLayer, scale << ((last instanceof VoronoiLayer) ? 2 : (last instanceof ScaleLayer) ? 1 : 0));
                     max = Math.max(max, scale);
                 }
+
                 last.setScale(max);
             }
         }

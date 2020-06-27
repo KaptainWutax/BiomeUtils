@@ -5,7 +5,9 @@ import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public abstract class BiomeSource {
@@ -94,16 +96,16 @@ public abstract class BiomeSource {
 		return true;
 	}
 
+	public BPos locateNearestBiome(int centerX, int centerY, int centerZ, int radius, Collection<Biome> biomes, JRand rand) {
+		return this.locateBiome(centerX, centerY, centerZ, radius, 1, biomes, rand, true);
+	}
+
 	public BPos locateBiome(int centerX, int centerY, int centerZ, int radius, Collection<Biome> biomes, JRand rand) {
-		return this.findBiomeInArea(centerX, centerY, centerZ, radius, 1, biomes, rand, true);
+		return this.locateBiome(centerX, centerY, centerZ, radius, 1, biomes, rand, false);
 	}
 
-	public BPos findBiomeInArea(int centerX, int centerY, int centerZ, int radius, Collection<Biome> biomes, JRand rand) {
-		return this.findBiomeInArea(centerX, centerY, centerZ, radius, 1, biomes, rand, false);
-	}
-
-	public BPos findBiomeInArea(int centerX, int centerY, int centerZ, int radius, int increment,
-	                            Collection<Biome> biomes, JRand rand, boolean checkByLayer) {
+	public BPos locateBiome(int centerX, int centerY, int centerZ, int radius, int increment,
+	                        Collection<Biome> biomes, JRand rand, boolean checkByLayer) {
 		//Since we're looking at the layer before the voronoi zoom...
 		centerX >>= 2; centerZ >>= 2; centerY >>= 2; radius >>= 2;
 
