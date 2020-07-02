@@ -23,7 +23,8 @@ public class Biome {
 
     private final MCVersion version;
 
-    public Biome(MCVersion version, int id, String name, Category category, Precipitation precipitation, float temperature, Biome parent) {
+    public Biome(MCVersion version, int id, String name, Category category, Precipitation precipitation,
+                 float temperature, Biome parent) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -113,7 +114,8 @@ public class Biome {
         if (b == null) return false;
 
         if (id != Biome.WOODED_BADLANDS_PLATEAU.getId() && id != Biome.BADLANDS_PLATEAU.getId()) {
-            if (b.getCategory() != Biome.Category.NONE && b2.getCategory() != Biome.Category.NONE && b.getCategory() == b2.getCategory()) {
+            if (b.getCategory() != Biome.Category.NONE && b2.getCategory()
+                    != Biome.Category.NONE && b.getCategory() == b2.getCategory()) {
                 return true;
             }
 
@@ -142,27 +144,37 @@ public class Biome {
     }
 
     public static class Data {
-        public final Predicate<Biome> biome;
+        public final Predicate<Biome> predicate;
+        public final Biome biome;
         public final int x;
         public final int z;
 
         public Data(Biome biome, int x, int z) {
-            this(b -> b == biome, x, z);
+            this(b -> b == biome, biome, x, z);
         }
 
-        public Data(Predicate<Biome> biome, int x, int z) {
+        public Data(Predicate<Biome> predicate, int x, int z) {
+            this(predicate, null, x, z);
+        }
+
+        protected Data(Predicate<Biome> predicate, Biome biome, int x, int z) {
+            this.predicate = predicate;
             this.biome = biome;
             this.x = x;
             this.z = z;
         }
 
         public boolean test(OverworldBiomeSource source) {
-            return this.biome.test(source.getBiome(this.x, 0, this.z));
+            return this.predicate.test(source.getBiome(this.x, 0, this.z));
         }
     }
 
     public enum Category {
-        NONE("none"), TAIGA("taiga"), EXTREME_HILLS("extreme_hills"), JUNGLE("jungle"), MESA("mesa"), PLAINS("plains"), SAVANNA("savanna"), ICY("icy"), THE_END("the_end"), BEACH("beach"), FOREST("forest"), OCEAN("ocean"), DESERT("desert"), RIVER("river"), SWAMP("swamp"), MUSHROOM("mushroom"), NETHER("nether");
+        NONE("none"), TAIGA("taiga"), EXTREME_HILLS("extreme_hills"),
+        JUNGLE("jungle"), MESA("mesa"), PLAINS("plains"), SAVANNA("savanna"),
+        ICY("icy"), THE_END("the_end"), BEACH("beach"), FOREST("forest"),
+        OCEAN("ocean"), DESERT("desert"), RIVER("river"), SWAMP("swamp"),
+        MUSHROOM("mushroom"), NETHER("nether");
 
         private final String name;
 
