@@ -13,8 +13,8 @@ public class ClimateLayer {
 		}
 
 		@Override
-		public int sample(int x, int z) {
-			int value = this.getParent().get(x, z);
+		public int sample(int x, int y, int z) {
+			int value = this.getParent().get(x, y, z);
 
 			if(Biome.isShallowOcean(value)) {
 				return value;
@@ -61,8 +61,8 @@ public class ClimateLayer {
 		}
 
 		@Override
-		public int sample(int x, int z) {
-			int i = this.getParent().get(x, z);
+		public int sample(int x, int y, int z) {
+			int i = this.getParent().get(x, y, z);
 
 			if(Biome.isShallowOcean(i))return i;
 			this.setSeed(x, z);

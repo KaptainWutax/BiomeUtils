@@ -17,24 +17,24 @@ public class ScaleLayer extends BiomeLayer {
     }
 
     @Override
-    public int sample(int x, int z) {
-        int i = this.getParent().get(x >> 1, z >> 1);
+    public int sample(int x, int y, int z) {
+        int i = this.getParent().get(x >> 1, y, z >> 1);
         this.setSeed(x & -2, z & -2);
         int xb = x & 1, zb = z & 1;
 
         if (xb == 0 && zb == 0)return i;
 
-        int l = this.getParent().get(x >> 1, (z + 1) >> 1);
+        int l = this.getParent().get(x >> 1, y, (z + 1) >> 1);
         int m = this.choose(i, l);
 
         if (xb == 0)return m;
 
-        int n = this.getParent().get((x + 1) >> 1, z >> 1);
+        int n = this.getParent().get((x + 1) >> 1, y, z >> 1);
         int o = this.choose(i, n);
 
         if (zb == 0)return o;
 
-        int p = getParent().get((x + 1) >> 1, (z + 1) >> 1);
+        int p = getParent().get((x + 1) >> 1, y, (z + 1) >> 1);
         return this.sample(i, n, l, p);
     }
 

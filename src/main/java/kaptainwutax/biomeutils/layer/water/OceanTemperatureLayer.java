@@ -16,7 +16,7 @@ public class OceanTemperatureLayer extends BiomeLayer {
 	}
 
 	@Override
-	public int sample(int x, int z) {
+	public int sample(int x, int y, int z) {
 		double d = this.perlin.sample((double)x / 8.0D, (double)z / 8.0D, 0.0D, 0.0D, 0.0D);
 		
 		if (d > 0.4D) {
@@ -36,14 +36,14 @@ public class OceanTemperatureLayer extends BiomeLayer {
 		}
 
 		@Override
-		public int sample(int x, int z) {
-			int i = this.getParent(0).get(x, z);
-			int j = this.getParent(1).get(x, z);
+		public int sample(int x, int y, int z) {
+			int i = this.getParent(0).get(x, y, z);
+			int j = this.getParent(1).get(x, y, z);
 			if (!Biome.isOcean(i))return i;
 
 			for(int m = -8; m <= 8; m += 4) {
 				for(int n = -8; n <= 8; n += 4) {
-					int o = this.getParent(0).get(x + m, z + n);
+					int o = this.getParent(0).get(x + m, y, z + n);
 
 					if (!Biome.isOcean(o)) {
 						if (j == Biome.WARM_OCEAN.getId()) {

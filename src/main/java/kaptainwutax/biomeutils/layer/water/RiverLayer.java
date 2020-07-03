@@ -11,9 +11,9 @@ public class RiverLayer extends BiomeLayer {
 	}
 
 	@Override
-	public int sample(int x, int z) {
-		int i = this.getParent(0).get(x, z);
-		int j = this.getParent(1).get(x, z);
+	public int sample(int x, int y, int z) {
+		int i = this.getParent(0).get(x, y, z);
+		int j = this.getParent(1).get(x, y, z);
 
 		if(Biome.isOcean(i))return i;
 		

@@ -11,9 +11,9 @@ public class SunflowerPlainsLayer extends BiomeLayer {
 	}
 
 	@Override
-	public int sample(int x, int z) {
+	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
-		int value = this.getParent().get(x, z);
+		int value = this.getParent().get(x, y, z);
 		return value == Biome.PLAINS.getId() && this.nextInt(57) == 0 ? Biome.SUNFLOWER_PLAINS.getId() : value;
 	}
 

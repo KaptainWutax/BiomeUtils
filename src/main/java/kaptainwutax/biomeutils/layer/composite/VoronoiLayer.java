@@ -15,9 +15,9 @@ public class VoronoiLayer extends BiomeLayer {
     }
 
     @Override
-    public int sample(int x, int z) {
+    public int sample(int x, int y, int z) {
         int i = x - 2;
-        int j = -2;
+        int j = y - 2;
         int k = z - 2;
         int l = i >> 2;
         int m = j >> 2;
@@ -51,8 +51,9 @@ public class VoronoiLayer extends BiomeLayer {
         }
 
         int xFinal = (index & 4) == 0 ? l : l + 1;
+        int yFinal = (index & 2) == 0 ? m : m + 1;
         int zFinal = (index & 1) == 0 ? n : n + 1;
-        return this.getParent().get(xFinal, zFinal);
+        return this.getParent().get(xFinal, yFinal, zFinal);
     }
 
     private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {

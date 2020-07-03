@@ -19,9 +19,9 @@ public class BaseBiomesLayer extends BiomeLayer {
     }
 
     @Override
-    public int sample(int x, int z) {
+    public int sample(int x, int y, int z) {
         this.setSeed(x, z);
-        int center = this.getParent().get(x, z);
+        int center = this.getParent().get(x, y, z);
         int highBit = (center >> 8) & 15;
         center &= -0xF01;
 

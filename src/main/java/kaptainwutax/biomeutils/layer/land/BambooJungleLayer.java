@@ -11,9 +11,9 @@ public class BambooJungleLayer extends BiomeLayer {
     }
 
     @Override
-    public int sample(int x, int z) {
+    public int sample(int x, int y, int z) {
         this.setSeed(x, z);
-        int value = this.getParent().get(x, z);
+        int value = this.getParent().get(x, y, z);
         return value == Biome.JUNGLE.getId() && this.nextInt(10) == 0 ? Biome.BAMBOO_JUNGLE.getId() : value;
     }
 

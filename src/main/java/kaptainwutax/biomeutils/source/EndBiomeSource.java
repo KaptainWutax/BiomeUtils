@@ -32,12 +32,12 @@ public class EndBiomeSource extends BiomeSource {
 
 	@Override
 	public Biome getBiome(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.voronoi.get(x >> 2, z >> 2));
+		return Biome.REGISTRY.get(this.voronoi.get(x >> 2, y,z >> 2));
 	}
 
 	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.full.get(x >> 4, z >> 4));
+		return Biome.REGISTRY.get(this.full.get(x >> 4, y,z >> 4));
 	}
 
 	public static float getNoiseAt(SimplexNoiseSampler simplexNoiseSampler, int i, int j) {
@@ -77,9 +77,7 @@ public class EndBiomeSource extends BiomeSource {
 		}
 
 		@Override
-		public int sample(int x, int z) {
-			System.out.println(x + ", " + z);
-			System.out.println((long)x * (long)x + (long)z * (long)z);
+		public int sample(int x, int y, int z) {
 			if ((long)x * (long)x + (long)z * (long)z <= 4096L) {
 				return Biome.THE_END.getId();
 			}
