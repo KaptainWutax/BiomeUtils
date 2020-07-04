@@ -11,7 +11,7 @@ public class ContinentLayer extends BiomeLayer {
     }
 
     @Override
-    public int sample(int x, int z) {
+    public int sample(int x, int y, int z) {
         this.setSeed(x, z);
         if (x == 0 && z == 0)return 1;
         return this.nextInt(10) == 0 ? Biome.PLAINS.getId() : Biome.OCEAN.getId();

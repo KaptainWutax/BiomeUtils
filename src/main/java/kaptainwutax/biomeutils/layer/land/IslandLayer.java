@@ -13,7 +13,8 @@ public class IslandLayer extends CrossLayer {
 
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
-		return Biome.applyAll(Biome::isShallowOcean,center,n,e,s,w) && this.nextInt(2) == 0 ? Biome.PLAINS.getId() : center;
+		return Biome.applyAll(Biome::isShallowOcean, center, n, e, s, w)
+				&& this.nextInt(2) == 0 ? Biome.PLAINS.getId() : center;
 	}
 
 }

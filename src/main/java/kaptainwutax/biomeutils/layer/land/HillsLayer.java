@@ -11,10 +11,10 @@ public class HillsLayer extends BiomeLayer {
 	}
 
 	@Override
-	public int sample(int x, int z) {
+	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
-		int i = this.getParent(0).get(x, z); // biomes
-		int j = this.getParent(1).get(x, z); // noise (river)
+		int i = this.getParent(0).get(x, y, z); // biomes
+		int j = this.getParent(1).get(x, y, z); // noise (river)
 
 		int k = (j - 2) % 29;
 		Biome biome3;
@@ -80,10 +80,10 @@ public class HillsLayer extends BiomeLayer {
 			if(l != i) {
 				int m = 0;
 				Biome b = Biome.REGISTRY.get(i);
-				if(Biome.areSimilar(this.getParent(0).get(x, z - 1), b))m++;
-				if(Biome.areSimilar(this.getParent(0).get(x + 1, z), b))m++;
-				if(Biome.areSimilar(this.getParent(0).get(x - 1, z), b))m++;
-				if(Biome.areSimilar(this.getParent(0).get(x, z + 1), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x, y,z - 1), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x + 1, y, z), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x - 1, y, z), b))m++;
+				if(Biome.areSimilar(this.getParent(0).get(x, y,z + 1), b))m++;
 				if(m >= 3)return l;
 			}
 		}

@@ -10,15 +10,15 @@ public abstract class CrossLayer extends BiomeLayer {
 	}
 
 	@Override
-	public int sample(int x, int z) {
+	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
 
 		return this.sample(
-				this.getParent().get(x, z - 1),
-				this.getParent().get(x + 1, z),
-				this.getParent().get(x, z + 1),
-				this.getParent().get(x - 1, z),
-				this.getParent().get(x, z)
+				this.getParent().get(x, y, z - 1),
+				this.getParent().get(x + 1, y, z),
+				this.getParent().get(x, y,z + 1),
+				this.getParent().get(x - 1, y, z),
+				this.getParent().get(x, y, z)
 			);
 	}
 
