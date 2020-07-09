@@ -1,19 +1,30 @@
 package kaptainwutax.biomeutils.noise;
 
-import kaptainwutax.seedutils.lcg.LCG;
-import kaptainwutax.seedutils.mc.ChunkRand;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class OctavePerlinNoiseSampler {
+import kaptainwutax.biomeutils.MathHelper;
+import kaptainwutax.seedutils.lcg.LCG;
+import kaptainwutax.seedutils.lcg.rand.JRand;
+import kaptainwutax.seedutils.mc.ChunkRand;
 
+public class OctavePerlinNoiseSampler implements NoiseSampler {
+	private final PerlinNoiseSampler[] octaveSamplers;
+	
 	private static final LCG SKIP_262 = LCG.JAVA.combine(262);
 
-	public final PerlinNoiseSampler[] octaveSamplers;
 	public final double field_20659;
 	public final double field_20660;
+
+	public OctavePerlinNoiseSampler(JRand random, int octaveCount) {
+		this.octaveSamplers = new PerlinNoiseSampler[octaveCount];
+		for (int i = 0; i < octaveCount; i++) {
+			this.octaveSamplers[i] = new PerlinNoiseSampler(random);
+		}
+		this.field_20659 = 1.0;
+		this.field_20660 = 1.0;
+	}
 
 	public OctavePerlinNoiseSampler(ChunkRand rand, IntStream octaves) {
 		this(rand, octaves.boxed().collect(Collectors.toList()));
@@ -92,16 +103,11 @@ public class OctavePerlinNoiseSampler {
 	}
 
 	public static double maintainPrecision(double d) {
-		return d - (double)lfloor(d / 3.3554432E7D + 0.5D) * 3.3554432E7D;
+		return d - (double)MathHelper.lfloor(d / 3.3554432E7D + 0.5D) * 3.3554432E7D;
 	}
 
+	@Override
 	public double sample(double x, double y, double d, double e) {
 		return this.sample(x, y, 0.0D, d, e, false);
 	}
-
-	public static long lfloor(double d) {
-		long l = (long)d;
-		return d < (double)l ? l - 1L : l;
-	}
-
 }
