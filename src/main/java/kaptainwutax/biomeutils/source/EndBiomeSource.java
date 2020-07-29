@@ -40,12 +40,12 @@ public class EndBiomeSource extends BiomeSource {
 		return Biome.REGISTRY.get(this.full.get(x >> 4, y,z >> 4));
 	}
 
-	public static float getNoiseAt(SimplexNoiseSampler simplexNoiseSampler, int i, int j) {
-		int k = i / 2;
-		int l = j / 2;
-		int m = i % 2;
-		int n = j % 2;
-		float f = 100.0F - (float)Math.sqrt((float)(i * i + j * j)) * 8.0F;
+	public static float getNoiseAt(SimplexNoiseSampler simplexNoiseSampler, int x, int z) {
+		int k = x / 2;
+		int l = z / 2;
+		int m = x % 2;
+		int n = z % 2;
+		float f = 100.0F - (float)Math.sqrt((float)(x * x + z * z)) * 8.0F;
 		f = clamp(f, -100.0F, 80.0F);
 
 		for(int o = -12; o <= 12; ++o) {

@@ -6,6 +6,7 @@ import kaptainwutax.biomeutils.noise.OctavePerlinNoiseSampler;
 import kaptainwutax.biomeutils.source.BiomeSource;
 
 public class OverworldChunkGenerator extends SurfaceChunkGenerator {
+
 	private static final float[] BIOME_WEIGHT_TABLE;
 	private final OctavePerlinNoiseSampler noiseSampler;
 	private final boolean amplified;
@@ -29,9 +30,9 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 
 	@Override
 	protected double computeNoiseFalloff(double depth, double scale, int y) {
-		// double d = 8.5D;
 		double e = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / scale;
-		if (e < 0.0D) {
+
+		if(e < 0.0D) {
 			e *= 4.0D;
 		}
 
@@ -71,13 +72,13 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 		g /= h;
 		f = f * 0.9F + 0.1F;
 		g = (g * 4.0F - 1.0F) / 8.0F;
-		ds[0] = (double) g + this.sampleNoise(x, z);
-		ds[1] = (double) f;
+		ds[0] = (double)g + this.sampleNoise(x, z);
+		ds[1] = f;
 		return ds;
 	}
 
 	private double sampleNoise(int x, int y) {
-		double d = this.noiseSampler.sample((double) (x * 200), 10.0D, (double) (y * 200), 1.0D, 0.0D, true) / 8000.0D;
+		double d = this.noiseSampler.sample(x * 200, 10.0D, y * 200, 1.0D, 0.0D, true) / 8000.0D;
 		if (d < 0.0D) {
 			d = -d * 0.3D;
 		}
@@ -100,4 +101,5 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 		this.sampleNoiseColumn(buffer, x, z, 684.4119873046875D, 684.4119873046875D, 8.555149841308594D,
 				4.277574920654297D, 3, -10);
 	}
+
 }

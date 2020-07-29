@@ -11,6 +11,7 @@ import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.seedutils.mc.ChunkRand;
 
 public abstract class SurfaceChunkGenerator extends ChunkGenerator {
+
 	private final int verticalNoiseResolution;
 	private final int horizontalNoiseResolution;
 	private final int noiseSizeX;
@@ -22,7 +23,7 @@ public abstract class SurfaceChunkGenerator extends ChunkGenerator {
 	private final NoiseSampler surfaceDepthNoise;
 	protected final ChunkRand random;
 
-	private final Map<Long, double[]> noiseColumnCache = new HashMap<Long, double[]>();
+	private final Map<Long, double[]> noiseColumnCache = new HashMap<>();
 
 	public SurfaceChunkGenerator(BiomeSource biomeSource, int horizontalNoiseResolution, int verticalNoiseResolution,
 			int worldHeight, boolean useSimplexNoise) {
@@ -77,14 +78,14 @@ public abstract class SurfaceChunkGenerator extends ChunkGenerator {
 		double[] ds = this.computeNoiseRange(x, z);
 		double h = ds[0];
 		double k = ds[1];
-		double l = (double) (this.getNoiseSizeY() - 4);
+		double l = this.getNoiseSizeY() - 4;
 		double m = 0.0D;
 
 		for (int n = 0; n < this.getNoiseSizeY(); ++n) {
 			double o = this.sampleNoise(x, n, z, d, e, f, g);
 			o -= this.computeNoiseFalloff(h, k, n);
 			if ((double) n > l) {
-				o = MathHelper.clampedLerp(o, (double) j, ((double) n - l) / (double) i);
+				o = MathHelper.clampedLerp(o, j, ((double) n - l) / (double) i);
 			} else if ((double) n < m) {
 				o = MathHelper.clampedLerp(o, -30.0D, (m - (double) n) / (m - 1.0D));
 			}
@@ -143,4 +144,5 @@ public abstract class SurfaceChunkGenerator extends ChunkGenerator {
 	protected abstract double[] computeNoiseRange(int x, int z);
 
 	protected abstract double computeNoiseFalloff(double depth, double scale, int y);
+
 }

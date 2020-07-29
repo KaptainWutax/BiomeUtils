@@ -13,5 +13,5 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.KaptainWutax:SeedUtils:99de78092ff9a85d515315b9397b9dd389cab8d0'
+    implementation 'com.github.KaptainWutax:SeedUtils:b5bf2e23610cc0eebcb91443788228c2ed446914'
 }
