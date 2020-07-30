@@ -17,7 +17,7 @@ public class IceSpikesTest {
 		long start = System.nanoTime();
 
 		for(long seed = min; seed < max; seed++) {
-			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed).build();
+			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed);
 
 			if(layers.getBiome(200,0,200) == Biome.ICE_SPIKES) {
 				naiveSeeds.add(seed);

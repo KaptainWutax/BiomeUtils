@@ -27,14 +27,14 @@ public class MathHelper {
 	}
 
 	public static float sqrt(float f) {
-		return (float)Math.sqrt((double)f);
+		return (float)Math.sqrt(f);
 	}
 
 	public static double clamp(double value, double min, double max) {
 		if (value < min) {
 			return min;
 		} else {
-			return value > max ? max : value;
+			return Math.min(value, max);
 		}
 	}
 }

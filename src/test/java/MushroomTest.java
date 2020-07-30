@@ -16,7 +16,7 @@ public class MushroomTest {
 		long start = System.nanoTime();
 
 		for(long seed = min; seed < max; seed++) {
-			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed).build();
+			OverworldBiomeSource layers = new OverworldBiomeSource(MCVersion.v1_15, seed);
 
 			if(layers.getBiome(-4000,0,-4000).getCategory() == Biome.Category.MUSHROOM) {
 				naiveSeeds.add(seed);

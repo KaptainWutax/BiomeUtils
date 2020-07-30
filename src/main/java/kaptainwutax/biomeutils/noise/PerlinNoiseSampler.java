@@ -54,8 +54,7 @@ public class PerlinNoiseSampler {
 	}
 
 	private static double grad(int hash, double x, double y, double z) {
-		int i = hash & 15;
-		return SimplexNoiseSampler.dot(SimplexNoiseSampler.GRADIENTS[i], x, y, z);
+		return SimplexNoiseSampler.dot(SimplexNoiseSampler.GRADIENTS[hash & 15], x, y, z);
 	}
 
 	private int getGradient(int hash) {
