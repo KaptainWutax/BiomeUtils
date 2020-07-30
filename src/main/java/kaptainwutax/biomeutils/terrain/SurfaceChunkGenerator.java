@@ -73,23 +73,22 @@ public abstract class SurfaceChunkGenerator extends ChunkGenerator {
 		return MathHelper.clampedLerp(h / 512.0D, i / 512.0D, (j / 10.0D + 1.0D) / 2.0D);
 	}
 
-	protected void sampleNoiseColumn(double[] buffer, int x, int z, double d, double e, double f, double g, int i,
-			int j) {
+	protected void sampleNoiseColumn(double[] buffer, int x, int z, double d, double e, double f, double g, int i, int j) {
 		double[] ds = this.computeNoiseRange(x, z);
 		double h = ds[0];
 		double k = ds[1];
-		double l = this.getNoiseSizeY() - 4;
+		double scale = this.getNoiseSizeY() - 4;
 		double m = 0.0D;
 
-		for (int n = 0; n < this.getNoiseSizeY(); ++n) {
-			double o = this.sampleNoise(x, n, z, d, e, f, g);
-			o -= this.computeNoiseFalloff(h, k, n);
-			if ((double) n > l) {
-				o = MathHelper.clampedLerp(o, j, ((double) n - l) / (double) i);
-			} else if ((double) n < m) {
-				o = MathHelper.clampedLerp(o, -30.0D, (m - (double) n) / (m - 1.0D));
+		for (int ry = 0; ry < this.getNoiseSizeY(); ++ry) {
+			double noise = this.sampleNoise(x, ry, z, d, e, f, g);
+			noise -= this.computeNoiseFalloff(h, k, ry);
+			if ((double) ry > scale) {
+				noise = MathHelper.clampedLerp(noise, j, ((double) ry - scale) / (double) i);
+			} else if ((double) ry < m) {
+				noise = MathHelper.clampedLerp(noise, -30.0D, (m - (double) ry) / (m - 1.0D));
 			}
-			buffer[n] = o;
+			buffer[ry] = noise;
 		}
 	}
 

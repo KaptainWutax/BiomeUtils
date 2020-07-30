@@ -13,10 +13,10 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 
 	static {
 		BIOME_WEIGHT_TABLE = new float[25];
-		for (int i = -2; i <= 2; ++i) {
-			for (int j = -2; j <= 2; ++j) {
-				float f = 10.0F / MathHelper.sqrt((float) (i * i + j * j) + 0.2F);
-				BIOME_WEIGHT_TABLE[i + 2 + (j + 2) * 5] = f;
+		for (int rx = -2; rx <= 2; ++rx) {
+			for (int rz = -2; rz <= 2; ++rz) {
+				float f = 10.0F / MathHelper.sqrt((float) (rx * rx + rz * rz) + 0.2F);
+				BIOME_WEIGHT_TABLE[rx + 2 + (rz + 2) * 5] = f;
 			}
 		}
 	}
@@ -30,13 +30,13 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 
 	@Override
 	protected double computeNoiseFalloff(double depth, double scale, int y) {
-		double e = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / scale;
+		double fall_off = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / scale;
 
-		if(e < 0.0D) {
-			e *= 4.0D;
+		if(fall_off < 0.0D) {
+			fall_off *= 4.0D;
 		}
 
-		return e;
+		return fall_off;
 	}
 
 	@Override
@@ -47,24 +47,24 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 		float h = 0.0F;
 		float j = this.biomeSource.getBiomeForNoiseGen(x, 0, z).getDepth();
 
-		for (int k = -2; k <= 2; ++k) {
-			for (int l = -2; l <= 2; ++l) {
-				Biome biome = this.biomeSource.getBiomeForNoiseGen(x + k, 0, z + l);
-				float m = biome.getDepth();
-				float n = biome.getScale();
-				if (this.amplified && m > 0.0F) {
-					m = 1.0F + m * 2.0F;
-					n = 1.0F + n * 4.0F;
+		for (int rx = -2; rx <= 2; ++rx) {
+			for (int rz = -2; rz <= 2; ++rz) {
+				Biome biome = this.biomeSource.getBiomeForNoiseGen(x + rx, 0, z + rz);
+				float depth = biome.getDepth();
+				float scale = biome.getScale();
+				if (this.amplified && depth > 0.0F) {
+					depth = 1.0F + depth * 2.0F;
+					scale = 1.0F + scale * 4.0F;
 				}
 
-				float o = BIOME_WEIGHT_TABLE[k + 2 + (l + 2) * 5] / (m + 2.0F);
+				float weight = BIOME_WEIGHT_TABLE[rx + 2 + (rz + 2) * 5] / (depth + 2.0F);
 				if (biome.getDepth() > j) {
-					o /= 2.0F;
+					weight /= 2.0F;
 				}
 
-				f += n * o;
-				g += m * o;
-				h += o;
+				f += scale * weight;
+				g += depth * weight;
+				h += weight;
 			}
 		}
 

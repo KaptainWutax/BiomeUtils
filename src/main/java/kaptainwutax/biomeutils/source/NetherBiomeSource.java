@@ -26,7 +26,7 @@ public class NetherBiomeSource extends BiomeSource {
 	private DoublePerlinNoiseSampler humidity;
 	private DoublePerlinNoiseSampler altitude;
 	private DoublePerlinNoiseSampler weirdness;
-	private MixedNoisePoint[] biomePoints;
+	private final MixedNoisePoint[] biomePoints;
 
 	private boolean threeDimensionalSampling;
 	public NetherBiomeSource.Layer full;

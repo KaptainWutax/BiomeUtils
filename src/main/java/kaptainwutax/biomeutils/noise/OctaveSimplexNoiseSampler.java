@@ -20,15 +20,16 @@ public class OctaveSimplexNoiseSampler implements NoiseSampler {
 	}
 
 	public double sample(double x, double y, boolean bl) {
-		double d = 0.0D;
-		double e = 1.0D;
+		double noise = 0.0D;
+		// contribution of each octaves to the final noise, diminished by a factor of 2 (or increased by factor of 0.5)
+		double persistence = 1.0D;
 
 		for (int i = 0; i < this.octaveCount; ++i) {
-			d += this.octaveSamplers[i].sample(x * e + (bl ? this.octaveSamplers[i].originX : 0.0D), y * e + (bl ? this.octaveSamplers[i].originY : 0.0D)) / e;
-			e /= 2.0D;
+			noise += this.octaveSamplers[i].sample2D(x * persistence + (bl ? this.octaveSamplers[i].originX : 0.0D), y * persistence + (bl ? this.octaveSamplers[i].originY : 0.0D)) / persistence;
+			persistence /= 2.0D;
 		}
 
-		return d;
+		return noise;
 	}
 
 	@Override

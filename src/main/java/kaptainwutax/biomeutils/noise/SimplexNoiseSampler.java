@@ -10,9 +10,10 @@ public class SimplexNoiseSampler {
 	};
 
 	private static final double SQRT_3 = Math.sqrt(3.0D);
-	private static final double SKEW_FACTOR_2D;
-	private static final double UNSKEW_FACTOR_2D;
-
+	private static final double SKEW_FACTOR_2D; // also known as F2
+	private static final double UNSKEW_FACTOR_2D; // also known as G2
+	private static final double F3=0.16666666666666666D;
+	private static final double G3=0.3333333333333333D;
 	private final int[] permutations = new int[512];
 	public final double originX;
 	public final double originY;
@@ -57,127 +58,127 @@ public class SimplexNoiseSampler {
 		return g;
 	}
 
-	public double sample(double x, double y) {
-		double d = (x + y) * SKEW_FACTOR_2D;
-		int i = floor(x + d);
-		int j = floor(y + d);
-		double e = (double)(i + j) * UNSKEW_FACTOR_2D;
-		double f = (double)i - e;
-		double g = (double)j - e;
-		double h = x - f;
-		double k = y - g;
-		byte n;
-		byte o;
-		if (h > k) {
-			n = 1;
-			o = 0;
-		} else {
-			n = 0;
-			o = 1;
+	public double sample2D(double x, double y) {
+		double hairy_factor = (x + y) * SKEW_FACTOR_2D;
+		// in minecraft those are the temperatures
+		int hairy_x = floor(x + hairy_factor);
+		int hairy_z = floor(y + hairy_factor);
+		double mixed_hairy_xz = (double)(hairy_x + hairy_z) * UNSKEW_FACTOR_2D;
+		double diff_x_to_xz = (double)hairy_x - mixed_hairy_xz;
+		double diff_z_to_xz = (double)hairy_z - mixed_hairy_xz;
+		double x0 = x - diff_x_to_xz;
+		double y0 = y - diff_z_to_xz;
+		byte offset_second_corner_x;
+		byte offset_second_corner_z;
+		if (x0 > y0) { // lower triangle, XY order: (0,0)->(1,0)->(1,1)
+			offset_second_corner_x = 1;
+			offset_second_corner_z = 0;
+		} else { // upper triangle, YX order: (0,0)->(0,1)->(1,1)
+			offset_second_corner_x = 0;
+			offset_second_corner_z = 1;
 		}
 
-		double p = h - (double)n + UNSKEW_FACTOR_2D;
-		double q = k - (double)o + UNSKEW_FACTOR_2D;
-		double r = h - 1.0D + 2.0D * UNSKEW_FACTOR_2D;
-		double s = k - 1.0D + 2.0D * UNSKEW_FACTOR_2D;
-		int t = i & 255;
-		int u = j & 255;
-		int v = this.getGradient(t + this.getGradient(u)) % 12;
-		int w = this.getGradient(t + n + this.getGradient(u + o)) % 12;
-		int z = this.getGradient(t + 1 + this.getGradient(u + 1)) % 12;
-		double aa = this.grad(v, h, k, 0.0D, 0.5D);
-		double ab = this.grad(w, p, q, 0.0D, 0.5D);
-		double ac = this.grad(z, r, s, 0.0D, 0.5D);
-		return 70.0D * (aa + ab + ac);
+		double x1 = x0 - (double)offset_second_corner_x + UNSKEW_FACTOR_2D;
+		double y1 = y0 - (double)offset_second_corner_z + UNSKEW_FACTOR_2D;
+		double x3 = x0 - 1.0D + 2.0D * UNSKEW_FACTOR_2D;
+		double y3 = y0 - 1.0D + 2.0D * UNSKEW_FACTOR_2D;
+		int ii = hairy_x & 255;
+		int jj = hairy_z & 255;
+		int gi0 = this.getGradient(ii + this.getGradient(jj)) % 12;
+		int gi1 = this.getGradient(ii + offset_second_corner_x + this.getGradient(jj + offset_second_corner_z)) % 12;
+		int gi2 = this.getGradient(ii + 1 + this.getGradient(jj + 1)) % 12;
+		double t0 = this.grad(gi0, x0, y0, 0.0D, 0.5D);
+		double t1 = this.grad(gi1, x1, y1, 0.0D, 0.5D);
+		double t2 = this.grad(gi2, x3, y3, 0.0D, 0.5D);
+		return 70.0D * (t0 + t1 + t2);
 	}
 
-	public double method_22416(double d, double e, double f) {
-		double g = 0.3333333333333333D;
-		double h = (d + e + f) * 0.3333333333333333D;
-		int i = floor(d + h);
-		int j = floor(e + h);
-		int k = floor(f + h);
-		double l = 0.16666666666666666D;
-		double m = (double)(i + j + k) * 0.16666666666666666D;
-		double n = (double)i - m;
-		double o = (double)j - m;
-		double p = (double)k - m;
-		double q = d - n;
-		double r = e - o;
-		double s = f - p;
-		byte z;
-		byte aa;
-		byte ab;
-		byte ac;
-		byte ad;
-		byte bc;
-		if (q >= r) {
-			if (r >= s) {
-				z = 1;
-				aa = 0;
-				ab = 0;
-				ac = 1;
-				ad = 1;
-				bc = 0;
-			} else if (q >= s) {
-				z = 1;
-				aa = 0;
-				ab = 0;
-				ac = 1;
-				ad = 0;
-				bc = 1;
-			} else {
-				z = 0;
-				aa = 0;
-				ab = 1;
-				ac = 1;
-				ad = 0;
-				bc = 1;
+	public double sample3D(double x, double y, double z) {
+		double skew_factor = (x + y + z) * F3; // F3 is 1/3
+		// Skew the input space to determine which simplex cell we're in
+		int i = floor(x + skew_factor);
+		int j = floor(y + skew_factor);
+		int k = floor(z + skew_factor);
+		double unskew_factor = (double)(i + j + k) * G3; // G3 is 1/6
+		double x0 = (double)i - unskew_factor;
+		double y0 = (double)j - unskew_factor;
+		double z0 = (double)k - unskew_factor;
+		x0 = x - x0;
+		y0 = y - y0;
+		z0 = z - z0;
+		byte i1;
+		byte j1;
+		byte k1;
+		byte i2;
+		byte j2;
+		byte k2;
+		if (x0 >= y0) {
+			if (y0 >= z0) { // X Y Z order
+				i1 = 1;
+				j1 = 0;
+				k1 = 0;
+				i2 = 1;
+				j2 = 1;
+				k2 = 0;
+			} else if (x0 >= z0) { // X Z Y order
+				i1 = 1;
+				j1 = 0;
+				k1 = 0;
+				i2 = 1;
+				j2 = 0;
+				k2 = 1;
+			} else { // Z X Y order
+				i1 = 0;
+				j1 = 0;
+				k1 = 1;
+				i2 = 1;
+				j2 = 0;
+				k2 = 1;
 			}
-		} else if (r < s) {
-			z = 0;
-			aa = 0;
-			ab = 1;
-			ac = 0;
-			ad = 1;
-			bc = 1;
-		} else if (q < s) {
-			z = 0;
-			aa = 1;
-			ab = 0;
-			ac = 0;
-			ad = 1;
-			bc = 1;
-		} else {
-			z = 0;
-			aa = 1;
-			ab = 0;
-			ac = 1;
-			ad = 1;
-			bc = 0;
+		} else if (y0 < z0) { // Z Y X order
+			i1 = 0;
+			j1 = 0;
+			k1 = 1;
+			i2 = 0;
+			j2 = 1;
+			k2 = 1;
+		} else if (x0 < z0) { // Y Z X order
+			i1 = 0;
+			j1 = 1;
+			k1 = 0;
+			i2 = 0;
+			j2 = 1;
+			k2 = 1;
+		} else { // Y X Z order
+			i1 = 0;
+			j1 = 1;
+			k1 = 0;
+			i2 = 1;
+			j2 = 1;
+			k2 = 0;
 		}
 
-		double bd = q - (double)z + 0.16666666666666666D;
-		double be = r - (double)aa + 0.16666666666666666D;
-		double bf = s - (double)ab + 0.16666666666666666D;
-		double bg = q - (double)ac + 0.3333333333333333D;
-		double bh = r - (double)ad + 0.3333333333333333D;
-		double bi = s - (double)bc + 0.3333333333333333D;
-		double bj = q - 1.0D + 0.5D;
-		double bk = r - 1.0D + 0.5D;
-		double bl = s - 1.0D + 0.5D;
-		int bm = i & 255;
-		int bn = j & 255;
-		int bo = k & 255;
-		int bp = this.getGradient(bm + this.getGradient(bn + this.getGradient(bo))) % 12;
-		int bq = this.getGradient(bm + z + this.getGradient(bn + aa + this.getGradient(bo + ab))) % 12;
-		int br = this.getGradient(bm + ac + this.getGradient(bn + ad + this.getGradient(bo + bc))) % 12;
-		int bs = this.getGradient(bm + 1 + this.getGradient(bn + 1 + this.getGradient(bo + 1))) % 12;
-		double bt = this.grad(bp, q, r, s, 0.6D);
-		double bu = this.grad(bq, bd, be, bf, 0.6D);
-		double bv = this.grad(br, bg, bh, bi, 0.6D);
-		double bw = this.grad(bs, bj, bk, bl, 0.6D);
-		return 32.0D * (bt + bu + bv + bw);
+		double x1 = x0 - (double)i1 + G3;
+		double y1 = y0 - (double)j1 + G3;
+		double z1 = z0 - (double)k1 + G3;
+		double x2 = x0 - (double)i2 + F3;
+		double y2 = y0 - (double)j2 + F3;
+		double z2 = z0 - (double)k2 + F3;
+		double bj = x0 - 1.0D + 0.5D;
+		double bk = y0 - 1.0D + 0.5D;
+		double bl = z0 - 1.0D + 0.5D;
+		int ii = i & 255;
+		int jj = j & 255;
+		int kk = k & 255;
+		int gi0 = this.getGradient(ii + this.getGradient(jj + this.getGradient(kk))) % 12;
+		int gi1 = this.getGradient(ii + i1 + this.getGradient(jj + j1 + this.getGradient(kk + k1))) % 12;
+		int gi2 = this.getGradient(ii + i2 + this.getGradient(jj + j2 + this.getGradient(kk + k2))) % 12;
+		int gi3 = this.getGradient(ii + 1 + this.getGradient(jj + 1 + this.getGradient(kk + 1))) % 12;
+		double t0 = this.grad(gi0, x0, y0, z0, 0.6D);
+		double t1 = this.grad(gi1, x1, y1, z1, 0.6D);
+		double t2 = this.grad(gi2, x2, y2, z2, 0.6D);
+		double t3 = this.grad(gi3, bj, bk, bl, 0.6D);
+		return 32.0D * (t0 + t1 + t2 + t3);
 	}
 
 	public static int floor(double d) {
@@ -186,8 +187,8 @@ public class SimplexNoiseSampler {
 	}
 
 	static {
-		SKEW_FACTOR_2D = 0.5D * (SQRT_3 - 1.0D);
-		UNSKEW_FACTOR_2D = (3.0D - SQRT_3) / 6.0D;
+		SKEW_FACTOR_2D = 0.5D * (SQRT_3 - 1.0D); // 0.3660254037844386D
+		UNSKEW_FACTOR_2D = (3.0D - SQRT_3) / 6.0D; // 0.21132486540518713D
 	}
 
 }

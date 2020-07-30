@@ -14,16 +14,16 @@ public class OctavePerlinNoiseSampler implements NoiseSampler {
 	
 	private static final LCG SKIP_262 = LCG.JAVA.combine(262);
 
-	public final double field_20659;
-	public final double field_20660;
+	public final double lacunarity;
+	public final double persistence;
 
 	public OctavePerlinNoiseSampler(JRand random, int octaveCount) {
 		this.octaveSamplers = new PerlinNoiseSampler[octaveCount];
 		for (int i = 0; i < octaveCount; i++) {
 			this.octaveSamplers[i] = new PerlinNoiseSampler(random);
 		}
-		this.field_20659 = 1.0;
-		this.field_20660 = 1.0;
+		this.lacunarity = 1.0;
+		this.persistence = 1.0;
 	}
 
 	public OctavePerlinNoiseSampler(ChunkRand rand, IntStream octaves) {
@@ -74,8 +74,8 @@ public class OctavePerlinNoiseSampler implements NoiseSampler {
 			}
 		}
 
-		this.field_20660 = Math.pow(2.0D, j);
-		this.field_20659 = 1.0D / (Math.pow(2.0D, k) - 1.0D);
+		this.persistence = Math.pow(2.0D, j);
+		this.lacunarity = 1.0D / (Math.pow(2.0D, k) - 1.0D);
 	}
 
 	public double sample(double x, double y, double z) {
@@ -83,19 +83,21 @@ public class OctavePerlinNoiseSampler implements NoiseSampler {
 	}
 
 	public double sample(double x, double y, double z, double d, double e, boolean bl) {
-		double f = 0.0D;
-		double g = this.field_20660;
-		double h = this.field_20659;
+		double noise = 0.0D;
+		// contribution of each octaves to the final noise, diminished by a factor of 2 (or increased by factor of 0.5)
+		double persistence = this.persistence;
+		// distance between octaves, increased for each by a factor of 2
+		double lacunarity = this.lacunarity;
 
 		for(PerlinNoiseSampler sampler: this.octaveSamplers) {
 			if(sampler == null)continue;
-			f += sampler.sample(maintainPrecision(x * g), bl ? -sampler.originY : maintainPrecision(y * g),
-					maintainPrecision(z * g), d * g, e * g) * h;
-			g /= 2.0D;
-			h *= 2.0D;
+			noise += sampler.sample(maintainPrecision(x * persistence), bl ? -sampler.originY : maintainPrecision(y * persistence),
+					maintainPrecision(z * persistence), d * persistence, e * persistence) * lacunarity;
+			persistence /= 2.0D;
+			lacunarity *= 2.0D;
 		}
 
-		return f;
+		return noise;
 	}
 
 	public PerlinNoiseSampler getOctave(int octave) {

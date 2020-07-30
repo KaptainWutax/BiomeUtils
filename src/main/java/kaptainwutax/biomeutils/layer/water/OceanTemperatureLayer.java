@@ -17,16 +17,16 @@ public class OceanTemperatureLayer extends BiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
-		double d = this.perlin.sample((double)x / 8.0D, (double)z / 8.0D, 0.0D, 0.0D, 0.0D);
+		double normalized_noise = this.perlin.sample((double)x / 8.0D, (double)z / 8.0D, 0.0D, 0.0D, 0.0D);
 		
-		if (d > 0.4D) {
+		if (normalized_noise > 0.4D) {
 			return Biome.WARM_OCEAN.getId();
-		} else if (d > 0.2D) {
+		} else if (normalized_noise > 0.2D) {
 			return Biome.LUKEWARM_OCEAN.getId();
-		} else if (d < -0.4D) {
+		} else if (normalized_noise < -0.4D) {
 			return Biome.FROZEN_OCEAN.getId();
 		} else {
-			return d < -0.2D ? Biome.COLD_OCEAN.getId() : Biome.OCEAN.getId();
+			return normalized_noise < -0.2D ? Biome.COLD_OCEAN.getId() : Biome.OCEAN.getId();
 		}
 	}
 
@@ -37,45 +37,45 @@ public class OceanTemperatureLayer extends BiomeLayer {
 
 		@Override
 		public int sample(int x, int y, int z) {
-			int i = this.getParent(0).get(x, y, z);
-			int j = this.getParent(1).get(x, y, z);
-			if (!Biome.isOcean(i))return i;
+			int full_stack_center = this.getParent(0).get(x, y, z);
+			int ocean_stack_center = this.getParent(1).get(x, y, z);
+			if (!Biome.isOcean(full_stack_center))return full_stack_center;
 
-			for(int m = -8; m <= 8; m += 4) {
-				for(int n = -8; n <= 8; n += 4) {
-					int o = this.getParent(0).get(x + m, y, z + n);
+			for(int rx = -8; rx <= 8; rx += 4) {
+				for(int rz = -8; rz <= 8; rz += 4) {
+					int shifted_xz = this.getParent(0).get(x + rx, y, z + rz);
 
-					if (!Biome.isOcean(o)) {
-						if (j == Biome.WARM_OCEAN.getId()) {
+					if (!Biome.isOcean(shifted_xz)) {
+						if (ocean_stack_center == Biome.WARM_OCEAN.getId()) {
 							return Biome.LUKEWARM_OCEAN.getId();
 						}
 
-						if (j == Biome.FROZEN_OCEAN.getId()) {
+						if (ocean_stack_center == Biome.FROZEN_OCEAN.getId()) {
 							return Biome.COLD_OCEAN.getId();
 						}
 					}
 				}
 			}
 
-			if (i == Biome.DEEP_OCEAN.getId()) {
-				if (j == Biome.LUKEWARM_OCEAN.getId()) {
+			if (full_stack_center == Biome.DEEP_OCEAN.getId()) {
+				if (ocean_stack_center == Biome.LUKEWARM_OCEAN.getId()) {
 					return Biome.DEEP_LUKEWARM_OCEAN.getId();
 				}
 
-				if (j == Biome.OCEAN.getId()) {
+				if (ocean_stack_center == Biome.OCEAN.getId()) {
 					return Biome.DEEP_OCEAN.getId();
 				}
 
-				if (j == Biome.COLD_OCEAN.getId()) {
+				if (ocean_stack_center == Biome.COLD_OCEAN.getId()) {
 					return Biome.DEEP_COLD_OCEAN.getId();
 				}
 
-				if (j == Biome.FROZEN_OCEAN.getId()) {
+				if (ocean_stack_center == Biome.FROZEN_OCEAN.getId()) {
 					return Biome.DEEP_FROZEN_OCEAN.getId();
 				}
 			}
 
-			return j;
+			return ocean_stack_center;
 		}
 	}
 

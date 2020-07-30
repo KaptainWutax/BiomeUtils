@@ -52,7 +52,7 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     @Override
-    public void build() {
+    protected void build() {
         BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
 
         // first legacy stack

@@ -40,30 +40,30 @@ public class EndBiomeSource extends BiomeSource {
 		return Biome.REGISTRY.get(this.full.get(x >> 4, y,z >> 4));
 	}
 
-	public static float getNoiseAt(SimplexNoiseSampler simplexNoiseSampler, int x, int z) {
-		int k = x / 2;
-		int l = z / 2;
-		int m = x % 2;
-		int n = z % 2;
-		float f = 100.0F - (float)Math.sqrt((float)(x * x + z * z)) * 8.0F;
-		f = clamp(f, -100.0F, 80.0F);
+	public static float getHeightAt(SimplexNoiseSampler simplexNoiseSampler, int x, int z) {
+		int scaled_x = x / 2;
+		int scaled_z = z / 2;
+		int odd_x = x % 2;
+		int odd_z = z % 2;
+		float height = 100.0F - (float)Math.sqrt((float)(x * x + z * z)) * 8.0F;
+		height = clamp(height, -100.0F, 80.0F);
 
-		for(int o = -12; o <= 12; ++o) {
-			for(int p = -12; p <= 12; ++p) {
-				long q = k + o;
-				long r = l + p;
-				if (q * q + r * r > 4096L && simplexNoiseSampler.sample((double)q, (double)r) < -0.8999999761581421D) {
-					float g = (Math.abs((float)q) * 3439.0F + Math.abs((float)r) * 147.0F) % 13.0F + 9.0F;
-					float h = (float)(m - o * 2);
-					float s = (float)(n - p * 2);
-					float t = 100.0F - (float)Math.sqrt(h * h + s * s) * g;
-					t = clamp(t, -100.0F, 80.0F);
-					f = Math.max(f, t);
+		for(int rx = -12; rx <= 12; ++rx) {
+			for(int rz = -12; rz <= 12; ++rz) {
+				long shifted_x = scaled_x + rx;
+				long shifted_z = scaled_z + rz;
+				if (shifted_x * shifted_x + shifted_z * shifted_z > 4096L && simplexNoiseSampler.sample2D((double)shifted_x, (double)shifted_z) < -0.8999999761581421D) {
+					float elevation = (Math.abs((float)shifted_x) * 3439.0F + Math.abs((float)shifted_z) * 147.0F) % 13.0F + 9.0F;
+					float smooth_x = (float)(odd_x - rx * 2);
+					float smooth_z = (float)(odd_z - rz * 2);
+					float noise = 100.0F - (float)Math.sqrt(smooth_x * smooth_x + smooth_z * smooth_z) * elevation;
+					noise = clamp(noise, -100.0F, 80.0F);
+					height = Math.max(height, noise);
 				}
 			}
 		}
 
-		return f;
+		return height;
 	}
 
 	public static float clamp(float value, float min, float max) {
@@ -81,14 +81,13 @@ public class EndBiomeSource extends BiomeSource {
 			if ((long)x * (long)x + (long)z * (long)z <= 4096L) {
 				return Biome.THE_END.getId();
 			}
-
-			float f = getNoiseAt(EndBiomeSource.this.simplex, x * 2 + 1, z * 2 + 1);
-			if (f > 40.0F) {
+			float height = getHeightAt(EndBiomeSource.this.simplex, x * 2 + 1, z * 2 + 1);
+			if (height > 40.0F) {
 				return Biome.END_HIGHLANDS.getId();
-			} else if (f >= 0.0F) {
+			} else if (height >= 0.0F) {
 				return Biome.END_MIDLANDS.getId();
 			} else {
-				return f < -20.0F ? Biome.SMALL_END_ISLANDS.getId() : Biome.END_BARRENS.getId();
+				return height < -20.0F ? Biome.SMALL_END_ISLANDS.getId() : Biome.END_BARRENS.getId();
 			}
 		}
 	}
