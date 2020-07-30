@@ -1,12 +1,12 @@
 # BiomeUtils
 
-This library aims to give easy access to the biome and noise generation of Minecraft. It is not a directly minecraft
-source code as it has been rewritten from the ground up with optimization in mind.
+This library aims to give easy access to the different biomes generations of Minecraft. It is not direct copy of Minecraft
+source code as it has been rewritten from the ground up with optimizations in mind.
 
 ------
 
 # A few words
-Before using the library, i want to say a few word about OverWorld biome generation in Minecraft. Currently, as it has been 
+Before using the library, I want to say a few words about OverWorld biome generation in Minecraft. Currently, as it has been 
 implemented, the biome generation is split up in layers which are stacked together to form the biome generator.
 
 This generator can be split in 4 different part, there is first the legacy stack which starts from `ContinentLayer`
@@ -23,21 +23,39 @@ At this point the biome generator give the biomes at 1/4 the scale of what you w
 applied, called `VoronoiLayer` which takes since 1.14 the sha2 hash of the world seed to initialize it.
 This means that this last layer can be done on the client side and save both on server performance and bandwidth.
 
-For Nether and End biome generation, simplex and perlin noise are used, thus they only use the 48 lower bits of the seed
-compared to the overworld.
+For Nether and End biome generation, Simplex and Perlin noise are used, thus they only use the 48 lower bits of the seed
+compared to the OverWorld.
 
 ------
 
 # How to use
 
-**Here vXXX means any version starting from v1_7 till current supported one.**
+**Here vXXX means any version starting from v1_13 (for the moment, we are extending support) till current supported one.**
+
+Before anything, we recommend using gradle buildsystem to import the library as such:
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation ('com.github.KaptainWutax:BiomeUtils:-SNAPSHOT'){
+        transitive = false
+    }
+    implementation ('com.github.KaptainWutax:SeedUtils:-SNAPSHOT'){
+        transitive = false
+    }
+}
+```
+
 
 To use the library, you have a few possible endpoints depending on your usage:
 
 - If you need simply OverWorld biomes then you use it as follows
   - `OverworldBiomeSource#getBiome` will give you the biome as scale 1/1
-  - `OverworldBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka voronoi)
-  - `OverworldBiomeSource.(base|ocean|noise|variants|biomes|river|full|voronoi)#get` are entrypoint for different level 
+  - `OverworldBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka Voronoi)
+  - `OverworldBiomeSource.(base|ocean|noise|variants|biomes|river|full|voronoi)#get` are entry points for different level 
   in the generator.
 
 The common approach:     
@@ -51,8 +69,8 @@ Biome biome=biomeSource.getBiome(x,y,z); // here y is always 0 no matter what yo
 
 - If you need to use Nether biome generation you need to do as follows
    - `NetherBiomeSource#getBiome` will give you the biome as scale 1/1
-   - `NetherBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka voronoi)
-   - `NetherBiomeSource.(full|voronoi)#get` are entrypoint for different level 
+   - `NetherBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka Voronoi)
+   - `NetherBiomeSource.(full|voronoi)#get` are entry points for different level 
  
    
 ```java
@@ -65,8 +83,8 @@ Biome biome=netherBiomeSource.getBiome(x,y,z); // here y matters
 
 - If you need to use End biome generation you need to do as follows
    - `EndBiomeSource#getBiome` will give you the biome as scale 1/1
-   - `EndBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka voronoi)
-   - `EndBiomeSource.(full|simplex|voronoi)#get` are entrypoint for different level 
+   - `EndBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka Voronoi)
+   - `EndBiomeSource.(full|simplex|voronoi)#get` are entry points for different level 
  
    
 ```java
