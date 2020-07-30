@@ -2,6 +2,7 @@ package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.*;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
@@ -16,7 +17,6 @@ import kaptainwutax.biomeutils.layer.water.RiverLayer;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.util.UnsupportedVersion;
 
-import java.util.ArrayList;
 import java.util.function.BiFunction;
 
 public class OverworldBiomeSource extends BiomeSource {
@@ -49,6 +49,11 @@ public class OverworldBiomeSource extends BiomeSource {
         this.biomeSize = biomeSize;
         this.riverSize = riverSize;
         this.build();
+    }
+
+    @Override
+    public LayerStack<BiomeLayer> getLayers() {
+        return this.layers;
     }
 
     @Override
@@ -147,33 +152,6 @@ public class OverworldBiomeSource extends BiomeSource {
     @Override
     public Biome getBiomeForNoiseGen(int x, int y, int z) {
         return Biome.REGISTRY.get(this.full.get(x, y, z));
-    }
-
-    public static class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
-        protected int layerIdCounter = 0;
-
-        @Override
-        public boolean add(T layer) {
-            layer.setLayerId(this.layerIdCounter++);
-            return super.add(layer);
-        }
-
-        public void setScales() {
-            setRecursiveScale(this.get(this.size() - 1), 1);
-        }
-
-        public void setRecursiveScale(BiomeLayer last, int scale) {
-            if(last != null) {
-                int max = 0;
-
-                for(BiomeLayer biomeLayer: last.getParents()) {
-                    setRecursiveScale(biomeLayer, scale << ((last instanceof VoronoiLayer) ? 2 : (last instanceof ScaleLayer) ? 1 : 0));
-                    max = Math.max(max, scale);
-                }
-
-                last.setScale(max);
-            }
-        }
     }
 
 }

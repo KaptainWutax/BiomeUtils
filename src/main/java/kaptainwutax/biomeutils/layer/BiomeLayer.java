@@ -4,7 +4,7 @@ import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.seed.SeedMixer;
 
 public abstract class BiomeLayer {
-    
+
     private final MCVersion version;
     private final BiomeLayer[] parents;
     public final long layerSeed;

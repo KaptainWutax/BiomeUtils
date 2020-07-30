@@ -1,13 +1,13 @@
 package kaptainwutax.biomeutils.noise;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import kaptainwutax.biomeutils.MathHelper;
 import kaptainwutax.seedutils.lcg.LCG;
 import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.ChunkRand;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class OctavePerlinNoiseSampler implements NoiseSampler {
 	private final PerlinNoiseSampler[] octaveSamplers;

@@ -2,6 +2,7 @@ package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.noise.DoublePerlinNoiseSampler;
 import kaptainwutax.biomeutils.noise.MixedNoisePoint;
@@ -28,9 +29,11 @@ public class NetherBiomeSource extends BiomeSource {
 	private DoublePerlinNoiseSampler weirdness;
 	private final MixedNoisePoint[] biomePoints;
 
-	private boolean threeDimensionalSampling;
 	public NetherBiomeSource.Layer full;
 	public VoronoiLayer voronoi;
+	private LayerStack<BiomeLayer> layers = new LayerStack<>();
+
+	private boolean threeDimensionalSampling;
 
 	public NetherBiomeSource(MCVersion version, long worldSeed) {
 		this(version, worldSeed, DEFAULT_BIOME_POINTS);
@@ -48,6 +51,11 @@ public class NetherBiomeSource extends BiomeSource {
 	}
 
 	@Override
+	public LayerStack<?> getLayers() {
+		return this.layers;
+	}
+
+	@Override
 	protected void build() {
 		if(this.getVersion().isOlderThan(MCVersion.v1_16))return;
 		this.temperature = new DoublePerlinNoiseSampler(new ChunkRand(this.getWorldSeed()), IntStream.rangeClosed(-7, -6));
@@ -55,8 +63,9 @@ public class NetherBiomeSource extends BiomeSource {
 		this.altitude = new DoublePerlinNoiseSampler(new ChunkRand(this.getWorldSeed() + 2L), IntStream.rangeClosed(-7, -6));
 		this.weirdness = new DoublePerlinNoiseSampler(new ChunkRand(this.getWorldSeed() + 3L), IntStream.rangeClosed(-7, -6));
 
-		this.full = new NetherBiomeSource.Layer(this.getVersion());
-		this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full);
+		this.layers.add(this.full = new NetherBiomeSource.Layer(this.getVersion()));
+		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full));
+		this.layers.setScales();
 	}
 
 	@Override

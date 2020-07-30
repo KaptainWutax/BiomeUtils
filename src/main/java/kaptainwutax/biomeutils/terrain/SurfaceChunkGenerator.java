@@ -1,14 +1,14 @@
 package kaptainwutax.biomeutils.terrain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import kaptainwutax.biomeutils.MathHelper;
 import kaptainwutax.biomeutils.noise.NoiseSampler;
 import kaptainwutax.biomeutils.noise.OctavePerlinNoiseSampler;
 import kaptainwutax.biomeutils.noise.OctaveSimplexNoiseSampler;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.seedutils.mc.ChunkRand;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class SurfaceChunkGenerator extends ChunkGenerator {
 

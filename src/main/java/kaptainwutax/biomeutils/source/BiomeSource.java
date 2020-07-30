@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
@@ -26,6 +27,12 @@ public abstract class BiomeSource {
 
 	public long getWorldSeed() {
 		return this.worldSeed;
+	}
+
+	public abstract LayerStack<?> getLayers();
+
+	public int getLayerCount() {
+		return this.getLayers().size();
 	}
 
 	protected abstract void build();
