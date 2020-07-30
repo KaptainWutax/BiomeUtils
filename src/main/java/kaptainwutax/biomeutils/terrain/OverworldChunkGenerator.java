@@ -30,13 +30,13 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 
 	@Override
 	protected double computeNoiseFalloff(double depth, double scale, int y) {
-		double fall_off = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / scale;
+		double fallOff = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / scale;
 
-		if(fall_off < 0.0D) {
-			fall_off *= 4.0D;
+		if(fallOff < 0.0D) {
+			fallOff *= 4.0D;
 		}
 
-		return fall_off;
+		return fallOff;
 	}
 
 	@Override

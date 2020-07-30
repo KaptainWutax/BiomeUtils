@@ -46,46 +46,46 @@ public class SimplexNoiseSampler {
 	}
 
 	private double grad(int hash, double x, double y, double z, double d) {
-		double e = d - x * x - y * y - z * z;
-		double g;
-		if (e < 0.0D) {
-			g = 0.0D;
+		double contribution = d - x * x - y * y - z * z;
+		double result;
+		if (contribution < 0.0D) {
+			result = 0.0D;
 		} else {
-			e *= e;
-			g = e * e * dot(GRADIENTS[hash], x, y, z);
+			contribution *= contribution;
+			result = contribution * contribution * dot(GRADIENTS[hash], x, y, z);
 		}
 
-		return g;
+		return result;
 	}
 
 	public double sample2D(double x, double y) {
-		double hairy_factor = (x + y) * SKEW_FACTOR_2D;
+		double hairyFactor = (x + y) * SKEW_FACTOR_2D;
 		// in minecraft those are the temperatures
-		int hairy_x = floor(x + hairy_factor);
-		int hairy_z = floor(y + hairy_factor);
-		double mixed_hairy_xz = (double)(hairy_x + hairy_z) * UNSKEW_FACTOR_2D;
-		double diff_x_to_xz = (double)hairy_x - mixed_hairy_xz;
-		double diff_z_to_xz = (double)hairy_z - mixed_hairy_xz;
-		double x0 = x - diff_x_to_xz;
-		double y0 = y - diff_z_to_xz;
-		byte offset_second_corner_x;
-		byte offset_second_corner_z;
+		int hairyX = floor(x + hairyFactor);
+		int hairyZ = floor(y + hairyFactor);
+		double mixedHairyXz = (double)(hairyX + hairyZ) * UNSKEW_FACTOR_2D;
+		double diffXToXz = (double)hairyX - mixedHairyXz;
+		double diffZToXz = (double)hairyZ - mixedHairyXz;
+		double x0 = x - diffXToXz;
+		double y0 = y - diffZToXz;
+		byte offsetSecondCornerX;
+		byte offsetSecondCornerZ;
 		if (x0 > y0) { // lower triangle, XY order: (0,0)->(1,0)->(1,1)
-			offset_second_corner_x = 1;
-			offset_second_corner_z = 0;
+			offsetSecondCornerX = 1;
+			offsetSecondCornerZ = 0;
 		} else { // upper triangle, YX order: (0,0)->(0,1)->(1,1)
-			offset_second_corner_x = 0;
-			offset_second_corner_z = 1;
+			offsetSecondCornerX = 0;
+			offsetSecondCornerZ = 1;
 		}
 
-		double x1 = x0 - (double)offset_second_corner_x + UNSKEW_FACTOR_2D;
-		double y1 = y0 - (double)offset_second_corner_z + UNSKEW_FACTOR_2D;
+		double x1 = x0 - (double)offsetSecondCornerX + UNSKEW_FACTOR_2D;
+		double y1 = y0 - (double)offsetSecondCornerZ + UNSKEW_FACTOR_2D;
 		double x3 = x0 - 1.0D + 2.0D * UNSKEW_FACTOR_2D;
 		double y3 = y0 - 1.0D + 2.0D * UNSKEW_FACTOR_2D;
-		int ii = hairy_x & 255;
-		int jj = hairy_z & 255;
+		int ii = hairyX & 255;
+		int jj = hairyZ & 255;
 		int gi0 = this.getGradient(ii + this.getGradient(jj)) % 12;
-		int gi1 = this.getGradient(ii + offset_second_corner_x + this.getGradient(jj + offset_second_corner_z)) % 12;
+		int gi1 = this.getGradient(ii + offsetSecondCornerX + this.getGradient(jj + offsetSecondCornerZ)) % 12;
 		int gi2 = this.getGradient(ii + 1 + this.getGradient(jj + 1)) % 12;
 		double t0 = this.grad(gi0, x0, y0, 0.0D, 0.5D);
 		double t1 = this.grad(gi1, x1, y1, 0.0D, 0.5D);
@@ -94,15 +94,15 @@ public class SimplexNoiseSampler {
 	}
 
 	public double sample3D(double x, double y, double z) {
-		double skew_factor = (x + y + z) * F3; // F3 is 1/3
+		double skewFactor = (x + y + z) * F3; // F3 is 1/3
 		// Skew the input space to determine which simplex cell we're in
-		int i = floor(x + skew_factor);
-		int j = floor(y + skew_factor);
-		int k = floor(z + skew_factor);
-		double unskew_factor = (double)(i + j + k) * G3; // G3 is 1/6
-		double x0 = (double)i - unskew_factor;
-		double y0 = (double)j - unskew_factor;
-		double z0 = (double)k - unskew_factor;
+		int i = floor(x + skewFactor);
+		int j = floor(y + skewFactor);
+		int k = floor(z + skewFactor);
+		double unskewFactor = (double)(i + j + k) * G3; // G3 is 1/6
+		double x0 = (double)i - unskewFactor;
+		double y0 = (double)j - unskewFactor;
+		double z0 = (double)k - unskewFactor;
 		x0 = x - x0;
 		y0 = y - y0;
 		z0 = z - z0;

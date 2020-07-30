@@ -12,20 +12,20 @@ public class RiverLayer extends BiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
-		int land_stack_center = this.getParent(0).get(x, y, z);
-		int noise_stack_center = this.getParent(1).get(x, y, z);
+		int landStackCenter = this.getParent(0).get(x, y, z);
+		int noiseStackCenter = this.getParent(1).get(x, y, z);
 
-		if(Biome.isOcean(land_stack_center))return land_stack_center;
+		if(Biome.isOcean(landStackCenter))return landStackCenter;
 		
-		if(noise_stack_center == Biome.RIVER.getId()) {
-			if(land_stack_center == Biome.SNOWY_TUNDRA.getId()) {
+		if(noiseStackCenter == Biome.RIVER.getId()) {
+			if(landStackCenter == Biome.SNOWY_TUNDRA.getId()) {
 				return Biome.FROZEN_RIVER.getId();
 			} else {
-				return land_stack_center != Biome.MUSHROOM_FIELDS.getId() && land_stack_center != Biome.MUSHROOM_FIELD_SHORE.getId() ? noise_stack_center & 255 : Biome.MUSHROOM_FIELD_SHORE.getId();
+				return landStackCenter != Biome.MUSHROOM_FIELDS.getId() && landStackCenter != Biome.MUSHROOM_FIELD_SHORE.getId() ? noiseStackCenter & 255 : Biome.MUSHROOM_FIELD_SHORE.getId();
 			}
 		}
 		
-		return land_stack_center;
+		return landStackCenter;
 	}
 
 }

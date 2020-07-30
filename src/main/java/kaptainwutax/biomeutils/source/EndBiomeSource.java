@@ -41,22 +41,22 @@ public class EndBiomeSource extends BiomeSource {
 	}
 
 	public static float getHeightAt(SimplexNoiseSampler simplexNoiseSampler, int x, int z) {
-		int scaled_x = x / 2;
-		int scaled_z = z / 2;
-		int odd_x = x % 2;
-		int odd_z = z % 2;
+		int scaledX = x / 2;
+		int scaledZ = z / 2;
+		int oddX = x % 2;
+		int oddZ = z % 2;
 		float height = 100.0F - (float)Math.sqrt((float)(x * x + z * z)) * 8.0F;
 		height = clamp(height, -100.0F, 80.0F);
 
 		for(int rx = -12; rx <= 12; ++rx) {
 			for(int rz = -12; rz <= 12; ++rz) {
-				long shifted_x = scaled_x + rx;
-				long shifted_z = scaled_z + rz;
-				if (shifted_x * shifted_x + shifted_z * shifted_z > 4096L && simplexNoiseSampler.sample2D((double)shifted_x, (double)shifted_z) < -0.8999999761581421D) {
-					float elevation = (Math.abs((float)shifted_x) * 3439.0F + Math.abs((float)shifted_z) * 147.0F) % 13.0F + 9.0F;
-					float smooth_x = (float)(odd_x - rx * 2);
-					float smooth_z = (float)(odd_z - rz * 2);
-					float noise = 100.0F - (float)Math.sqrt(smooth_x * smooth_x + smooth_z * smooth_z) * elevation;
+				long shiftedX = scaledX + rx;
+				long shiftedZ = scaledZ + rz;
+				if (shiftedX * shiftedX + shiftedZ * shiftedZ > 4096L && simplexNoiseSampler.sample2D((double)shiftedX, (double)shiftedZ) < -0.8999999761581421D) {
+					float elevation = (Math.abs((float)shiftedX) * 3439.0F + Math.abs((float)shiftedZ) * 147.0F) % 13.0F + 9.0F;
+					float smoothX = (float)(oddX - rx * 2);
+					float smoothZ = (float)(oddZ - rz * 2);
+					float noise = 100.0F - (float)Math.sqrt(smoothX * smoothX + smoothZ * smoothZ) * elevation;
 					noise = clamp(noise, -100.0F, 80.0F);
 					height = Math.max(height, noise);
 				}

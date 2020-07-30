@@ -18,9 +18,9 @@ public class DoublePerlinNoiseSampler {
 	public DoublePerlinNoiseSampler(ChunkRand rand, List<Integer> octaves) {
 		this.firstSampler = new OctavePerlinNoiseSampler(rand, octaves);
 		this.secondSampler = new OctavePerlinNoiseSampler(rand, octaves);
-		int i = octaves.stream().min(Integer::compareTo).orElse(0);
-		int j = octaves.stream().max(Integer::compareTo).orElse(0);
-		this.amplitude = 0.16666666666666666D / createAmplitude(j - i);
+		int minNbOctave = octaves.stream().min(Integer::compareTo).orElse(0);
+		int maxNbOctave = octaves.stream().max(Integer::compareTo).orElse(0);
+		this.amplitude = 0.16666666666666666D / createAmplitude(maxNbOctave - minNbOctave);
 	}
 
 	private static double createAmplitude(int octaves) {
