@@ -1,4 +1,4 @@
-#BiomeUtils
+# BiomeUtils
 
 This library aims to give easy access to the biome and noise generation of Minecraft. It is not a directly minecraft
 source code as it has been rewritten from the ground up with optimization in mind.
@@ -6,7 +6,7 @@ source code as it has been rewritten from the ground up with optimization in min
 ------
 
 # A few words
-Before using the library, i want to say a few word about OverWorld biome generation in Minecraft. Currently as it has been 
+Before using the library, i want to say a few word about OverWorld biome generation in Minecraft. Currently, as it has been 
 implemented, the biome generation is split up in layers which are stacked together to form the biome generator.
 
 This generator can be split in 4 different part, there is first the legacy stack which starts from `ContinentLayer`
@@ -23,6 +23,8 @@ At this point the biome generator give the biomes at 1/4 the scale of what you w
 applied, called `VoronoiLayer` which takes since 1.14 the sha2 hash of the world seed to initialize it.
 This means that this last layer can be done on the client side and save both on server performance and bandwidth.
 
+For Nether and End biome generation, simplex and perlin noise are used, thus they only use the 48 lower bits of the seed
+compared to the overworld.
 
 ------
 
