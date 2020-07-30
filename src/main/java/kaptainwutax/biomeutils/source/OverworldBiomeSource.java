@@ -131,7 +131,7 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // mixing of the two firsts stacks with the ocean chain
         this.layers.add(this.full = new OceanTemperatureLayer.Apply(this.getVersion(), this.getWorldSeed(), 100L, this.full, this.ocean));
-        this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full));
+        this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full));
 
         this.layers.setScales();
     }

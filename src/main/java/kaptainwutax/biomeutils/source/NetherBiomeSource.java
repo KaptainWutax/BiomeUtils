@@ -64,7 +64,7 @@ public class NetherBiomeSource extends BiomeSource {
 		this.weirdness = new DoublePerlinNoiseSampler(new ChunkRand(this.getWorldSeed() + 3L), IntStream.rangeClosed(-7, -6));
 
 		this.layers.add(this.full = new NetherBiomeSource.Layer(this.getVersion()));
-		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full));
+		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), true, this.full));
 		this.layers.setScales();
 	}
 

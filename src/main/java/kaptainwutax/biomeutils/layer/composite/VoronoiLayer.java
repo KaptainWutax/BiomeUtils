@@ -8,10 +8,12 @@ import kaptainwutax.seedutils.mc.seed.WorldSeed;
 public class VoronoiLayer extends BiomeLayer {
 
     public final long seed;
+    private final boolean threeDimensional;
 
-    public VoronoiLayer(MCVersion version, long worldSeed, BiomeLayer parent) {
+    public VoronoiLayer(MCVersion version, long worldSeed, boolean threeDimensional, BiomeLayer parent) {
         super(version, worldSeed, version.isOlderThan(MCVersion.v1_15) ? 10L : 0L, parent);
         this.seed = version.isOlderThan(MCVersion.v1_15) ? worldSeed : WorldSeed.toHash(worldSeed);
+        this.threeDimensional = threeDimensional;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class VoronoiLayer extends BiomeLayer {
         int xFinal = (index & 4) == 0 ? l : l + 1;
         int yFinal = (index & 2) == 0 ? m : m + 1;
         int zFinal = (index & 1) == 0 ? n : n + 1;
-        return this.getParent().get(xFinal, yFinal, zFinal);
+        return this.getParent().get(xFinal, this.threeDimensional ? yFinal : 0, zFinal);
     }
 
     private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {

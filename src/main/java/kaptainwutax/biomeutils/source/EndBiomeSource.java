@@ -35,7 +35,7 @@ public class EndBiomeSource extends BiomeSource {
 	@Override
 	protected void build() {
 		this.layers.add(this.full = new EndBiomeSource.Layer(this.getVersion()));
-		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), this.full));
+		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full));
 		this.layers.setScales();
 	}
 
