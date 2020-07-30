@@ -30,7 +30,25 @@ compared to the OverWorld.
 
 # How to use
 
-**Here vXXX means any version starting from v1_7 till current supported one.**
+**Here vXXX means any version starting from v1_13 (for the moment, we are extending support) till current supported one.**
+
+Before anything, we recommend using gradle buildsystem to import the library as such:
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation ('com.github.KaptainWutax:BiomeUtils:-SNAPSHOT'){
+        transitive = false
+    }
+    implementation ('com.github.KaptainWutax:SeedUtils:-SNAPSHOT'){
+        transitive = false
+    }
+}
+```
+
 
 To use the library, you have a few possible endpoints depending on your usage:
 
