@@ -1,13 +1,10 @@
 package kaptainwutax.biomeutils.layer;
 
 import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.pos.BPos;
 import kaptainwutax.seedutils.mc.seed.SeedMixer;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public abstract class BiomeLayer {
+    
     private final MCVersion version;
     private final BiomeLayer[] parents;
     public final long layerSeed;
@@ -16,7 +13,7 @@ public abstract class BiomeLayer {
     protected int scale = -1;
     protected int layerId = -1;
 
-    private Map<BPos, Integer> cache = new LinkedHashMap<>();
+    private LayerCache layerCache = new LayerCache(1024);
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
         this.version = version;
@@ -69,22 +66,7 @@ public abstract class BiomeLayer {
     }
 
     public int get(int x, int y, int z) {
-        BPos p = new BPos(x, y, z);
-        Integer r = this.cache.get(p);
-
-        if (r == null) {
-            r = this.sample(x, y, z);
-            this.cache.put(p, r);
-
-            //TODO: Quick hack to stop memory leaks.
-            if(this.cache.size() > 512) {
-                this.cache.clear();
-            }
-
-            return r;
-        }
-
-        return r;
+        return this.layerCache.get(x, y, z, this::sample);
     }
 
     public abstract int sample(int x, int y, int z);
