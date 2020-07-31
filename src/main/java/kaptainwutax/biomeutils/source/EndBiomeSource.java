@@ -46,7 +46,7 @@ public class EndBiomeSource extends BiomeSource {
 
 	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.full.get(x >> 4, y,z >> 4));
+		return Biome.REGISTRY.get(this.full.get(x >> 2, y,z >> 2));
 	}
 
 	public static float getHeightAt(SimplexNoiseSampler simplex, int x, int z) {

@@ -86,7 +86,7 @@ public class NetherBiomeSource extends BiomeSource {
 			return Biome.NETHER_WASTES;
 		}
 
-		return Biome.REGISTRY.get(this.full.get(x >> 2, y,z >> 2));
+		return Biome.REGISTRY.get(this.full.get(x, y, z));
 	}
 
 	public class Layer extends BiomeLayer {
