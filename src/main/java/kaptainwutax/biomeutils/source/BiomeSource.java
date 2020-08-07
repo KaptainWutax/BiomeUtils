@@ -19,6 +19,7 @@ public abstract class BiomeSource {
 	public BiomeSource(MCVersion version, long worldSeed) {
 		this.version = version;
 		this.worldSeed = worldSeed;
+		this.build();
 	}
 
 	public MCVersion getVersion() {

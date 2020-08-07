@@ -146,12 +146,12 @@ public class OverworldBiomeSource extends BiomeSource {
 
     @Override
     public Biome getBiome(int x, int y, int z) {
-        return Biome.REGISTRY.get(this.voronoi.get(x, y, z));
+        return Biome.REGISTRY.get(this.voronoi.get(x, 0, z));
     }
 
     @Override
     public Biome getBiomeForNoiseGen(int x, int y, int z) {
-        return Biome.REGISTRY.get(this.full.get(x, y, z));
+        return Biome.REGISTRY.get(this.full.get(x, 0, z));
     }
 
 }
