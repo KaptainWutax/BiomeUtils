@@ -33,11 +33,13 @@ public class NetherBiomeSource extends BiomeSource {
 	public NetherBiomeSource(MCVersion version, long worldSeed, MixedNoisePoint... biomePoints) {
 		super(version, worldSeed);
 		this.biomePoints = biomePoints;
-		this.build();
 	}
 
 	public NetherBiomeSource addDimension() {
 		this.threeDimensional = true;
+		this.full = null;
+		this.voronoi = null;
+		this.layers.clear();
 		this.build();
 		return this;
 	}

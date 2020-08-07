@@ -48,7 +48,6 @@ public class OverworldBiomeSource extends BiomeSource {
 
         this.biomeSize = biomeSize;
         this.riverSize = riverSize;
-        this.build();
     }
 
     @Override
