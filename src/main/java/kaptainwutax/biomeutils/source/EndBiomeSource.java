@@ -12,10 +12,11 @@ public class EndBiomeSource extends BiomeSource {
 	public EndLayer full;
 	public VoronoiLayer voronoi;
 
-	protected LayerStack<BiomeLayer> layers;
+	protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
 
 	public EndBiomeSource(MCVersion version, long worldSeed) {
 		super(version, worldSeed);
+		this.build();
 	}
 
 	@Override
@@ -23,9 +24,7 @@ public class EndBiomeSource extends BiomeSource {
 		return this.layers;
 	}
 
-	@Override
 	protected void build() {
-		this.layers = new LayerStack<>();
 		this.layers.add(this.full = new EndLayer(this.getVersion(), this.getWorldSeed()));
 		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full));
 		this.layers.setScales();

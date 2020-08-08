@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
@@ -11,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public abstract class BiomeSource {
+public abstract class BiomeSource<T extends BiomeLayer> {
 
 	private final MCVersion version;
 	private final long worldSeed;
@@ -19,7 +20,6 @@ public abstract class BiomeSource {
 	public BiomeSource(MCVersion version, long worldSeed) {
 		this.version = version;
 		this.worldSeed = worldSeed;
-		this.build();
 	}
 
 	public MCVersion getVersion() {
@@ -30,13 +30,15 @@ public abstract class BiomeSource {
 		return this.worldSeed;
 	}
 
-	public abstract LayerStack<?> getLayers();
+	public abstract LayerStack<T> getLayers();
+
+	public T getLayer(int index) {
+		return this.getLayers().get(index);
+	}
 
 	public int getLayerCount() {
 		return this.getLayers().size();
 	}
-
-	protected abstract void build();
 
 	public abstract Biome getBiome(int x, int y, int z);
 

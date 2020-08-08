@@ -33,7 +33,7 @@ public class OverworldBiomeSource extends BiomeSource {
     public final int biomeSize;
     public final int riverSize;
 
-    protected LayerStack<BiomeLayer> layers;
+    protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
 
     public OverworldBiomeSource(MCVersion version, long worldSeed) {
         this(version, worldSeed, 4, 4);
@@ -48,6 +48,7 @@ public class OverworldBiomeSource extends BiomeSource {
 
         this.biomeSize = biomeSize;
         this.riverSize = riverSize;
+        this.build();
     }
 
     @Override
@@ -55,11 +56,8 @@ public class OverworldBiomeSource extends BiomeSource {
         return this.layers;
     }
 
-    @Override
     protected void build() {
         BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
-
-        this.layers = new LayerStack<>();
 
         // first legacy stack
         //4096

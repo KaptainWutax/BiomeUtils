@@ -22,7 +22,7 @@ public class NetherBiomeSource extends BiomeSource {
 
 	public NetherLayer full;
 	public VoronoiLayer voronoi;
-	protected LayerStack<BiomeLayer> layers;
+	protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
 
 	private boolean threeDimensional;
 
@@ -33,11 +33,13 @@ public class NetherBiomeSource extends BiomeSource {
 	public NetherBiomeSource(MCVersion version, long worldSeed, MixedNoisePoint... biomePoints) {
 		super(version, worldSeed);
 		this.biomePoints = biomePoints;
+		this.build();
 	}
 
 	public NetherBiomeSource addDimension() {
 		this.threeDimensional = true;
 		this.full = null;
+		this.layers.clear();
 		this.build();
 		return this;
 	}
@@ -47,10 +49,7 @@ public class NetherBiomeSource extends BiomeSource {
 		return this.layers;
 	}
 
-	@Override
 	protected void build() {
-		this.layers = new LayerStack<>();
-
 		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
 			this.layers.add(this.full = new NetherLayer(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints));
 			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), true, this.full));
