@@ -45,7 +45,7 @@ public class NetherBiomeSource extends BiomeSource {
 	}
 
 	@Override
-	public LayerStack<?> getLayers() {
+	public LayerStack<BiomeLayer> getLayers() {
 		return this.layers;
 	}
 

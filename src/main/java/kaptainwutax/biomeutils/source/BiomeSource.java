@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public abstract class BiomeSource<T extends BiomeLayer> {
+public abstract class BiomeSource {
 
 	private final MCVersion version;
 	private final long worldSeed;
@@ -30,9 +30,9 @@ public abstract class BiomeSource<T extends BiomeLayer> {
 		return this.worldSeed;
 	}
 
-	public abstract LayerStack<T> getLayers();
+	public abstract LayerStack<BiomeLayer> getLayers();
 
-	public T getLayer(int index) {
+	public BiomeLayer getLayer(int index) {
 		return this.getLayers().get(index);
 	}
 
