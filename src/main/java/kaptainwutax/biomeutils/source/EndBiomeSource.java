@@ -35,6 +35,11 @@ public class EndBiomeSource extends BiomeSource {
 		return Biome.REGISTRY.get(this.voronoi.get(x, 0, z));
 	}
 
+	// warning end biomes displayed on f3 are actually the sampled 2d map with voronoi on all the different y
+	public Biome getBiome3D(int x, int y, int z) {
+		return Biome.REGISTRY.get(this.voronoi.get(x, y, z));
+	}
+
 	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z) {
 		return Biome.REGISTRY.get(this.full.get(x, 0, z));
