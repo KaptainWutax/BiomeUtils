@@ -31,7 +31,7 @@ public class EndBiomeSource extends BiomeSource {
 	protected void build() {
 		this.layers.add(this.simplex = new EndSimplexLayer(this.getVersion(), this.getWorldSeed()));
 		this.layers.add(this.height = new EndHeightLayer(this.getVersion(), this.getWorldSeed(), this.simplex));
-		this.layers.add(this.full = new EndBiomeLayer(this.getVersion(), this.getWorldSeed(), this.simplex));
+		this.layers.add(this.full = new EndBiomeLayer(this.getVersion(), this.getWorldSeed(), this.height));
 		this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full));
 		this.layers.setScales();
 	}
