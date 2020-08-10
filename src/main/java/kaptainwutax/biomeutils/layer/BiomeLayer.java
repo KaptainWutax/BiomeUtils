@@ -7,7 +7,7 @@ public abstract class BiomeLayer {
 
     private final MCVersion version;
     private final BiomeLayer[] parents;
-    public final long layerSeed;
+    public long layerSeed;
     public long localSeed;
 
     protected int scale = -1;
@@ -15,10 +15,14 @@ public abstract class BiomeLayer {
 
     private LayerCache layerCache = new LayerCache(1024);
 
-    public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+    public BiomeLayer(MCVersion version, BiomeLayer... parents) {
         this.version = version;
-        this.layerSeed = getLayerSeed(worldSeed, salt);
         this.parents = parents;
+    }
+
+    public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+        this(version, parents);
+        this.layerSeed = getLayerSeed(worldSeed, salt);
     }
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt) {

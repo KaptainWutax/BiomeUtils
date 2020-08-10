@@ -1,6 +1,7 @@
-package kaptainwutax.biomeutils.layer;
+package kaptainwutax.biomeutils.layer.nether;
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.noise.DoublePerlinNoiseSampler;
 import kaptainwutax.biomeutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.ChunkRand;
@@ -21,7 +22,7 @@ public class NetherLayer extends BiomeLayer {
     private final boolean is3D;
 
     public NetherLayer(MCVersion version, long worldSeed, boolean is3D, MixedNoisePoint[] biomePoints) {
-        super(version, worldSeed, -1, (BiomeLayer)null);
+        super(version, (BiomeLayer)null);
         this.is3D = is3D;
 
         if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {

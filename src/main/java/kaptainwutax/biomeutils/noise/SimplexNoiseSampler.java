@@ -4,16 +4,16 @@ import kaptainwutax.seedutils.lcg.rand.JRand;
 
 public class SimplexNoiseSampler {
 
-	protected static final int[][] GRADIENTS = new int[][]{
+	protected static final int[][] GRADIENTS = new int[][] {
 			{1, 1, 0}, {-1, 1, 0}, {1, -1, 0}, {-1, -1, 0}, {1, 0, 1}, {-1, 0, 1}, {1, 0, -1}, {-1, 0, -1},
 			{0, 1, 1}, {0, -1, 1}, {0, 1, -1}, {0, -1, -1}, {1, 1, 0}, {0, -1, 1}, {-1, 1, 0}, {0, -1, -1}
 	};
 
 	private static final double SQRT_3 = Math.sqrt(3.0D);
-	private static final double SKEW_FACTOR_2D; // also known as F2
-	private static final double UNSKEW_FACTOR_2D; // also known as G2
-	private static final double F3=0.16666666666666666D;
-	private static final double G3=0.3333333333333333D;
+	private static final double SKEW_FACTOR_2D = 0.5D * (SQRT_3 - 1.0D); // also known as F2 // 0.3660254037844386D
+	private static final double UNSKEW_FACTOR_2D = (3.0D - SQRT_3) / 6.0D; // also known as G2 // 0.21132486540518713D
+	private static final double F3 = 0.16666666666666666D;
+	private static final double G3 = 0.3333333333333333D;
 	private final int[] permutations = new int[512];
 	public final double originX;
 	public final double originY;
@@ -25,6 +25,7 @@ public class SimplexNoiseSampler {
 		this.originZ = rand.nextDouble() * 256.0D;
 
 		int j;
+
 		for(j = 0; j < 256; this.permutations[j] = j++) {
 		}
 
@@ -34,7 +35,6 @@ public class SimplexNoiseSampler {
 			this.permutations[j] = this.permutations[k + j];
 			this.permutations[k + j] = l;
 		}
-
 	}
 
 	private int getGradient(int hash) {
@@ -184,11 +184,6 @@ public class SimplexNoiseSampler {
 	public static int floor(double d) {
 		int i = (int)d;
 		return d < (double)i ? i - 1 : i;
-	}
-
-	static {
-		SKEW_FACTOR_2D = 0.5D * (SQRT_3 - 1.0D); // 0.3660254037844386D
-		UNSKEW_FACTOR_2D = (3.0D - SQRT_3) / 6.0D; // 0.21132486540518713D
 	}
 
 }

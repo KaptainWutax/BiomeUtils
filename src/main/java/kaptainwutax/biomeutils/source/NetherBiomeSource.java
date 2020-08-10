@@ -3,7 +3,7 @@ package kaptainwutax.biomeutils.source;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
-import kaptainwutax.biomeutils.layer.NetherLayer;
+import kaptainwutax.biomeutils.layer.nether.NetherLayer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.MCVersion;
