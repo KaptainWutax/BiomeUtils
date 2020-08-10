@@ -55,6 +55,12 @@ public class NetherBiomeSource extends BiomeSource {
 			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), true, this.full));
 		} else {
 			this.layers.add(this.full = new NetherLayer(this.getVersion(), this.getWorldSeed(), false, null));
+			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full) {
+				@Override
+				public int sample(int x, int y, int z) {
+					return this.getVersion().isOlderThan(MCVersion.v1_16) ? Biome.NETHER_WASTES.getId() : super.sample(x, y, z);
+				}
+			});
 		}
 
 		this.layers.setScales();
@@ -62,7 +68,6 @@ public class NetherBiomeSource extends BiomeSource {
 
 	@Override
 	public Biome getBiome(int x, int y, int z) {
-		if(this.getVersion().isOlderThan(MCVersion.v1_16))return Biome.NETHER_WASTES;
 		return Biome.REGISTRY.get(this.voronoi.get(x, y, z));
 	}
 
