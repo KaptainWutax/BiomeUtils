@@ -10,6 +10,6 @@ repositories {
 }
 
 dependencies {
-    implementation('com.github.KaptainWutax:MathUtils:-SNAPSHOT') {transitive = false}
-    implementation('com.github.KaptainWutax:SeedUtils:-SNAPSHOT') {transitive = false}
+    implementation('com.github.KaptainWutax:MathUtils:6c2d50eacad0241ff76119e6e703b70bac4b4bce') {transitive = false}
+    implementation('com.github.KaptainWutax:SeedUtils:e6f363e89fa0830ec874402498809cb1ea9d9e55') {transitive = false}
 }

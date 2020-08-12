@@ -6,6 +6,7 @@ import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
+import kaptainwutax.seedutils.util.Dimension;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,6 +21,18 @@ public abstract class BiomeSource {
 	public BiomeSource(MCVersion version, long worldSeed) {
 		this.version = version;
 		this.worldSeed = worldSeed;
+	}
+
+	public static BiomeSourceSupplier supplierOf(Dimension dimension) {
+		if(dimension == Dimension.OVERWORLD)return OverworldBiomeSource::new;
+		else if(dimension == Dimension.NETHER)return NetherBiomeSource::new;
+		else if(dimension == Dimension.THE_END)return EndBiomeSource::new;
+		return null;
+	}
+
+	public static BiomeSource of(Dimension dimension, MCVersion version, long worldSeed) {
+		BiomeSourceSupplier supplier = supplierOf(dimension);
+		return supplier == null ? null : supplier.create(version, worldSeed);
 	}
 
 	public MCVersion getVersion() {
@@ -153,8 +166,9 @@ public abstract class BiomeSource {
 		return pos;
 	}
 
-	public interface BiomeSupplier {
-		Biome getBiome(int x, int y, int z);
+	@FunctionalInterface
+	public interface BiomeSourceSupplier {
+		BiomeSource create(MCVersion version, long worldSeed);
 	}
 
 }
