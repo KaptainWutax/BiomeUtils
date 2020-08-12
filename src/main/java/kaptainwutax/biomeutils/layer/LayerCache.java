@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer;
 
-import kaptainwutax.seedutils.util.math.Mth;
+import kaptainwutax.mathutils.util.Mth;
 
 import java.util.Arrays;
 
@@ -18,7 +18,7 @@ public class LayerCache {
 		this.keys = new long[capacity];
 		Arrays.fill(this.keys, -1);
 		this.values = new int[capacity];
-		this.mask = (int)Mth.mask(Long.numberOfTrailingZeros(capacity));
+		this.mask = (int)Mth.getMask(Long.numberOfTrailingZeros(capacity));
 	}
 
 	public int get(int x, int y, int z, Sampler sampler) {
@@ -36,9 +36,9 @@ public class LayerCache {
 	}
 
 	public long uniqueHash(int x, int y, int z) {
-		long hash = (long)x & Mth.mask(28);
-		hash |= ((long)z & Mth.mask(28)) << 28;
-		hash |= ((long)y & Mth.mask(8)) << 56;
+		long hash = (long)x & Mth.getMask(28);
+		hash |= ((long)z & Mth.getMask(28)) << 28;
+		hash |= ((long)y & Mth.getMask(8)) << 56;
 		return hash;
 	}
 

@@ -6,12 +6,10 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-
-    maven {
-        url "https://jitpack.io"
-    }
+    maven {url "https://jitpack.io"}
 }
 
 dependencies {
-    implementation 'com.github.KaptainWutax:SeedUtils:b5bf2e23610cc0eebcb91443788228c2ed446914'
+    implementation('com.github.KaptainWutax:MathUtils:-SNAPSHOT') {transitive = false}
+    implementation('com.github.KaptainWutax:SeedUtils:-SNAPSHOT') {transitive = false}
 }
