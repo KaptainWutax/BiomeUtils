@@ -4,9 +4,9 @@ import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.seedutils.lcg.rand.JRand;
+import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
-import kaptainwutax.seedutils.util.Dimension;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,7 +26,7 @@ public abstract class BiomeSource {
 	public static BiomeSourceSupplier supplierOf(Dimension dimension) {
 		if(dimension == Dimension.OVERWORLD)return OverworldBiomeSource::new;
 		else if(dimension == Dimension.NETHER)return NetherBiomeSource::new;
-		else if(dimension == Dimension.THE_END)return EndBiomeSource::new;
+		else if(dimension == Dimension.END)return EndBiomeSource::new;
 		return null;
 	}
 
@@ -52,6 +52,8 @@ public abstract class BiomeSource {
 	public int getLayerCount() {
 		return this.getLayers().size();
 	}
+
+	public abstract boolean isValidDimension(Dimension dimension);
 
 	public abstract Biome getBiome(int x, int y, int z);
 

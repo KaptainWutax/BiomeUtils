@@ -7,6 +7,7 @@ import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.end.EndBiomeLayer;
 import kaptainwutax.biomeutils.layer.end.EndHeightLayer;
 import kaptainwutax.biomeutils.layer.end.EndSimplexLayer;
+import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
 
 public class EndBiomeSource extends BiomeSource {
@@ -26,6 +27,11 @@ public class EndBiomeSource extends BiomeSource {
 	@Override
 	public LayerStack<BiomeLayer> getLayers() {
 		return this.layers;
+	}
+
+	@Override
+	public boolean isValidDimension(Dimension dimension) {
+		return dimension == Dimension.END;
 	}
 
 	protected void build() {

@@ -14,6 +14,7 @@ import kaptainwutax.biomeutils.layer.water.DeepOceanLayer;
 import kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer;
 import kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer;
 import kaptainwutax.biomeutils.layer.water.RiverLayer;
+import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.util.UnsupportedVersion;
 
@@ -54,6 +55,11 @@ public class OverworldBiomeSource extends BiomeSource {
     @Override
     public LayerStack<BiomeLayer> getLayers() {
         return this.layers;
+    }
+
+    @Override
+    public boolean isValidDimension(Dimension dimension) {
+        return dimension == Dimension.OVERWORLD;
     }
 
     protected void build() {

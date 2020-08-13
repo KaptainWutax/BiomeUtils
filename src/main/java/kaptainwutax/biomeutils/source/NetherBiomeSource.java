@@ -6,6 +6,7 @@ import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.nether.NetherLayer;
 import kaptainwutax.biomeutils.noise.MixedNoisePoint;
+import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
 
 public class NetherBiomeSource extends BiomeSource {
@@ -36,17 +37,22 @@ public class NetherBiomeSource extends BiomeSource {
 		this.build();
 	}
 
+	@Override
+	public LayerStack<BiomeLayer> getLayers() {
+		return this.layers;
+	}
+
+	@Override
+	public boolean isValidDimension(Dimension dimension) {
+		return dimension == Dimension.NETHER;
+	}
+
 	public NetherBiomeSource addDimension() {
 		this.threeDimensional = true;
 		this.full = null;
 		this.layers.clear();
 		this.build();
 		return this;
-	}
-
-	@Override
-	public LayerStack<BiomeLayer> getLayers() {
-		return this.layers;
 	}
 
 	protected void build() {
