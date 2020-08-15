@@ -20,6 +20,10 @@ public abstract class BiomeLayer {
         this.parents = parents;
     }
 
+    public BiomeLayer(MCVersion version) {
+        this(version, (BiomeLayer)null);
+    }
+
     public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
         this(version, parents);
         this.layerSeed = getLayerSeed(worldSeed, salt);
