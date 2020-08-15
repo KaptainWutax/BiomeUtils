@@ -23,7 +23,7 @@ public abstract class BiomeSource {
 		this.worldSeed = worldSeed;
 	}
 
-	public static BiomeSourceSupplier supplierOf(Dimension dimension) {
+	public static Factory factory(Dimension dimension) {
 		if(dimension == Dimension.OVERWORLD)return OverworldBiomeSource::new;
 		else if(dimension == Dimension.NETHER)return NetherBiomeSource::new;
 		else if(dimension == Dimension.END)return EndBiomeSource::new;
@@ -31,8 +31,8 @@ public abstract class BiomeSource {
 	}
 
 	public static BiomeSource of(Dimension dimension, MCVersion version, long worldSeed) {
-		BiomeSourceSupplier supplier = supplierOf(dimension);
-		return supplier == null ? null : supplier.create(version, worldSeed);
+		Factory factory = factory(dimension);
+		return factory == null ? null : factory.create(version, worldSeed);
 	}
 
 	public MCVersion getVersion() {
@@ -169,7 +169,7 @@ public abstract class BiomeSource {
 	}
 
 	@FunctionalInterface
-	public interface BiomeSourceSupplier {
+	public interface Factory {
 		BiomeSource create(MCVersion version, long worldSeed);
 	}
 
