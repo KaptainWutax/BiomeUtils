@@ -14,13 +14,20 @@ import kaptainwutax.biomeutils.layer.water.DeepOceanLayer;
 import kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer;
 import kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer;
 import kaptainwutax.biomeutils.layer.water.RiverLayer;
+import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.seedutils.mc.pos.BPos;
 import kaptainwutax.seedutils.util.UnsupportedVersion;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public class OverworldBiomeSource extends BiomeSource {
+
+    public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biome.FOREST, Biome.PLAINS, Biome.TAIGA,
+            Biome.TAIGA_HILLS, Biome.WOODED_HILLS, Biome.JUNGLE, Biome.JUNGLE_HILLS);
 
     public BiomeLayer base;
     public BiomeLayer ocean;
@@ -157,6 +164,12 @@ public class OverworldBiomeSource extends BiomeSource {
     @Override
     public Biome getBiomeForNoiseGen(int x, int y, int z) {
         return Biome.REGISTRY.get(this.full.get(x, 0, z));
+    }
+
+    public BPos getSpawnPoint() {
+        JRand rand = new JRand(this.getWorldSeed());
+        BPos spawnPos = this.locateBiome(0, 0, 0, 256, SPAWN_BIOMES, rand);
+        return spawnPos == null ? new BPos(8, 0, 8) : spawnPos.add(8, 0, 8);
     }
 
 }
