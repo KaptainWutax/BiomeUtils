@@ -21,6 +21,7 @@ import kaptainwutax.seedutils.mc.pos.BPos;
 import kaptainwutax.seedutils.util.UnsupportedVersion;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -166,10 +167,14 @@ public class OverworldBiomeSource extends BiomeSource {
         return Biome.REGISTRY.get(this.full.get(x, 0, z));
     }
 
-    public BPos getSpawnPoint() {
+    public BPos getSpawnPoint(Collection<Biome> spawnBiomes) {
         JRand rand = new JRand(this.getWorldSeed());
-        BPos spawnPos = this.locateBiome(0, 0, 0, 256, SPAWN_BIOMES, rand);
+        BPos spawnPos = this.locateBiome(0, 0, 0, 256, spawnBiomes, rand);
         return spawnPos == null ? new BPos(8, 0, 8) : spawnPos.add(8, 0, 8);
+    }
+
+    public BPos getSpawnPoint() {
+        return this.getSpawnPoint(SPAWN_BIOMES);
     }
 
 }
