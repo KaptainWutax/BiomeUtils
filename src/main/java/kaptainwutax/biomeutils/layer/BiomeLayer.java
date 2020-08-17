@@ -7,6 +7,8 @@ public abstract class BiomeLayer {
 
     private final MCVersion version;
     private final BiomeLayer[] parents;
+
+    public long salt;
     public long layerSeed;
     public long localSeed;
 
@@ -26,7 +28,8 @@ public abstract class BiomeLayer {
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
         this(version, parents);
-        this.layerSeed = getLayerSeed(worldSeed, salt);
+        this.salt = salt;
+        this.layerSeed = getLayerSeed(worldSeed, this.salt);
     }
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt) {

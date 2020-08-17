@@ -13,6 +13,7 @@ public class Main {
                 .add(Restrictions.MUSHROOM, 2, 0)
                 .add(Restrictions.MUSHROOM, 2, 1);
 
+
         device.findSeeds(System.out::println);
     }
 
