@@ -43,10 +43,9 @@ public class NetherBiomeSource extends BiomeSource {
 	}
 
 	@Override
-	public boolean isValidDimension(Dimension dimension) {
-		return dimension == Dimension.NETHER;
+	public Dimension getDimension() {
+		return Dimension.NETHER;
 	}
-
 	public NetherBiomeSource addDimension() {
 		this.threeDimensional = true;
 		this.full = null;

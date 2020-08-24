@@ -53,7 +53,7 @@ public abstract class BiomeSource {
 		return this.getLayers().size();
 	}
 
-	public abstract boolean isValidDimension(Dimension dimension);
+	public abstract Dimension getDimension();
 
 	public abstract Biome getBiome(int x, int y, int z);
 

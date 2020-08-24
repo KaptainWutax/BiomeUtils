@@ -66,8 +66,8 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     @Override
-    public boolean isValidDimension(Dimension dimension) {
-        return dimension == Dimension.OVERWORLD;
+    public Dimension getDimension() {
+        return Dimension.OVERWORLD;
     }
 
     protected void build() {

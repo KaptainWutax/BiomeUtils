@@ -1,7 +1,10 @@
 package kaptainwutax.biomeutils.layer;
 
+import kaptainwutax.mathutils.util.Mth;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.seed.SeedMixer;
+
+import java.util.Random;
 
 public abstract class BiomeLayer {
 

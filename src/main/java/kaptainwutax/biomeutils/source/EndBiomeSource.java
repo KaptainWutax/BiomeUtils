@@ -30,8 +30,8 @@ public class EndBiomeSource extends BiomeSource {
 	}
 
 	@Override
-	public boolean isValidDimension(Dimension dimension) {
-		return dimension == Dimension.END;
+	public Dimension getDimension() {
+		return Dimension.END;
 	}
 
 	protected void build() {

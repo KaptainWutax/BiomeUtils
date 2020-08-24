@@ -37,7 +37,16 @@ public class BiomeDevice {
             long worldSeed = 0;
 
             do {
-                if(entry.testSeed(worldSeed)) {
+                boolean valid = true;
+
+                for(BitGroup group: groups) {
+                    if(!group.testSeed(worldSeed)) {
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if(valid && groups.get(groups.size() - 1).testSource(worldSeed)) {
                     onSeedFound.accept(worldSeed);
                 }
 
@@ -47,11 +56,12 @@ public class BiomeDevice {
     }
 
     public void search(BitGroup group, long baseSeed, int bits, LongConsumer onSeedFound) {
-        System.out.println(baseSeed + " is good for the lowest " + bits + " bits!");
         long searchSpace = Mth.getPow2(group.bits - bits);
+        System.out.println("[" + baseSeed + "] is good for the lowest " + bits + " bits! Lifting the next " + (group.bits - bits) + " bits...");
 
         for(long i = 0; i < searchSpace; i++) {
             long seed = baseSeed | (i << bits);
+
             if(!group.testSeed(seed))continue;
 
             if(group.next == null) {
@@ -74,7 +84,7 @@ public class BiomeDevice {
         List<BitGroup> result = new ArrayList<>(raw.values());
 
         for(int i = 0; i < result.size() - 1; i++) {
-            result.get(0).next = result.get(i + 1);
+            result.get(i).next = result.get(i + 1);
         }
 
         return result;
