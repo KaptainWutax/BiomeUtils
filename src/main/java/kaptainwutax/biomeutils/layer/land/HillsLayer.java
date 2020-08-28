@@ -66,7 +66,9 @@ public class HillsLayer extends BiomeLayer {
 				l = Biome.SAVANNA_PLATEAU.getId();
 			} else if(Biome.areSimilar(i, Biome.WOODED_BADLANDS_PLATEAU)) {
 				l = Biome.BADLANDS.getId();
-			} else if((i == Biome.DEEP_OCEAN.getId() || i == Biome.DEEP_LUKEWARM_OCEAN.getId()
+			}
+			// in 1.12 this check is only for DEEP_OCEAN but since the other can't spawn, its ok
+			else if((i == Biome.DEEP_OCEAN.getId() || i == Biome.DEEP_LUKEWARM_OCEAN.getId()
 					|| i == Biome.DEEP_COLD_OCEAN.getId() || i == Biome.DEEP_FROZEN_OCEAN.getId())
 					&& this.nextInt(3) == 0) {
 				l = this.nextInt(2) == 0 ? Biome.PLAINS.getId() : Biome.FOREST.getId();
