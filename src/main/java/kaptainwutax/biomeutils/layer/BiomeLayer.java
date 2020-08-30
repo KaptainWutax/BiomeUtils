@@ -112,7 +112,7 @@ public abstract class BiomeLayer {
     }
 
     public int nextInt(int bound) {
-        int i = (int)Math.floorMod(this.localSeed >> 24, bound);
+        int i = (int)Math.floorMod(this.localSeed >> 24,(long) bound);
         this.localSeed = SeedMixer.mixSeed(this.localSeed, this.layerSeed);
         return i;
     }

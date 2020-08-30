@@ -28,53 +28,56 @@ public class VoronoiLayer extends BiomeLayer {
 
     @Override
     public int sample(int x, int y, int z) {
-        double[] res = new double[16];
+        int offset;
         x -= 2;
         z -= 2;
         int pX = x >> 2;
         int pZ = z >> 2;
         int X = pX << 2;
         int Z = pZ << 2;
-        double[] off_0_0 = calcOffset(layerSeed, X, Z);
-        double[] off_1_0 = calcOffset(layerSeed, X + 4, Z);
-        double[] off_0_1 = calcOffset(layerSeed, X, Z + 4);
-        double[] off_1_1 = calcOffset(layerSeed, X + 4, Z + 4);
-        for (int cell = 0; cell < 16; cell++) {
-            double corner0 = calcContribution(off_0_0, cell, cell & 3);
-            double corner1 = calcContribution(off_1_0, cell, cell & 3);
-            double corner2 = calcContribution(off_0_1, cell, cell & 3);
-            double corner3 = calcContribution(off_1_1, cell, cell & 3);
-            if (corner0 < corner1 && corner0 < corner2 && corner0 < corner3) {
-                res[cell] = 0;
-            } else if (corner1 < corner0 && corner1 < corner2 && corner1 < corner3) {
-                res[cell] = 1;
-            } else if (corner2 < corner0 && corner2 < corner1 && corner2 < corner3) {
-                res[cell] = 2;
-            } else {
-                res[cell] = 3;
-            }
+        double[] off_0_0 = calcOffset(layerSeed, X, Z, 0, 0);
+        double[] off_1_0 = calcOffset(layerSeed, X, Z, 4, 0);
+        double[] off_0_1 = calcOffset(layerSeed, X, Z, 0, 4);
+        double[] off_1_1 = calcOffset(layerSeed, X, Z, 4, 4);
 
+        int cell = (z & 3) * 4 + (x & 3);
+        double corner0 = calcContribution(off_0_0, cell >> 2, cell & 3);
+        double corner1 = calcContribution(off_1_0, cell >> 2, cell & 3);
+        double corner2 = calcContribution(off_0_1, cell >> 2, cell & 3);
+        double corner3 = calcContribution(off_1_1, cell >> 2, cell & 3);
+        if (corner0 < corner1 && corner0 < corner2 && corner0 < corner3) {
+            offset = 0;
+        } else if (corner1 < corner0 && corner1 < corner2 && corner1 < corner3) {
+            offset = 1;
+        } else if (corner2 < corner0 && corner2 < corner1 && corner2 < corner3) {
+            offset = 2;
+        } else {
+            offset = 3;
         }
-        // res[3] is the correct one
-        for (int v = 0; v < 4; v++) {
-            for (int w = 0; w < 4; w++) {
-                System.out.println(this.getParent().get(v+x,0,w+y));
-            }
-        }
-        return this.getParent().get(x,0,y);
+
+
+        //  X -> (cell&1)
+        // _________
+        // | 0 | 1 |   Z cell>>1)
+        // |---|---|   |
+        // | 2 | 3 |  \_/
+        // |___|___|
+
+        return this.getParent().get(pX + (offset & 1), 0, pZ + (offset >> 1));
     }
 
-    private static double calcContribution(double[] d, int major, int minor) {
-        return ((double) major - d[1]) * ((double) major - d[1]) + ((double) minor - d[0]) * ((double) minor - d[0]);
+    private static double calcContribution(double[] d, int x, int z) {
+        return ((double) x - d[1]) * ((double) x - d[1]) + ((double) z - d[0]) * ((double) z - d[0]);
     }
 
-    private static double[] calcOffset(long seed, int x, int z) {
-        long mixedSeed = SeedMixer.mixSeed(seed, x);
-        mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
-        mixedSeed = SeedMixer.mixSeed(mixedSeed, x);
-        mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
-        double d1 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D;
-        double d2 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D;
+    private static double[] calcOffset(long layerSeed, int x, int z, int offX, int offZ) {
+        long mixedSeed = SeedMixer.mixSeed(layerSeed, x + offX);
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, z + offZ);
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, x + offX);
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, z + offZ);
+        double d1 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D + offX;
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, layerSeed);
+        double d2 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D + offZ;
         return new double[] {d1, d2};
     }
 
