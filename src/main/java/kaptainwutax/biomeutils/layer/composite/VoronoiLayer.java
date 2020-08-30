@@ -16,54 +16,74 @@ public class VoronoiLayer extends BiomeLayer {
         this.is3D = is3D;
     }
 
+    public int sample12(int x, int z) {
+        x -= 2;
+        z -= 2;
+        int pX = x >> 2;
+        int pZ = z >> 2;
+        long mixedSeed = SeedMixer.mixSeed(layerSeed, x);
+
+        return 0;
+    }
+
     @Override
     public int sample(int x, int y, int z) {
-        int i = x - 2;
-        int j = y - 2;
-        int k = z - 2;
-        int l = i >> 2;
-        int m = j >> 2;
-        int n = k >> 2;
-        double d = (double) (i & 3) / 4.0D;
-        double e = (double) (j & 3) / 4.0D;
-        double f = (double) (k & 3) / 4.0D;
-        double[] ds = new double[8];
+        double[] res = new double[16];
+        x -= 2;
+        z -= 2;
+        int pX = x >> 2;
+        int pZ = z >> 2;
+        int X = pX << 2;
+        int Z = pZ << 2;
+        double[] off_0_0 = calcOffset(layerSeed, X, Z);
+        double[] off_1_0 = calcOffset(layerSeed, X + 4, Z);
+        double[] off_0_1 = calcOffset(layerSeed, X, Z + 4);
+        double[] off_1_1 = calcOffset(layerSeed, X + 4, Z + 4);
+        for (int cell = 0; cell < 16; cell++) {
+            double corner0 = calcContribution(off_0_0, cell, cell & 3);
+            double corner1 = calcContribution(off_1_0, cell, cell & 3);
+            double corner2 = calcContribution(off_0_1, cell, cell & 3);
+            double corner3 = calcContribution(off_1_1, cell, cell & 3);
+            if (corner0 < corner1 && corner0 < corner2 && corner0 < corner3) {
+                res[cell] = 0;
+            } else if (corner1 < corner0 && corner1 < corner2 && corner1 < corner3) {
+                res[cell] = 1;
+            } else if (corner2 < corner0 && corner2 < corner1 && corner2 < corner3) {
+                res[cell] = 2;
+            } else {
+                res[cell] = 3;
+            }
 
-        for (int cell = 0; cell < 8; ++cell) {
-            boolean bl = (cell & 4) == 0;
-            boolean bl2 = (cell & 2) == 0;
-            boolean bl3 = (cell & 1) == 0;
-            int aa = bl ? l : l + 1;
-            int ab = bl2 ? m : m + 1;
-            int ac = bl3 ? n : n + 1;
-            double g = bl ? d : d - 1.0D;
-            double h = bl2 ? e : e - 1.0D;
-            double s = bl3 ? f : f - 1.0D;
-            ds[cell] = calcSquaredDistance(this.seed, aa, ab, ac, g, h, s);
         }
-
-        int index = 0;
-        double min = ds[0];
-
-        for (int cell = 1; cell < 8; ++cell) {
-            if (min > ds[cell]) {
-                index = cell;
-                min = ds[cell];
+        // res[3] is the correct one
+        for (int v = 0; v < 4; v++) {
+            for (int w = 0; w < 4; w++) {
+                System.out.println(this.getParent().get(v+x,0,w+y));
             }
         }
+        return this.getParent().get(x,0,y);
+    }
 
-        int xFinal = (index & 4) == 0 ? l : l + 1;
-        int yFinal = (index & 2) == 0 ? m : m + 1;
-        int zFinal = (index & 1) == 0 ? n : n + 1;
-        return this.getParent().get(xFinal, this.is3D ? yFinal : 0, zFinal);
+    private static double calcContribution(double[] d, int major, int minor) {
+        return ((double) major - d[1]) * ((double) major - d[1]) + ((double) minor - d[0]) * ((double) minor - d[0]);
+    }
+
+    private static double[] calcOffset(long seed, int x, int z) {
+        long mixedSeed = SeedMixer.mixSeed(seed, x);
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, x);
+        mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
+        double d1 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D;
+        double d2 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D;
+        return new double[] {d1, d2};
     }
 
     private static double calcSquaredDistance(long seed, int x, int y, int z, double xFraction, double yFraction, double zFraction) {
         long mixedSeed = SeedMixer.mixSeed(seed, x);
-        mixedSeed = SeedMixer.mixSeed(mixedSeed, y);
+        //mixedSeed = SeedMixer.mixSeed(mixedSeed, y);
         mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
         mixedSeed = SeedMixer.mixSeed(mixedSeed, x);
-        mixedSeed = SeedMixer.mixSeed(mixedSeed, y);
+        //mixedSeed = SeedMixer.mixSeed(mixedSeed, y);
         mixedSeed = SeedMixer.mixSeed(mixedSeed, z);
         double d = distribute(mixedSeed);
         mixedSeed = SeedMixer.mixSeed(mixedSeed, seed);

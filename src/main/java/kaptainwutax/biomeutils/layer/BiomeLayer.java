@@ -18,7 +18,7 @@ public abstract class BiomeLayer {
     protected int scale = -1;
     protected int layerId = -1;
 
-    private LayerCache layerCache = new LayerCache(1024);
+    private final LayerCache layerCache = new LayerCache(1024);
 
     public BiomeLayer(MCVersion version, BiomeLayer... parents) {
         this.version = version;

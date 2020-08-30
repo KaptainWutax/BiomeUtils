@@ -110,7 +110,7 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // noise generation for variant and river
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
-        this.noise = this.stack(1000L, NORMAL_SCALE, this.noise, 2);
+        this.layers.add(this.noise = this.stack(1000L, NORMAL_SCALE, this.noise, 2));
 
         // hills and variants chain
         this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
@@ -131,7 +131,7 @@ public class OverworldBiomeSource extends BiomeSource {
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
         // river chain
-        this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 4);
+        this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 4));
         this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
         this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
