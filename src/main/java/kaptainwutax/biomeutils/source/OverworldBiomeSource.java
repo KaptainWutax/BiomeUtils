@@ -51,7 +51,7 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
         super(version, worldSeed);
 
-        if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_8)) {
             throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
         }
 
@@ -110,7 +110,7 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // noise generation for variant and river
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
-        this.noise = this.stack(1000L, NORMAL_SCALE, this.noise, 2);
+        this.layers.add(this.noise = this.stack(1000L, NORMAL_SCALE, this.noise, 2));
 
         // hills and variants chain
         this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
@@ -131,21 +131,22 @@ public class OverworldBiomeSource extends BiomeSource {
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
         // river chain
-        this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 4);
+        this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 4));
         this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
         this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
         // mixing of the river with the hills and variants
         this.layers.add(this.full = new RiverLayer(this.getVersion(), this.getWorldSeed(), 100L, this.variants, this.river));
 
-        // ocean chains
-        this.layers.add(this.ocean = new OceanTemperatureLayer(this.getVersion(), this.getWorldSeed(), 2L));
-        this.ocean = this.stack(2001L, NORMAL_SCALE, this.ocean, 6);
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_13)){
+            // ocean chains
+            this.layers.add(this.ocean = new OceanTemperatureLayer(this.getVersion(), this.getWorldSeed(), 2L));
+            this.ocean = this.stack(2001L, NORMAL_SCALE, this.ocean, 6);
+            // mixing of the two firsts stacks with the ocean chain
+            this.layers.add(this.full = new OceanTemperatureLayer.Apply(this.getVersion(), this.getWorldSeed(), 100L, this.full, this.ocean));
+        }
 
-        // mixing of the two firsts stacks with the ocean chain
-        this.layers.add(this.full = new OceanTemperatureLayer.Apply(this.getVersion(), this.getWorldSeed(), 100L, this.full, this.ocean));
         this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full));
-
         this.layers.setScales();
     }
 
