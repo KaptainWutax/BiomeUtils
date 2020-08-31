@@ -110,28 +110,26 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // noise generation for variant and river
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
-        this.layers.add(this.noise = this.stack(1000L, NORMAL_SCALE, this.noise, 2));
 
         // hills and variants chain
-        this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
+        this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, ScaleLayer.Type.NORMAL, this.noise,false));
+        this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1001L, ScaleLayer.Type.NORMAL, this.variants,false));
+        this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.variants));
         this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
-
         for(int i = 0; i < this.biomeSize; i++) {
             this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
-
             if(i == 0) {
                 this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
             }
-
             if(i == 1 || this.biomeSize == 1) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
             }
         }
-
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
         // river chain
-        this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 4));
+        this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 2));
+        this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.river, 4));
         this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
         this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 

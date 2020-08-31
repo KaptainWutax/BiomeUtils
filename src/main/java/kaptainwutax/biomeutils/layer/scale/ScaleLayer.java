@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.scale;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.land.NoiseLayer;
 import kaptainwutax.seedutils.mc.MCVersion;
 
 public class ScaleLayer extends BiomeLayer {
@@ -8,8 +9,18 @@ public class ScaleLayer extends BiomeLayer {
     private final Type type;
 
     public ScaleLayer(MCVersion version, long worldSeed, long salt, Type type, BiomeLayer parent) {
+        this(version, worldSeed, salt, type, parent, true);
+    }
+
+    public ScaleLayer(MCVersion version, long worldSeed, long salt, Type type, BiomeLayer parent, boolean shouldInit) {
         super(version, worldSeed, salt, parent);
         this.type = type;
+        // this line needs an explanation : basically back when the stack was recursively initialized, only if the parent was initialized
+        // but the hills layer only had one parent the other branch was never initialized recursively, so we simulate this stuff here.
+        if (!shouldInit) {
+            this.layerSeed = 0;
+        }
+
     }
 
     public Type getType() {
@@ -22,17 +33,17 @@ public class ScaleLayer extends BiomeLayer {
         this.setSeed(x & -2, z & -2);
         int xb = x & 1, zb = z & 1;
 
-        if (xb == 0 && zb == 0)return i;
+        if (xb == 0 && zb == 0) return i;
 
         int l = this.getParent().get(x >> 1, y, (z + 1) >> 1);
         int m = this.choose(i, l);
 
-        if (xb == 0)return m;
+        if (xb == 0) return m;
 
         int n = this.getParent().get((x + 1) >> 1, y, z >> 1);
         int o = this.choose(i, n);
 
-        if (zb == 0)return o;
+        if (zb == 0) return o;
 
         int p = getParent().get((x + 1) >> 1, y, (z + 1) >> 1);
         return this.sample(i, n, l, p);
