@@ -17,7 +17,8 @@ public class ScaleLayer extends BiomeLayer {
         this.type = type;
         // this line needs an explanation : basically back when the stack was recursively initialized, only if the parent was initialized
         // but the hills layer only had one parent the other branch was never initialized recursively, so we simulate this stuff here.
-        if (!shouldInit) {
+        if (!shouldInit && version.isOlderThan(MCVersion.v1_13)) {
+            // added a safeguard as 1.13+ should not have this bug
             this.layerSeed = 0;
         }
 
