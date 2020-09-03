@@ -109,7 +109,10 @@ public abstract class BiomeLayer {
     }
 
     public int nextInt(int bound) {
-        int i = (int)Math.floorMod(this.localSeed >> 24, bound);
+        // warning for JDK lower than 1.9 its important to left the (long) cast
+        // @formatter:off
+        int i = (int)Math.floorMod(this.localSeed >> 24, (long)bound);
+        // @formatter:on
         this.localSeed = SeedMixer.mixSeed(this.localSeed, this.layerSeed);
         return i;
     }
