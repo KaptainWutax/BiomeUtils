@@ -29,7 +29,7 @@ public class VoronoiLayer extends BiomeLayer {
         return this.getVersion().isOlderThan(MCVersion.v1_13) ? this.sample12(x, z) : this.sample13(x, y, z);
     }
 
-    public int sample12(int x, int z) {
+    private int sample12(int x, int z) {
         int offset;
         x -= 2;
         z -= 2;
@@ -68,7 +68,7 @@ public class VoronoiLayer extends BiomeLayer {
         return this.getParent().get(pX + (offset & 1), 0, pZ + (offset >> 1));
     }
 
-    public int sample13(int x, int y, int z) {
+    private int sample13(int x, int y, int z) {
         int i = x - 2;
         int j = y - 2;
         int k = z - 2;
