@@ -39,7 +39,7 @@ public class test1dot12 {
                 int x = biomes[i * size + j][0];
                 int z = biomes[i * size + j][1];
                 int id = overworldBiomeSource.biomes.sample(x, 0, z);
-                assertEquals(id, biomes[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + biomes[i * size + j][2]);
+                assertEquals(biomes[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + biomes[i * size + j][2]);
             }
         }
     }
@@ -52,7 +52,7 @@ public class test1dot12 {
                 int x = noise[i * size + j][0];
                 int z = noise[i * size + j][1];
                 int id = overworldBiomeSource.noise.sample(x, 0, z);
-                assertEquals(id, noise[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + noise[i * size + j][2]);
+                assertEquals(noise[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + noise[i * size + j][2]);
             }
         }
     }
@@ -65,7 +65,7 @@ public class test1dot12 {
                 int x = full[i * size + j][0];
                 int z = full[i * size + j][1];
                 int id = overworldBiomeSource.full.sample(x, 0, z);
-                assertEquals(id, full[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + full[i * size + j][2]);
+                assertEquals(full[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + full[i * size + j][2]);
             }
         }
     }
@@ -78,7 +78,7 @@ public class test1dot12 {
                 int x = voronoi[i * size + j][0];
                 int z = voronoi[i * size + j][1];
                 int id = overworldBiomeSource.voronoi.sample(x, 0, z);
-                assertEquals(id, voronoi[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + voronoi[i * size + j][2]);
+                assertEquals(voronoi[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + voronoi[i * size + j][2]);
             }
         }
     }
@@ -91,7 +91,7 @@ public class test1dot12 {
                 int x = river[i * size + j][0];
                 int z = river[i * size + j][1];
                 int id = overworldBiomeSource.river.sample(x, 0, z);
-                assertEquals(id, river[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + river[i * size + j][2]);
+                assertEquals(river[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + river[i * size + j][2]);
             }
         }
     }
@@ -104,7 +104,7 @@ public class test1dot12 {
                 int x = variants[i * size + j][0];
                 int z = variants[i * size + j][1];
                 int id = overworldBiomeSource.variants.sample(x, 0, z);
-                assertEquals(id, variants[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + variants[i * size + j][2]);
+                assertEquals(variants[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + variants[i * size + j][2]);
             }
         }
     }
@@ -117,7 +117,7 @@ public class test1dot12 {
                 int x = base[i * size + j][0];
                 int z = base[i * size + j][1];
                 int id = overworldBiomeSource.base.sample(x, 0, z);
-                assertEquals(id, base[i * size + j][2], x + " " + z + " Wrong got id " + id + " but was " + base[i * size + j][2]);
+                assertEquals(base[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + base[i * size + j][2]);
             }
         }
     }
