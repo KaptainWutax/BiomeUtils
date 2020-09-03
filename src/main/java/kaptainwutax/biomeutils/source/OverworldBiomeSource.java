@@ -71,7 +71,7 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     protected void build() {
-        BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (s, p) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), s, ScaleLayer.Type.NORMAL, p);
+        BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (salt, parent) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), salt, ScaleLayer.Type.NORMAL, parent);
 
         // first legacy stack
         //4096
@@ -101,7 +101,7 @@ public class OverworldBiomeSource extends BiomeSource {
         // new biomes chain
         this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
 
-        if (!this.getVersion().isOlderThan(MCVersion.v1_14)) {
+        if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_14)) {
             this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));
         }
 
@@ -112,19 +112,32 @@ public class OverworldBiomeSource extends BiomeSource {
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
 
         // hills and variants chain
-        this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, ScaleLayer.Type.NORMAL, this.noise,false));
-        this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1001L, ScaleLayer.Type.NORMAL, this.variants,false));
+        if(this.getVersion().isOlderThan(MCVersion.v1_13)) {
+            // this line needs an explanation : basically back when the stack was recursively initialized, only if the parent was initialized
+            // but the hills layer only had one parent the other branch was never initialized recursively, so we simulate this stuff here.
+            // Passing 0 for worldSeed and salt leads to the layerSeed being equal to 0.
+            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), 0L, 0L, ScaleLayer.Type.NORMAL, this.noise));
+            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), 0L, 0L, ScaleLayer.Type.NORMAL, this.variants));
+        } else {
+            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, ScaleLayer.Type.NORMAL, this.noise));
+            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1001L, ScaleLayer.Type.NORMAL, this.variants));
+        }
+
         this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.variants));
         this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
+
         for(int i = 0; i < this.biomeSize; i++) {
             this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
+
             if(i == 0) {
                 this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
             }
+
             if(i == 1 || this.biomeSize == 1) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
             }
         }
+
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
         // river chain
@@ -136,7 +149,7 @@ public class OverworldBiomeSource extends BiomeSource {
         // mixing of the river with the hills and variants
         this.layers.add(this.full = new RiverLayer(this.getVersion(), this.getWorldSeed(), 100L, this.variants, this.river));
 
-        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_13)){
+        if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_13)) {
             // ocean chains
             this.layers.add(this.ocean = new OceanTemperatureLayer(this.getVersion(), this.getWorldSeed(), 2L));
             this.ocean = this.stack(2001L, NORMAL_SCALE, this.ocean, 6);
@@ -149,7 +162,7 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     public BiomeLayer stack(long salt, BiFunction<Long, BiomeLayer, BiomeLayer> layer, BiomeLayer parent, int count) {
-        for (int i = 0; i < count; i++) {
+        for(int i = 0; i < count; i++) {
             this.layers.add(parent = layer.apply(salt + i, parent));
         }
 

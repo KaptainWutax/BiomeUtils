@@ -1,10 +1,7 @@
 package kaptainwutax.biomeutils.layer;
 
-import kaptainwutax.mathutils.util.Mth;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.seed.SeedMixer;
-
-import java.util.Random;
 
 public abstract class BiomeLayer {
 
@@ -112,7 +109,7 @@ public abstract class BiomeLayer {
     }
 
     public int nextInt(int bound) {
-        int i = (int)Math.floorMod(this.localSeed >> 24,(long) bound);
+        int i = (int)Math.floorMod(this.localSeed >> 24, bound);
         this.localSeed = SeedMixer.mixSeed(this.localSeed, this.layerSeed);
         return i;
     }
