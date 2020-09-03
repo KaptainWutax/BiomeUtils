@@ -58,9 +58,9 @@ public class VoronoiLayer extends BiomeLayer {
         }
 
 
-        //  X -> (cell&1)
+        //  X -> (offset&1)
         // _________
-        // | 0 | 1 |   Z cell>>1)
+        // | 0 | 1 |   Z (offset>>1)
         // |---|---|   |
         // | 2 | 3 |  \_/
         // |___|___|
