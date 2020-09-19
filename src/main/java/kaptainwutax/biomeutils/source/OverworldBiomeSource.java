@@ -185,6 +185,9 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     public BPos getSpawnPoint(Collection<Biome> spawnBiomes) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
+            throw new UnsupportedVersion(this.getVersion(), "getSpawnPoint");
+        }
         JRand rand = new JRand(this.getWorldSeed());
         BPos spawnPos = this.locateBiome(0, 0, 0, 256, spawnBiomes, rand);
         return spawnPos == null ? new BPos(8, 0, 8) : spawnPos.add(8, 0, 8);
