@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestScales {
 
-    private static final String scales_1_14 = "51 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
-            "50 4 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer$Apply\n" +
-            "42 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
+    private static final String scales_1_14 = "50 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
+            "49 4 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer$Apply\n" +
+            "41 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
             "34 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
             "33 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "32 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -64,9 +64,9 @@ public class TestScales {
             "2 2048 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n" +
-            "41 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
-            "40 4 kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer\n" +
-            "39 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "40 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
+            "39 4 kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer\n" +
+            "38 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "37 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "36 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "35 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -91,16 +91,16 @@ public class TestScales {
             "2 2048 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n" +
-            "49 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "48 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "47 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "46 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "45 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "44 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "43 256 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer\n";
-    private static final String scales_1_13 = "50 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
-            "49 4 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer$Apply\n" +
-            "41 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
+            "48 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "47 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "46 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "45 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "44 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "43 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "42 256 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer\n";
+    private static final String scales_1_13 = "49 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
+            "48 4 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer$Apply\n" +
+            "40 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
             "33 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
             "32 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "31 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -153,9 +153,9 @@ public class TestScales {
             "2 2048 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n" +
-            "40 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
-            "39 4 kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer\n" +
-            "38 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "39 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
+            "38 4 kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer\n" +
+            "37 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "36 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "35 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "34 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -180,25 +180,25 @@ public class TestScales {
             "2 2048 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n" +
-            "48 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "47 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "46 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "45 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "44 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "43 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "42 256 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer\n";
+            "47 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "46 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "45 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "44 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "43 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "42 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "41 256 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer\n";
 
-    private static final String scales_1_12 = "45 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
-            "44 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
-            "36 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
-            "35 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "34 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "33 16 kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer\n" +
-            "32 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "31 32 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
-            "30 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "29 64 kaptainwutax.biomeutils.layer.land.SunflowerPlainsLayer\n" +
-            "28 64 kaptainwutax.biomeutils.layer.land.HillsLayer\n" +
+    private static final String scales_1_12 = "43 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
+            "42 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
+            "35 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
+            "34 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "33 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "32 16 kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer\n" +
+            "31 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "30 32 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
+            "29 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "28 64 kaptainwutax.biomeutils.layer.land.SunflowerPlainsLayer\n" +
+            "27 64 kaptainwutax.biomeutils.layer.land.HillsLayer\n" +
             "21 64 kaptainwutax.biomeutils.layer.shore.EaseEdgeLayer\n" +
             "20 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "19 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -221,8 +221,8 @@ public class TestScales {
             "2 2048 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n" +
-            "27 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "26 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "26 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "25 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "22 256 kaptainwutax.biomeutils.layer.land.NoiseLayer\n" +
             "17 256 kaptainwutax.biomeutils.layer.water.DeepOceanLayer\n" +
             "16 256 kaptainwutax.biomeutils.layer.land.MushroomLayer\n" +
@@ -242,13 +242,13 @@ public class TestScales {
             "2 2048 kaptainwutax.biomeutils.layer.land.LandLayer\n" +
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n" +
-            "43 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
-            "42 4 kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer\n" +
-            "41 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "39 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "38 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "37 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
-            "25 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "41 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
+            "40 4 kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer\n" +
+            "39 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "38 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "37 16 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "36 32 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
+            "24 64 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "23 128 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "22 256 kaptainwutax.biomeutils.layer.land.NoiseLayer\n" +
             "17 256 kaptainwutax.biomeutils.layer.water.DeepOceanLayer\n" +

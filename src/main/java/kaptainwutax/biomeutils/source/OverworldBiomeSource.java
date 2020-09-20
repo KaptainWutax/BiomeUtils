@@ -117,7 +117,7 @@ public class OverworldBiomeSource extends BiomeSource {
             // initialized with its world seed but the hills layer had 2 parents so the noise was never initialized recursively,
             // we simulate this stuff here by scaling with world seed equals to 0
             // the river branch still use the full scaling with its normal layer seed
-            this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 2));
+            this.river = this.stack(1000L, NORMAL_SCALE, this.noise, 2);
             // Passing 0 for worldSeed and salt leads to the layerSeed being equal to 0.
             this.layers.add(this.noise = new ScaleLayer(this.getVersion(), 0L, 0L, ScaleLayer.Type.NORMAL, this.noise));
             this.layers.add(this.noise = new ScaleLayer(this.getVersion(), 0L, 0L, ScaleLayer.Type.NORMAL, this.noise));
@@ -147,7 +147,7 @@ public class OverworldBiomeSource extends BiomeSource {
         // river chain
         // basically for 1.13+ the stack 2 for the biomes and the river was the same but for 1.12 there was a difference
         // for the hills the noise was sampled with layer seed=0 but the river stack was normal
-        this.layers.add(this.river = this.stack(1000L, NORMAL_SCALE, this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise, 4));
+        this.river = this.stack(1000L, NORMAL_SCALE, this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise, 4);
         this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
         this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
