@@ -98,8 +98,7 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 
 	@Override
 	protected void sampleNoiseColumn(double[] buffer, int x, int z) {
-		this.sampleNoiseColumn(buffer, x, z, 684.4119873046875D, 684.4119873046875D, 8.555149841308594D,
-				4.277574920654297D, 3, -10);
+		this.sampleNoiseColumn(buffer, x, z, 684.4119873046875D, 684.4119873046875D, 8.555149841308594D, 4.277574920654297D, 3, -10);
 	}
 
 }

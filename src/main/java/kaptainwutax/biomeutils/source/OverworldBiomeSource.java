@@ -186,14 +186,14 @@ public class OverworldBiomeSource extends BiomeSource {
 
     public BPos getSpawnPoint(Collection<Biome> spawnBiomes) {
         if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
-            return getSpawnPoint_12(spawnBiomes,false);
+            return getSpawnPoint12(spawnBiomes, false);
         }
         JRand rand = new JRand(this.getWorldSeed());
         BPos spawnPos = this.locateBiome(0, 0, 0, 256, spawnBiomes, rand);
         return spawnPos == null ? new BPos(8, 0, 8) : spawnPos.add(8, 0, 8);
     }
 
-    public double getGrassStats(Biome biome){
+    public double getGrassStats(Biome biome) {
         if (Biome.PLAINS.equals(biome)) {
             return 1.0;
         } else if (Biome.MOUNTAINS.equals(biome)) {
@@ -249,37 +249,39 @@ public class OverworldBiomeSource extends BiomeSource {
         }
         return 0;
     }
-    public boolean isValidPos(int x, int z,boolean trueSpawn) {
+
+    public boolean isValidPos(int x, int z, boolean trueSpawn) {
         // TODO tricky part, check biomes valid + gen terain == GRASS
 
-         // void check not usable
+        // void check not usable
         // for now lets just do the proba tables then we can move to full terrain for true spawn
-        if (! trueSpawn){
-            return getGrassStats(this.getBiome(x,0,z))>=0.5;
-        }else{
-            throw new UnsupportedVersion(getVersion(),"The true spawn is not yet implemented");
+        if (!trueSpawn) {
+            return getGrassStats(this.getBiome(x, 0, z)) >= 0.5;
+        } else {
+            throw new UnsupportedVersion(getVersion(), "The true spawn is not yet implemented");
         }
     }
 
-    public BPos getSpawnPoint_12(Collection<Biome> spawnBiomes,boolean trueSpawn) {
+    public BPos getSpawnPoint12(Collection<Biome> spawnBiomes, boolean trueSpawn) {
         JRand rand = new JRand(this.getWorldSeed());
-        BPos spawnPos = this.locateBiome(0, 0, 0, 256, spawnBiomes, rand);
-        if (spawnPos != null) return spawnPos.add(0, 0, 0); // TODO check if add?
+        BPos spawnPos = this.locateBiome12(0, 0, 256, spawnBiomes, rand);
         int x = 8;
         int z = 8;
-
+        if (spawnPos != null) {
+            x = spawnPos.getX();
+            z = spawnPos.getZ();
+        }
         int counter = 0;
         // wiggle
-        while (!isValidPos(x, z,trueSpawn)) {
+        while (!isValidPos(x, z, trueSpawn)) {
             x += rand.nextInt(64) - rand.nextInt(64);
             z += rand.nextInt(64) - rand.nextInt(64);
             ++counter;
-
             if (counter == 1000) {
                 break;
             }
         }
-        return new BPos(x, 0, z);
+        return new BPos(x, 64, z);
     }
 
     public BPos getSpawnPoint() {

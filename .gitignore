@@ -7,3 +7,6 @@ bin/
 .settings/
 .project
 .classpath
+
+# this is mainly because this file is used for local test and this should never be included in a library
+Main.java

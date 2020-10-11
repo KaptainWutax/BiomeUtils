@@ -270,6 +270,19 @@ public class TestScales {
             "1 2048 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
             "0 4096 kaptainwutax.biomeutils.layer.land.ContinentLayer\n";
 
+    public static String printFunc(BiomeLayer last, String str) {
+        if (last == null) {
+            return str;
+        }
+        str += (String.format("%d %d %s\n", last.getLayerId(), last.getScale(), last.getClass().getName()));
+        if (last.getParents() != null) {
+            for (BiomeLayer biomeLayer : last.getParents()) {
+                str = printFunc(biomeLayer, str);
+            }
+        }
+        return str;
+    }
+
     @Test
     @DisplayName("Test 1.12 scale and names")
     public void testScale1_12() {
@@ -289,18 +302,5 @@ public class TestScales {
     public void testScale1_14() {
         OverworldBiomeSource source = new OverworldBiomeSource(MCVersion.v1_14, 12228782782872L);
         assertEquals(scales_1_14, printFunc(source.voronoi, ""));
-    }
-
-    public static String printFunc(BiomeLayer last, String str) {
-        if (last == null) {
-            return str;
-        }
-        str += (String.format("%d %d %s\n", last.getLayerId(), last.getScale(), last.getClass().getName()));
-        if (last.getParents() != null) {
-            for (BiomeLayer biomeLayer : last.getParents()) {
-                str = printFunc(biomeLayer, str);
-            }
-        }
-        return str;
     }
 }
