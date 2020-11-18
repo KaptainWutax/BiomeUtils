@@ -26,7 +26,7 @@ public class VoronoiLayer extends BiomeLayer {
 
     @Override
     public int sample(int x, int y, int z) {
-        return this.getVersion().isOlderThan(MCVersion.v1_14) ? this.sample13(x, z) : this.sample14(x, y, z);
+        return this.getVersion().isOlderOrEqualTo(MCVersion.v1_15) ? this.sample13(x, z) : this.sample14(x, y, z);
     }
 
     private int sample13(int x, int z) {
