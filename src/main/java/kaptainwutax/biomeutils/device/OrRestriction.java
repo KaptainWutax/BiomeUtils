@@ -9,7 +9,7 @@ public class OrRestriction extends Restriction {
     private final Restriction[] restrictions;
 
     protected OrRestriction(int x, int z, Restriction... restrictions) {
-        super(x, z);
+        super("OR", x, z);
         this.restrictions = restrictions;
     }
 

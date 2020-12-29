@@ -18,12 +18,12 @@ public abstract class BoundRestriction extends Restriction {
     private final long shortMin;
     private final long shortMax;
 
-    public BoundRestriction(int x, int z, long salt, long bound, long value) {
-        this(x, z, salt, bound, value, value);
+    public BoundRestriction(String name, int x, int z, long salt, long bound, long value) {
+        this(name, x, z, salt, bound, value, value);
     }
 
-    public BoundRestriction(int x, int z, long salt, long bound, long min, long max) {
-        super(x, z);
+    public BoundRestriction(String name, int x, int z, long salt, long bound, long min, long max) {
+        super(name, x, z);
 
         if(max >= bound) {
             System.err.println("Using " + max + " as maximum for bound " + bound + "? Go Fix.");

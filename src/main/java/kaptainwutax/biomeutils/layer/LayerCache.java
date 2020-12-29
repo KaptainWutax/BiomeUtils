@@ -36,9 +36,9 @@ public class LayerCache {
 	}
 
 	public long uniqueHash(int x, int y, int z) {
-		long hash = (long)x & Mth.getMask(28);
-		hash |= ((long)z & Mth.getMask(28)) << 28;
-		hash |= ((long)y & Mth.getMask(8)) << 56;
+		long hash = (long)x & Mth.getMask(26);
+		hash |= ((long)z & Mth.getMask(26)) << 26;
+		hash |= ((long)y & Mth.getMask(8)) << 52;
 		return hash;
 	}
 

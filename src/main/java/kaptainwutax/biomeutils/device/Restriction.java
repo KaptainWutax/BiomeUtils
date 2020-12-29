@@ -11,12 +11,18 @@ import java.util.Objects;
 
 public abstract class Restriction {
 
+    private final String name;
     private final int x;
     private final int z;
 
-    public Restriction(int x, int z) {
+    public Restriction(String name, int x, int z) {
+        this.name = name;
         this.x = x;
         this.z = z;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public int getX() {
@@ -55,7 +61,7 @@ public abstract class Restriction {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " at (" + this.getX() + ", " + this.getZ() + ")";
+        return this.getName() + " at (" + this.getX() + ", " + this.getZ() + ")";
     }
 
     @FunctionalInterface
