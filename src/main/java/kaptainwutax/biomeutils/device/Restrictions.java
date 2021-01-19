@@ -50,6 +50,16 @@ public class Restrictions {
     };
 
     //1024:1
+    public static final Restriction.Factory<BoundRestriction> HILLS_PLATEAU = (version, x, z) -> {
+        return new BoundRestriction("PLATEAU", x, z, getSalt(version, HillsLayer.class), 3, 0) {
+            @Override
+            public boolean testSource(BiomeSource source) {
+                return true; // no test can really be made since it is a off by 1 stuff
+            }
+        };
+    };
+
+    //1024:1
     public static final Restriction.Factory<BoundRestriction> COLD_MOUNTAIN = (version, x, z) -> {
         return new BoundRestriction("COLD_MOUNTAIN", x, z, getSalt(version, ClimateLayer.Cold.class), 6, 1) {
             private final int ID = getLayerId(version, ClimateLayer.Cold.class);
@@ -62,8 +72,20 @@ public class Restrictions {
     };
 
     // 1024:1
-    public static final Restriction.Factory<ModRestriction> MUTATED = (version, x, z) -> {
+    public static final Restriction.Factory<ModRestriction> MUTATED = (version, x, z) -> { //line 21 hillslayer k==1
         return new ModRestriction("NOISE LAYER", x, z, getSalt(version, NoiseLayer.class), 299999, 1, 29) {
+            private final int ID = getLayerId(version, NoiseLayer.class);
+
+            @Override
+            public boolean testSource(BiomeSource source) {
+                int id = source.getLayer(this.ID).get(this.getX(), 0, this.getZ());
+                return (id >> 7) == 1;
+            }
+        };
+    };
+
+    public static final Restriction.Factory<ModRestriction> MUTATED_SECOND = (version, x, z) -> { //line 71 hillslayer k==0
+        return new ModRestriction("NOISE LAYER", x, z, getSalt(version, NoiseLayer.class), 299999, 0, 29) {
             private final int ID = getLayerId(version, NoiseLayer.class);
 
             @Override

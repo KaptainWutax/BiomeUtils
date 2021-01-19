@@ -151,7 +151,8 @@ public class Main {
         for (int x = -bound; x <= bound; x++) {
             for (int z = -bound; z <= bound; z++) {
                 device.add(Restrictions.SAVANNAH_BIOME,x,z);
-                device.add(Restrictions.MUTATED,x,z);
+                device.add(Restrictions.HILLS_PLATEAU,x,z);
+                device.add(Restrictions.MUTATED_SECOND,x,z);
             }
         }
         device.findSeeds(System.out::println);
