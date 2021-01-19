@@ -147,10 +147,13 @@ public class Main {
 
     public static void main(String[] args) {
         BiomeDevice device = new BiomeDevice(MCVersion.v1_16_2);
-        device.add(Restrictions.MUSHROOM, 0, 0);
-
-        device.add(Restrictions.BAMBOO_JUNGLE, 1, 0);
-        device.add(Restrictions.BAMBOO_JUNGLE, 0, -1);
+        int bound=0;
+        for (int x = -bound; x <= bound; x++) {
+            for (int z = -bound; z <= bound; z++) {
+                device.add(Restrictions.SAVANNAH_BIOME,x,z);
+                device.add(Restrictions.MUTATED,x,z);
+            }
+        }
         device.findSeeds(System.out::println);
     }
 
