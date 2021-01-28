@@ -8,6 +8,7 @@ import kaptainwutax.biomeutils.layer.nether.NetherLayer;
 import kaptainwutax.biomeutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.seedutils.mc.pos.BPos;
 
 public class NetherBiomeSource extends BiomeSource {
 
@@ -67,6 +68,11 @@ public class NetherBiomeSource extends BiomeSource {
         }
 
         this.layers.setScales();
+    }
+
+    @Override
+    public Biome getBiome(BPos bpos) {
+        return Biome.REGISTRY.get(this.voronoi.get(bpos.getX(), bpos.getY(), bpos.getZ()));
     }
 
     @Override

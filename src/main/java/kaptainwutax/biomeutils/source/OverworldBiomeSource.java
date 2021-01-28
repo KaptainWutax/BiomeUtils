@@ -175,6 +175,11 @@ public class OverworldBiomeSource extends BiomeSource {
     }
 
     @Override
+    public Biome getBiome(BPos bpos) {
+        return Biome.REGISTRY.get(this.voronoi.get(bpos.getX(), 0, bpos.getZ()));
+    }
+
+    @Override
     public Biome getBiome(int x, int y, int z) {
         return Biome.REGISTRY.get(this.voronoi.get(x, 0, z));
     }

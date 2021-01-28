@@ -259,7 +259,7 @@ public class Biome {
     public static final Biome JUNGLE = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 21, "jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.200F, 0.100F, null);
     public static final Biome JUNGLE_HILLS = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 22, "jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.300F, 0.450F, null);
     public static final Biome JUNGLE_EDGE = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 23, "jungle_edge", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.200F, 0.100F, null);
-    public static final Biome DEEP_OCEAN = new Biome(MCVersion.v1_13, Dimension.OVERWORLD, 24, "deep_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, 0.100F, -1.800F, null);
+    public static final Biome DEEP_OCEAN = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 24, "deep_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, 0.100F, -1.800F, null);
     public static final Biome STONE_SHORE = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 25, "stone_shore", Category.NONE, Precipitation.RAIN, 0.2F, 0.800F, 0.100F, null);
     public static final Biome SNOWY_BEACH = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 26, "snowy_beach", Category.BEACH, Precipitation.SNOW, 0.05F, 0.025F, 0.000F, null);
     public static final Biome BIRCH_FOREST = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 27, "birch_forest", Category.FOREST, Precipitation.RAIN, 0.6F, 0.200F, 0.100F, null);
