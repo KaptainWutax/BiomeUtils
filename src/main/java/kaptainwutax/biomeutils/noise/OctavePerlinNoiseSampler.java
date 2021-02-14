@@ -90,9 +90,10 @@ public class OctavePerlinNoiseSampler implements NoiseSampler {
 		double lacunarity = this.lacunarity;
 
 		for(PerlinNoiseSampler sampler: this.octaveSamplers) {
-			if(sampler == null)continue;
-			noise += sampler.sample(maintainPrecision(x * persistence), bl ? -sampler.originY : maintainPrecision(y * persistence),
-					maintainPrecision(z * persistence), d * persistence, e * persistence) * lacunarity;
+			if(sampler != null){
+				noise += sampler.sample(maintainPrecision(x * persistence), bl ? -sampler.originY : maintainPrecision(y * persistence),
+						maintainPrecision(z * persistence), d * persistence, e * persistence) * lacunarity;
+			}
 			persistence /= 2.0D;
 			lacunarity *= 2.0D;
 		}

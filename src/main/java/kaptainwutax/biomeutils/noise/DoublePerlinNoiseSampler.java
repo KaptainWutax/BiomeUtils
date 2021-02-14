@@ -11,8 +11,8 @@ public class DoublePerlinNoiseSampler {
 	private final OctavePerlinNoiseSampler firstSampler;
 	private final OctavePerlinNoiseSampler secondSampler;
 
-	public DoublePerlinNoiseSampler(ChunkRand rand, IntStream intStream) {
-		this(rand, intStream.boxed().collect(Collectors.toList()));
+	public DoublePerlinNoiseSampler(ChunkRand rand, IntStream octaves) {
+		this(rand, octaves.boxed().collect(Collectors.toList()));
 	}
 
 	public DoublePerlinNoiseSampler(ChunkRand rand, List<Integer> octaves) {
