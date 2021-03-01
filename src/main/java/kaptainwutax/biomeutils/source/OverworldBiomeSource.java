@@ -51,8 +51,11 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
         super(version, worldSeed);
 
-        if (this.getVersion().isOlderThan(MCVersion.v1_8)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_6_2)) {
             throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
+        }
+        if (this.getVersion().isOlderThan(MCVersion.v1_7_2)) {
+            System.out.println("WARNING USING TEMPORARY BIOME STACK (NOT VERIFIED)");
         }
 
         this.biomeSize = biomeSize;
@@ -82,31 +85,39 @@ public class OverworldBiomeSource extends BiomeSource {
         //1024
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
-        this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base));
-        this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)){
+            this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base));
+            this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
+        }
         this.layers.add(this.base = new IslandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
         this.layers.add(this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base));
-        this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
-        this.layers.add(this.base = new ClimateLayer.Temperate(this.getVersion(), this.getWorldSeed(), 2L, this.base));
-        this.layers.add(this.base = new ClimateLayer.Cool(this.getVersion(), this.getWorldSeed(), 2L, this.base));
-        this.layers.add(this.base = new ClimateLayer.Special(this.getVersion(), this.getWorldSeed(), 3L, this.base));
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
+            this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
+            this.layers.add(this.base = new ClimateLayer.Temperate(this.getVersion(), this.getWorldSeed(), 2L, this.base));
+            this.layers.add(this.base = new ClimateLayer.Cool(this.getVersion(), this.getWorldSeed(), 2L, this.base));
+            this.layers.add(this.base = new ClimateLayer.Special(this.getVersion(), this.getWorldSeed(), 3L, this.base));
+        }
         //512
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2002L, ScaleLayer.Type.NORMAL, this.base));
+        if (this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4)){
+            this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
+        }
         //256
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
         this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
-        this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
-
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
+            this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
+        }
         // new biomes chain
         this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
-
         if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_14)) {
             this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));
         }
-
         this.biomes = this.stack(1000L, NORMAL_SCALE, this.biomes, 2);
-        this.layers.add(this.biomes = new EaseEdgeLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes));
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
+            this.layers.add(this.biomes = new EaseEdgeLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes));
+        }
 
         // noise generation for variant and river
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
@@ -127,7 +138,11 @@ public class OverworldBiomeSource extends BiomeSource {
         }
 
         // hills and variants chain
-        this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
+            this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
+        }else{
+            this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes));
+        }
         this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
 
         for (int i = 0; i < this.biomeSize; i++) {
@@ -140,6 +155,7 @@ public class OverworldBiomeSource extends BiomeSource {
             if (i == 1 || this.biomeSize == 1) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
             }
+            // 1.6.4- swamp stuff
         }
 
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
@@ -147,7 +163,8 @@ public class OverworldBiomeSource extends BiomeSource {
         // river chain
         // basically for 1.13+ the stack 2 for the biomes and the river was the same but for 1.12 there was a difference
         // for the hills the noise was sampled with layer seed=0 but the river stack was normal
-        this.river = this.stack(1000L, NORMAL_SCALE, this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise, 4);
+        // for 1.6.4- we have a stack of 6 so here 2+4 that we offset by 2
+        this.river = this.stack( this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)? 1000L:1002L, NORMAL_SCALE, this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise, 4);
         this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
         this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
@@ -172,6 +189,11 @@ public class OverworldBiomeSource extends BiomeSource {
         }
 
         return parent;
+    }
+
+    @Override
+    public Biome getBiome(BPos bpos) {
+        return Biome.REGISTRY.get(this.voronoi.get(bpos.getX(), 0, bpos.getZ()));
     }
 
     @Override

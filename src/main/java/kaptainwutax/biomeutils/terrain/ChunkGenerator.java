@@ -13,7 +13,7 @@ public abstract class ChunkGenerator {
 		this.biomeSource = biomeSource;
 		this.version = biomeSource.getVersion();
 
-		if(this.version != MCVersion.v1_14) {
+		if(this.version.isOlderThan(MCVersion.v1_14)) {
 			throw new UnsupportedVersion(this.version, "chunk generator");
 		}
 	}

@@ -52,6 +52,7 @@ public abstract class BiomeSource {
     }
 
     public abstract Dimension getDimension();
+    public abstract Biome getBiome(BPos bpos);
 
     public abstract Biome getBiome(int x, int y, int z);
 

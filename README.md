@@ -30,7 +30,7 @@ compared to the OverWorld.
 
 # How to use
 
-**Here vXXX means any version starting from v1_13 (for the moment, we are extending support) till current supported one.**
+**Here vXXX means any version starting from v1_8 (for the moment, we are extending support) till current supported one.**
 
 Before anything, we recommend using gradle buildsystem to import the library as such:
 ```groovy

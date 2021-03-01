@@ -14,21 +14,26 @@ public class HillsLayer extends BiomeLayer {
 	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
 		int i = this.getParent(0).get(x, y, z); // biomes
-		int j = this.getParent(1).get(x, y, z); // noise (river)
+		boolean toHills=this.nextInt(3) == 0;
 
-		int k = (j - 2) % 29;
+		int k=-1;
 		Biome biome3;
+		if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)){
+			int j = this.getParent(1).get(x, y, z); // noise (river)
+			k = (j - 2) % 29;
+			if(!Biome.isShallowOcean(i) && j >= 2 && k == 1) {
+				Biome biome = Biome.REGISTRY.get(i);
 
-		if(!Biome.isShallowOcean(i) && j >= 2 && k == 1) {
-			Biome biome = Biome.REGISTRY.get(i);
-
-			if(biome == null || !biome.hasParent()) {
-				biome3 = biome == null ? null : biome.getChild();
-				return biome3 == null ? i : biome3.getId();
+				if(biome == null || !biome.hasParent()) {
+					biome3 = biome == null ? null : biome.getChild();
+					return biome3 == null ? i : biome3.getId();
+				}
 			}
+			toHills|=(k == 0);
 		}
 
-		if(this.nextInt(3) == 0 || k == 0) {
+
+		if (toHills) {
 			int l = i;
 			if (i == Biome.DESERT.getId()) {
 				l = Biome.DESERT_HILLS.getId();
@@ -74,9 +79,11 @@ public class HillsLayer extends BiomeLayer {
 				l = this.nextInt(2) == 0 ? Biome.PLAINS.getId() : Biome.FOREST.getId();
 			}
 
-			if(k == 0 && l != i) {
-				biome3 = Biome.REGISTRY.get(l).getChild();
-				l = biome3 == null ? i : biome3.getId();
+			if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
+				if (k == 0 && l != i) {
+					biome3 = Biome.REGISTRY.get(l).getChild();
+					l = biome3 == null ? i : biome3.getId();
+				}
 			}
 
 			if(l != i) {
