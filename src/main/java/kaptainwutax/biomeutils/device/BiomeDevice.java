@@ -35,7 +35,7 @@ public class BiomeDevice {
         BitGroup entry = groups.get(0);
 
         if(entry.bits < 64) {
-            search(entry, 156996, 0, onSeedFound);
+            search(entry, 0, 0, onSeedFound);
         } else {
             long worldSeed = 0;
 
