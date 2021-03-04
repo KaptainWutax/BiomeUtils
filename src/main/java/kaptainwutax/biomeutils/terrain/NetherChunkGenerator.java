@@ -4,11 +4,12 @@ import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.MathHelper;
 import kaptainwutax.biomeutils.noise.OctavePerlinNoiseSampler;
 import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.seedutils.mc.MCVersion;
 
-public class OverworldChunkGenerator extends SurfaceChunkGenerator {
+public class NetherChunkGenerator extends SurfaceChunkGenerator {
 
-	public OverworldChunkGenerator(BiomeSource biomeSource) {
-		super(biomeSource, 4, 8, 256, true);
+	public NetherChunkGenerator(BiomeSource biomeSource) {
+		super(biomeSource, 1, 2, 128, false);
 	}
 
 	@Override
@@ -21,6 +22,20 @@ public class OverworldChunkGenerator extends SurfaceChunkGenerator {
 
 		return fallOff;
 	}
+
+	@Override
+	public int getSeaLevel() {
+		return 32;
+	}
+
+	@Override
+	protected double[] computeNoiseRange(int x, int z) {
+		if (this.biomeSource.getVersion().isNewerOrEqualTo(MCVersion.v1_16)){
+			return super.computeNoiseRange(x,z);
+		}
+		return new double[]{0.0,0.0};
+	}
+
 
 	@Override
 	protected void sampleNoiseColumn(double[] buffer, int x, int z) {

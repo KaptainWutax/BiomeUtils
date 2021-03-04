@@ -37,36 +37,35 @@ public class OctavePerlinNoiseSampler implements NoiseSampler {
 			throw new IllegalArgumentException("Need some octaves!");
 		}
 
-		int i = -octaves.get(0);
-		int j = octaves.get(octaves.size() - 1);
-		int k = i + j + 1;
+		int start = -octaves.get(0);
+		int end = octaves.get(octaves.size() - 1);
+		int length = start + end + 1;
 
-		if(k < 1) {
+		if(length < 1) {
 			throw new IllegalArgumentException("Total number of octaves needs to be >= 1");
 		}
 
 		PerlinNoiseSampler perlin = new PerlinNoiseSampler(rand);
 
-		this.octaveSamplers = new PerlinNoiseSampler[k];
+		this.octaveSamplers = new PerlinNoiseSampler[length];
 
-		if(j >= 0 && j < k && octaves.contains(0)) {
-			this.octaveSamplers[j] = perlin;
+		if(end >= 0 && end < length && octaves.contains(0)) {
+			this.octaveSamplers[end] = perlin;
 		}
 
-		for(int m = j + 1; m < k; ++m) {
-			if(m >= 0 && octaves.contains(j - m)) {
-				this.octaveSamplers[m] = new PerlinNoiseSampler(rand);
+		for(int idx = end + 1; idx < length; ++idx) {
+			if(idx >= 0 && octaves.contains(end - idx)) {
+				this.octaveSamplers[idx] = new PerlinNoiseSampler(rand);
 			} else {
 				rand.advance(SKIP_262);
 			}
 		}
 
-		if(j > 0) {
+		if(end > 0) {
 			long n = (long)(perlin.sample(0.0D, 0.0D, 0.0D, 0.0D, 0.0D) * 9.223372036854776E18D);
 			rand.setSeed(n);
-
-			for(int o = j - 1; o >= 0; --o) {
-				if(o < k && octaves.contains(j - o)) {
+			for(int o = end - 1; o >= 0; --o) {
+				if(o < length && octaves.contains(end - o)) {
 					this.octaveSamplers[o] = new PerlinNoiseSampler(rand);
 				} else {
 					rand.advance(SKIP_262);
@@ -74,8 +73,8 @@ public class OctavePerlinNoiseSampler implements NoiseSampler {
 			}
 		}
 
-		this.persistence = Math.pow(2.0D, j);
-		this.lacunarity = 1.0D / (Math.pow(2.0D, k) - 1.0D);
+		this.persistence = Math.pow(2.0D, end);
+		this.lacunarity = 1.0D / (Math.pow(2.0D, length) - 1.0D);
 	}
 
 	public double sample(double x, double y, double z) {
