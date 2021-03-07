@@ -276,7 +276,7 @@ public class OverworldBiomeSource extends BiomeSource {
         // TODO tricky part, check biomes valid + gen terain == GRASS
 
         // void check not usable
-        // for now lets just do the proba tables then we can move to full terrain for true spawn
+        // for now lets just do the proba tables then we can move to full terrain for true spawn (see terrainUtils)
         if (!trueSpawn) {
             return getGrassStats(this.getBiome(x, 0, z)) >= 0.5;
         } else {

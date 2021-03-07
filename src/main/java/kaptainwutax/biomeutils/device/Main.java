@@ -4,7 +4,6 @@ import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.noiseutils.terrain.OverworldChunkGenerator;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
 
@@ -164,9 +163,7 @@ public class Main {
             BPos bpos=biomeSource.getSpawnPoint();
             Biome biome=biomeSource.getBiome(bpos);
             if (biome.getCategory()== Biome.Category.SAVANNA){
-                OverworldChunkGenerator chunkGenerator= kaptainwutax.biomeutils.terrain.OverworldChunkGenerator.of(biomeSource);
-                int height=chunkGenerator.getHeightOnGround(bpos.getX(),bpos.getZ());
-                System.out.println(height+" "+seed);
+                System.out.println(seed);
             }
         });
     }
