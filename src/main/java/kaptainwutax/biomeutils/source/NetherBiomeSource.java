@@ -5,7 +5,7 @@ import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.nether.NetherLayer;
-import kaptainwutax.biomeutils.noise.MixedNoisePoint;
+import kaptainwutax.noiseutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;

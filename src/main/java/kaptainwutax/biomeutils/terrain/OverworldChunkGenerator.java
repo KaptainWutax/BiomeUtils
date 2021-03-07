@@ -1,30 +1,19 @@
 package kaptainwutax.biomeutils.terrain;
 
-import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.MathHelper;
-import kaptainwutax.biomeutils.noise.OctavePerlinNoiseSampler;
 import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.noiseutils.ChunkGenerator;
+import kaptainwutax.seedutils.mc.Dimension;
 
-public class OverworldChunkGenerator extends SurfaceChunkGenerator {
+public class OverworldChunkGenerator {
 
-	public OverworldChunkGenerator(BiomeSource biomeSource) {
-		super(biomeSource, 4, 8, 256, true);
+	/**
+	 * Return an overworldGenerator to generate the world
+	 * @deprecated
+	 * This method is no longer acceptable use NoiseUtils
+	 *
+	 */
+	@Deprecated()
+	public static kaptainwutax.noiseutils.terrain.OverworldChunkGenerator of(BiomeSource biomeSource) {
+		return (kaptainwutax.noiseutils.terrain.OverworldChunkGenerator) ChunkGenerator.of(Dimension.OVERWORLD,biomeSource);
 	}
-
-	@Override
-	protected double computeNoiseFalloff(double depth, double scale, int y) {
-		double fallOff = ((double) y - (8.5D + depth * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / scale;
-
-		if(fallOff < 0.0D) {
-			fallOff *= 4.0D;
-		}
-
-		return fallOff;
-	}
-
-	@Override
-	protected void sampleNoiseColumn(double[] buffer, int x, int z) {
-		this.sampleNoiseColumn(buffer, x, z, 684.4119873046875D, 684.4119873046875D, 8.555149841308594D, 4.277574920654297D, 3, -10);
-	}
-
 }

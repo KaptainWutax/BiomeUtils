@@ -2,8 +2,8 @@ package kaptainwutax.biomeutils.layer.nether;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.biomeutils.noise.DoublePerlinNoiseSampler;
-import kaptainwutax.biomeutils.noise.MixedNoisePoint;
+import kaptainwutax.noiseutils.noise.DoublePerlinNoiseSampler;
+import kaptainwutax.noiseutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.ChunkRand;
 import kaptainwutax.seedutils.mc.MCVersion;
 

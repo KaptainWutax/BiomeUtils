@@ -4,14 +4,9 @@ import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.biomeutils.terrain.ChunkGenerator;
-import kaptainwutax.biomeutils.terrain.OverworldChunkGenerator;
+import kaptainwutax.noiseutils.terrain.OverworldChunkGenerator;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
-
-import java.util.Random;
-
-import static kaptainwutax.biomeutils.device.Restriction.getSalt;
 
 public class Main {
 
@@ -169,7 +164,7 @@ public class Main {
             BPos bpos=biomeSource.getSpawnPoint();
             Biome biome=biomeSource.getBiome(bpos);
             if (biome.getCategory()== Biome.Category.SAVANNA){
-                OverworldChunkGenerator chunkGenerator=new OverworldChunkGenerator(biomeSource);
+                OverworldChunkGenerator chunkGenerator= kaptainwutax.biomeutils.terrain.OverworldChunkGenerator.of(biomeSource);
                 int height=chunkGenerator.getHeightOnGround(bpos.getX(),bpos.getZ());
                 System.out.println(height+" "+seed);
             }
