@@ -2,7 +2,7 @@ package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.noiseutils.noise.PerlinNoiseSampler;
+import kaptainwutax.noiseutils.perlin.PerlinNoiseSampler;
 import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
 

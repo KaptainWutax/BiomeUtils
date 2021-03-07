@@ -1,13 +1,10 @@
 package kaptainwutax.biomeutils.device;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.land.*;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.source.BiomeSource;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static kaptainwutax.biomeutils.device.Restriction.getSalt;
 
