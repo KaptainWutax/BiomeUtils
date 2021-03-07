@@ -315,4 +315,36 @@ public class Biome {
     public static final Biome WARPED_FOREST = new Biome(MCVersion.v1_16, Dimension.NETHER, 172, "warped_forest", Category.NETHER, Precipitation.NONE, 2.0F, 0F, 0F, null);
     public static final Biome BASALT_DELTAS = new Biome(MCVersion.v1_16, Dimension.NETHER, 173, "basalt_deltas", Category.NETHER, Precipitation.NONE, 2.0F, 0F, 0F, null);
 
+
+    public static class BiomePoint {
+
+        public final Biome biome;
+        public final float temperature;
+        public final float humidity;
+        public final float altitude;
+        public final float weirdness;
+        public final float weight;
+
+        public BiomePoint(Biome biome, float temperature, float humidity, float altitude, float weirdness, float weight) {
+            this.biome = biome;
+            this.temperature = temperature;
+            this.humidity = humidity;
+            this.altitude = altitude;
+            this.weirdness = weirdness;
+            this.weight = weight;
+        }
+
+        public Biome getBiome() {
+            return this.biome;
+        }
+
+        public float distanceTo(BiomePoint other) {
+            return (this.temperature - other.temperature) * (this.temperature - other.temperature) +
+                    (this.humidity - other.humidity) * (this.humidity - other.humidity) +
+                    (this.altitude - other.altitude) * (this.altitude - other.altitude) +
+                    (this.weirdness - other.weirdness) * (this.weirdness - other.weirdness) +
+                    (this.weight - other.weight) * (this.weight - other.weight);
+        }
+
+    }
 }

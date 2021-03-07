@@ -5,22 +5,21 @@ import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.nether.NetherLayer;
-import kaptainwutax.noiseutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.pos.BPos;
 
 public class NetherBiomeSource extends BiomeSource {
 
-    private static final MixedNoisePoint[] DEFAULT_BIOME_POINTS = {
-            new MixedNoisePoint(Biome.NETHER_WASTES, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
-            new MixedNoisePoint(Biome.SOUL_SAND_VALLEY, 0.0F, -0.5F, 0.0F, 0.0F, 0.0F),
-            new MixedNoisePoint(Biome.CRIMSON_FOREST, 0.4F, 0.0F, 0.0F, 0.0F, 0.0F),
-            new MixedNoisePoint(Biome.WARPED_FOREST, 0.0F, 0.5F, 0.0F, 0.0F, 0.375F),
-            new MixedNoisePoint(Biome.BASALT_DELTAS, -0.5F, 0.0F, 0.0F, 0.0F, 0.175F)
+    private static final Biome.BiomePoint[] DEFAULT_BIOME_POINTS = {
+            new Biome.BiomePoint(Biome.NETHER_WASTES, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
+            new Biome.BiomePoint(Biome.SOUL_SAND_VALLEY, 0.0F, -0.5F, 0.0F, 0.0F, 0.0F),
+            new Biome.BiomePoint(Biome.CRIMSON_FOREST, 0.4F, 0.0F, 0.0F, 0.0F, 0.0F),
+            new Biome.BiomePoint(Biome.WARPED_FOREST, 0.0F, 0.5F, 0.0F, 0.0F, 0.375F),
+            new Biome.BiomePoint(Biome.BASALT_DELTAS, -0.5F, 0.0F, 0.0F, 0.0F, 0.175F)
     };
     protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
-    private final MixedNoisePoint[] biomePoints;
+    private final Biome.BiomePoint[] biomePoints;
     public NetherLayer full;
     public VoronoiLayer voronoi;
     private boolean threeDimensional;
@@ -29,7 +28,7 @@ public class NetherBiomeSource extends BiomeSource {
         this(version, worldSeed, DEFAULT_BIOME_POINTS);
     }
 
-    public NetherBiomeSource(MCVersion version, long worldSeed, MixedNoisePoint... biomePoints) {
+    public NetherBiomeSource(MCVersion version, long worldSeed, Biome.BiomePoint... biomePoints) {
         super(version, worldSeed);
         this.biomePoints = biomePoints;
         this.build();

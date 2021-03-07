@@ -3,7 +3,6 @@ package kaptainwutax.biomeutils.layer.nether;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.noiseutils.noise.DoublePerlinNoiseSampler;
-import kaptainwutax.noiseutils.noise.MixedNoisePoint;
 import kaptainwutax.seedutils.mc.ChunkRand;
 import kaptainwutax.seedutils.mc.MCVersion;
 
@@ -18,10 +17,10 @@ public class NetherLayer extends BiomeLayer {
     private DoublePerlinNoiseSampler altitude;
     private DoublePerlinNoiseSampler weirdness;
 
-    private final MixedNoisePoint[] biomePoints;
+    private final Biome.BiomePoint[] biomePoints;
     private final boolean is3D;
 
-    public NetherLayer(MCVersion version, long worldSeed, boolean is3D, MixedNoisePoint[] biomePoints) {
+    public NetherLayer(MCVersion version, long worldSeed, boolean is3D, Biome.BiomePoint[] biomePoints) {
         super(version, (BiomeLayer)null);
         this.is3D = is3D;
 
@@ -41,14 +40,14 @@ public class NetherLayer extends BiomeLayer {
 
         y = this.is3D ? y : 0;
 
-        MixedNoisePoint point = new MixedNoisePoint(null,
+        Biome.BiomePoint point = new Biome.BiomePoint(null,
                 (float)this.temperature.sample(x, y, z),
                 (float)this.humidity.sample(x, y, z),
                 (float)this.altitude.sample(x, y, z),
                 (float)this.weirdness.sample(x, y, z), 0.0F);
 
         return Stream.of(this.biomePoints).min(Comparator.comparing(m -> m.distanceTo(point)))
-                .map(MixedNoisePoint::getBiome).orElse(Biome.THE_VOID).getId();
+                .map(Biome.BiomePoint::getBiome).orElse(Biome.THE_VOID).getId();
     }
 
 }
