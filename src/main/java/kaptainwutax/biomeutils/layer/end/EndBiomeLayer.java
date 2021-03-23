@@ -19,6 +19,7 @@ public class EndBiomeLayer extends BiomeLayer {
             return Biome.THE_END.getId();
         }
 
+        // this not a fail proof method
         float height = Float.intBitsToFloat(this.getParent().get(x * 2 + 1, 0, z * 2 + 1));
 
         if(height > 40.0F) {

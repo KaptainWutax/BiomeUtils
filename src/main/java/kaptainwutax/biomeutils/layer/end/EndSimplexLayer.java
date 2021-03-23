@@ -20,7 +20,7 @@ public class EndSimplexLayer extends BiomeLayer {
 
     @Override
     public int sample(int x, int y, int z) {
-        return this.simplex.sample2D(x, z) < -0.8999999761581421D ? 1 : 0;
+        return this.simplex.sample2D(x, z) < (double)-0.9F ? 1 : 0;
     }
 
 }
