@@ -85,7 +85,7 @@ public class OverworldBiomeSource extends BiomeSource {
         //1024
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
-        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)){
+        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
             this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base));
             this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
         }
@@ -99,7 +99,7 @@ public class OverworldBiomeSource extends BiomeSource {
         }
         //512
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2002L, ScaleLayer.Type.NORMAL, this.base));
-        if (this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4)){
+        if (this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4)) {
             this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
         }
         //256
@@ -109,6 +109,7 @@ public class OverworldBiomeSource extends BiomeSource {
         if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
             this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
         }
+
         // new biomes chain
         this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
         if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_14)) {
@@ -121,7 +122,6 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // noise generation for variant and river
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
-
 
         if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
             // this line needs an explanation : basically back when the stack was recursively initialized, only one parent was
@@ -140,7 +140,7 @@ public class OverworldBiomeSource extends BiomeSource {
         // hills and variants chain
         if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
             this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
-        }else{
+        } else {
             this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes));
         }
         this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
@@ -163,8 +163,13 @@ public class OverworldBiomeSource extends BiomeSource {
         // river chain
         // basically for 1.13+ the stack 2 for the biomes and the river was the same but for 1.12 there was a difference
         // for the hills the noise was sampled with layer seed=0 but the river stack was normal
+        // for 1.7 they don't have the notion of river size so biome size was used
         // for 1.6.4- we have a stack of 6 so here 2+4 that we offset by 2
-        this.river = this.stack( this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)? 1000L:1002L, NORMAL_SCALE, this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise, 4);
+        this.river = this.stack(
+                this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2) ? 1000L : 1002L, NORMAL_SCALE,
+                this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise,
+                this.getVersion().isNewerOrEqualTo(MCVersion.v1_8) ? riverSize : biomeSize
+        );
         this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
         this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
