@@ -1,3 +1,5 @@
+package kaptainwutax.v1_16_5;
+
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.source.EndBiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
@@ -8,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EndTest {
+public class End {
     @Test
     @DisplayName("Test End layers 3D")
     public void testEnd3D() {
