@@ -20,7 +20,7 @@ public class Overworld {
 
     private OverworldBiomeSource overworldBiomeSource;
     private int size;
-    private static final String version = "1.14";
+    private static final String version = "1.14.4";
 
     @BeforeEach
     public void setup() {

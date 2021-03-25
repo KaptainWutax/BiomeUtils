@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static kaptainwutax.TestFramework.randomBiomeGen;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Overworld {
@@ -25,6 +26,7 @@ public class Overworld {
     public int[][] voronoi = {{171, 497, 5}, {69, 130, 1}, {412, 107, 0}, {35, 168, 1}, {233, 337, 5}, {510, 409, 0}, {92, 263, 3}, {223, 262, 34}, {201, 226, 3}, {54, 44, 0}, {221, 439, 5}, {234, 47, 5}, {392, 313, 24}, {506, 263, 0}, {53, 351, 1}, {269, 216, 7}, {71, 494, 19}, {44, 291, 1}, {451, 285, 24}, {457, 131, 24}, {241, 52, 5}, {326, 300, 24}, {163, 334, 5}, {86, 284, 3}, {407, 218, 24}, {121, 398, 133}, {158, 273, 34}, {213, 81, 5}, {76, 431, 133}, {76, 220, 1}, {164, 252, 34}, {342, 426, 16}, {342, 307, 24}, {446, 426, 24}, {411, 428, 0}, {379, 436, 0}, {488, 116, 0}, {278, 201, 5}, {157, 355, 133}, {199, 377, 133}, {30, 37, 16}, {15, 325, 1}, {295, 498, 5}, {332, 477, 5}, {493, 256, 0}, {203, 121, 5}, {158, 272, 34}, {93, 150, 1}, {479, 229, 24}, {287, 9, 19}, {151, 297, 34}, {50, 491, 19}, {3, 308, 1}, {304, 461, 5}, {202, 470, 5}, {234, 397, 5}, {334, 115, 0}, {15, 47, 1}, {91, 311, 3}, {92, 420, 133}, {460, 120, 24}, {14, 232, 1}, {44, 164, 1}, {309, 315, 24}, {121, 503, 5}, {505, 430, 0}, {324, 345, 0}, {135, 320, 3}, {109, 444, 133}, {204, 202, 3}, {267, 278, 3}, {401, 125, 24}, {507, 369, 0}, {214, 120, 5}, {297, 274, 24}, {499, 504, 0}, {504, 373, 0}, {286, 364, 0}, {0, 229, 1}, {149, 429, 133}, {232, 272, 34}, {209, 207, 3}, {382, 458, 0}, {429, 395, 0}, {506, 500, 0}, {41, 188, 1}, {472, 477, 0}, {9, 95, 1}, {501, 483, 0}, {168, 336, 5}, {270, 480, 5}, {369, 365, 0}, {253, 318, 3}, {486, 53, 0}, {151, 372, 133}, {364, 75, 0}, {232, 293, 3}, {48, 186, 1}, {134, 177, 34}, {220, 208, 3}, {329, 462, 5}, {303, 384, 0}, {145, 426, 133}, {32, 225, 1}, {468, 505, 0}, {152, 20, 5}, {501, 344, 24}, {37, 314, 1}, {421, 73, 0}, {321, 218, 0}, {251, 335, 25}, {417, 366, 24}, {58, 447, 133}, {139, 41, 5}, {494, 160, 24}, {30, 471, 133}, {363, 172, 0}, {24, 149, 1}, {489, 84, 0}, {219, 76, 5}, {130, 469, 133}, {187, 10, 5}, {372, 258, 24}, {431, 64, 0}, {441, 496, 0}, {381, 408, 24}, {23, 329, 1}, {507, 6, 24}, {237, 511, 5}, {1, 148, 18}, {93, 8, 5}, {395, 482, 0}, {509, 426, 0}, {283, 273, 25}, {364, 424, 0}, {210, 493, 19}, {380, 316, 24}, {161, 401, 133}, {88, 264, 3}, {340, 437, 7}, {185, 416, 133}, {121, 77, 16}, {426, 276, 24}, {49, 10, 16}, {216, 327, 5}, {212, 394, 133}, {306, 399, 16}, {493, 133, 0}, {442, 485, 24}, {48, 486, 19}, {286, 34, 5}, {313, 220, 0}, {206, 386, 133}, {289, 472, 5}, {411, 87, 0}, {308, 103, 5}, {400, 111, 0}, {65, 57, 0}, {470, 480, 0}, {40, 473, 133}, {344, 155, 0}, {443, 263, 0}, {510, 62, 0}, {466, 161, 24}, {146, 433, 133}, {465, 351, 24}, {49, 428, 133}, {140, 40, 5}, {462, 159, 24}, {100, 29, 16}, {423, 269, 24}, {113, 429, 133}, {62, 52, 0}, {316, 386, 0}, {66, 391, 133}, {346, 371, 0}, {63, 442, 133}, {247, 467, 5}, {215, 121, 5}, {511, 387, 0}, {46, 446, 133}, {459, 230, 0}, {478, 379, 0}, {497, 356, 24}, {388, 128, 24}, {323, 352, 0}, {247, 64, 5}, {316, 242, 24}, {130, 251, 34}, {226, 370, 5}, {476, 332, 0}, {358, 151, 0}, {262, 218, 7}, {303, 214, 25}, {139, 201, 34}, {87, 285, 3}, {502, 306, 24}, {281, 7, 19}, {332, 501, 5}, {56, 152, 1}, {475, 386, 0}, {234, 425, 5}, {279, 21, 19}, {456, 231, 0}, {122, 3, 5}, {503, 131, 0}, {52, 307, 1}, {198, 196, 3}, {302, 38, 5}, {284, 126, 19}, {418, 386, 24}, {39, 109, 1}, {400, 438, 0}, {456, 438, 24}, {412, 430, 0}, {399, 143, 24}, {132, 289, 34}, {456, 449, 24}, {243, 292, 3}, {309, 338, 0}, {61, 282, 3}, {341, 292, 24}, {366, 225, 24}, {186, 27, 5}, {233, 482, 19}, {250, 287, 3}, {326, 45, 5}, {220, 251, 34}, {213, 113, 5}, {482, 220, 24}, {261, 116, 19}, {214, 141, 19}, {146, 477, 133}, {198, 118, 5}, {397, 54, 0}, {338, 130, 0}, {368, 374, 0}, {67, 67, 16}, {466, 274, 0}, {338, 34, 5}, {240, 71, 5}, {203, 334, 133}, {254, 465, 5}, {35, 128, 1}, {70, 246, 3}, {107, 284, 3}, {20, 370, 19}, {421, 97, 0}, {469, 331, 24}, {455, 96, 24}, {2, 335, 1}, {88, 360, 133}, {468, 255, 0}, {332, 154, 16}, {499, 166, 24}, {164, 365, 133},};
     private OverworldBiomeSource overworldBiomeSource;
     private int size;
+    private static final String version = "1.7.2";
 
     @BeforeEach
     public void setup() {
@@ -33,94 +35,45 @@ public class Overworld {
     }
 
     @Test
-    @DisplayName("Test Biomes against data for 1.7.2")
+    @DisplayName("Test Biomes against data for " + version)
     public void testBiomes() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = biomes[i * size + j][0];
-                int z = biomes[i * size + j][1];
-                int id = overworldBiomeSource.biomes.sample(x, 0, z);
-                assertEquals(biomes[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + biomes[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.biomes, biomes);
     }
 
     @Test
-    @DisplayName("Test Noise against data for 1.7.2")
+    @DisplayName("Test Noise against data for " + version)
     public void testNoise() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = noise[i * size + j][0];
-                int z = noise[i * size + j][1];
-                int id = overworldBiomeSource.noise.sample(x, 0, z);
-                assertEquals(noise[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + noise[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.noise, noise);
     }
 
     @Test
-    @DisplayName("Test full mixing river with biomes against data for 1.7.2")
+    @DisplayName("Test full mixing river with biomes against data for " + version)
     public void testFull() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = full[i * size + j][0];
-                int z = full[i * size + j][1];
-                int id = overworldBiomeSource.full.sample(x, 0, z);
-                assertEquals(full[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + full[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.full, full);
     }
 
     @Test
-    @DisplayName("Test voronoi against data for 1.7.2")
+    @DisplayName("Test voronoi against data for " + version)
     public void testVoronoi() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = voronoi[i * size + j][0];
-                int z = voronoi[i * size + j][1];
-                int id = overworldBiomeSource.voronoi.sample(x, 0, z);
-                assertEquals(voronoi[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + voronoi[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.voronoi, voronoi);
     }
 
     @Test
-    @DisplayName("Test river against data for 1.7.2")
+    @DisplayName("Test river against data for " + version)
     public void testRiver() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = river[i * size + j][0];
-                int z = river[i * size + j][1];
-                int id = overworldBiomeSource.river.sample(x, 0, z);
-                assertEquals(river[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + river[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.river, river);
     }
 
     @Test
-    @DisplayName("Test Variants against data for 1.7.2")
+    @DisplayName("Test Variants against data for " + version)
     public void testVariants() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = variants[i * size + j][0];
-                int z = variants[i * size + j][1];
-                int id = overworldBiomeSource.variants.sample(x, 0, z);
-                assertEquals(variants[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + variants[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.variants, variants);
     }
 
     @Test
-    @DisplayName("Test First stack against data for 1.7.2")
+    @DisplayName("Test First stack against data for " + version)
     public void testBase() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                int x = base[i * size + j][0];
-                int z = base[i * size + j][1];
-                int id = overworldBiomeSource.base.sample(x, 0, z);
-                assertEquals(base[i * size + j][2], id, x + " " + z + " Wrong got id " + id + " but was " + base[i * size + j][2]);
-            }
-        }
+        randomBiomeGen(size, overworldBiomeSource.base, base);
     }
 }
 
