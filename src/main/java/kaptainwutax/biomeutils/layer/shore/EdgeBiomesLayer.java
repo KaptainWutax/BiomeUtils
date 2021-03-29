@@ -16,11 +16,15 @@ public class EdgeBiomesLayer extends CrossLayer {
         Biome biome = Biome.REGISTRY.get(center);
 
         if (center == Biome.MUSHROOM_FIELDS.getId()) {
-            if (Biome.applyAll((v) -> !Biome.isShallowOcean(v,this), n, e, s, w)) {
+            if (Biome.applyAll((v) -> !Biome.isShallowOcean(v, this), n, e, s, w)) {
                 return center;
             }
             return Biome.MUSHROOM_FIELD_SHORE.getId();
-        } else if (biome != null && biome.getCategory() == Biome.Category.JUNGLE) {
+        }
+
+        if (is1_6down.call()) return sampleOld(n, e, s, w, center);
+
+        if (biome != null && biome.getCategory() == Biome.Category.JUNGLE) {
             if (!(Biome.applyAll(EdgeBiomesLayer::isWooded, n, e, s, w))) {
                 return Biome.JUNGLE_EDGE.getId();
             }
@@ -28,7 +32,9 @@ public class EdgeBiomesLayer extends CrossLayer {
                 return center;
             }
             return Biome.BEACH.getId();
-        } else if (center != Biome.MOUNTAINS.getId() && center != Biome.WOODED_MOUNTAINS.getId() && center != Biome.MOUNTAIN_EDGE.getId()) {
+        }
+
+        if (center != Biome.MOUNTAINS.getId() && center != Biome.WOODED_MOUNTAINS.getId() && center != Biome.MOUNTAIN_EDGE.getId()) {
             if (biome != null && biome.getPrecipitation() == Biome.Precipitation.SNOW) {
                 if (!Biome.isOcean(center) && !(Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w))) {
                     return Biome.SNOWY_BEACH.getId();
@@ -40,7 +46,8 @@ public class EdgeBiomesLayer extends CrossLayer {
             } else if (Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w) && !(Biome.applyAll(EdgeBiomesLayer::isBadlands, n, e, s, w))) {
                 return Biome.DESERT.getId();
             }
-        } else if (!Biome.isOcean(center) && !(Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w))) {
+        }
+        if (!Biome.isOcean(center) && !(Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w))) {
             return Biome.STONE_SHORE.getId();
         }
 
@@ -55,6 +62,22 @@ public class EdgeBiomesLayer extends CrossLayer {
 
     private static boolean isBadlands(int id) {
         return id == Biome.BADLANDS.getId() || id == Biome.WOODED_BADLANDS_PLATEAU.getId() || id == Biome.BADLANDS_PLATEAU.getId() || id == Biome.ERODED_BADLANDS.getId() || id == Biome.MODIFIED_WOODED_BADLANDS_PLATEAU.getId() || id == Biome.MODIFIED_BADLANDS_PLATEAU.getId();
+    }
+
+    private int sampleOld(int n, int e, int s, int w, int center) {
+        if (center != Biome.OCEAN.getId() && center != Biome.RIVER.getId() && center != Biome.SWAMP.getId() && center != Biome.MOUNTAINS.getId()) {
+            if (Biome.applyAll((v) -> !Biome.isShallowOcean(v, this), n, e, s, w)) {
+                return center;
+            }
+            return Biome.BEACH.getId();
+        }
+        if (center == Biome.MOUNTAINS.getId()) {
+            if (Biome.applyAll((v) -> v == Biome.MOUNTAINS.getId(), n, e, s, w)) {
+                return center;
+            }
+            return Biome.MOUNTAIN_EDGE.getId();
+        }
+        return center;
     }
 
 }

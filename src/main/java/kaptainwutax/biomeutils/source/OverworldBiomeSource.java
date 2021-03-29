@@ -10,10 +10,7 @@ import kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer;
 import kaptainwutax.biomeutils.layer.shore.EaseEdgeLayer;
 import kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
-import kaptainwutax.biomeutils.layer.water.DeepOceanLayer;
-import kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer;
-import kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer;
-import kaptainwutax.biomeutils.layer.water.RiverLayer;
+import kaptainwutax.biomeutils.layer.water.*;
 import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.Dimension;
 import kaptainwutax.seedutils.mc.MCVersion;
@@ -40,8 +37,6 @@ public class OverworldBiomeSource extends BiomeSource {
     public VoronoiLayer voronoi;
     public BiomeLayer debug;
 
-
-
     public final int biomeSize;
     public final int riverSize;
 
@@ -54,10 +49,10 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
         super(version, worldSeed);
 
-        if (this.getVersion().isOlderThan(MCVersion.v1_6_2)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_6_1)) {
             throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
         }
-        if (this.getVersion().isOlderThan(MCVersion.v1_7_2)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_6_4)) {
             System.out.println("WARNING USING TEMPORARY BIOME STACK (NOT VERIFIED)");
         }
 
@@ -122,7 +117,6 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // new biomes chain
         this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
-        this.debug=this.biomes;
         if (is1_14up.call()) {
             this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));
         }
@@ -149,8 +143,9 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // hills and variants chain
         this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
-        this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
-
+        if (is1_7up.call()){
+            this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
+        }
         for (int i = 0; i < this.biomeSize; i++) {
             this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
 
@@ -160,8 +155,13 @@ public class OverworldBiomeSource extends BiomeSource {
 
             if (i == 1 || (this.biomeSize == 1 && is1_8up.call())) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
+
             }
-            // 1.6.4- swamp stuff
+            if (i==1 && is1_6down.call()){
+                // 1.6.4- rivers
+                this.layers.add(this.variants=new OldRiverInBiomes(this.getVersion(),this.getWorldSeed(),1000L,this.variants));
+                this.debug=this.variants;
+            }
         }
 
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));

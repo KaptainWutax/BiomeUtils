@@ -104,7 +104,7 @@ public class Biome extends VersionedGen {
     }
 
     public static boolean isShallowOcean(int id,VersionedGen versionedGen) {
-        if (versionedGen.is1_12down.call()){ // TODO validate me **CRITICAL** (this is an undiscovered bug)
+        if (versionedGen.is1_12down.call()){ // TODO validate me **CRITICAL** (this is an undiscovered bug, frozen ocean was dormant)
             return id==Biome.OCEAN.getId();
         }
         return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
@@ -243,7 +243,7 @@ public class Biome extends VersionedGen {
     public static final Biome RIVER = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 7, "river", Category.RIVER, Precipitation.RAIN, 0.5F, 0.000F, -0.500F, null);
     public static final Biome NETHER_WASTES = new Biome(MCVersion.v1_8, Dimension.NETHER, 8, "nether_wastes", Category.NETHER, Precipitation.NONE, 2.0F, 0.200F, 0.100F, null);
     public static final Biome THE_END = new Biome(MCVersion.v1_8, Dimension.END, 9, "the_end", Category.THE_END, Precipitation.NONE, 0.5F, 0.200F, 0.100F, null);
-    public static final Biome FROZEN_OCEAN = new Biome(MCVersion.v1_13, Dimension.OVERWORLD, 10, "frozen_ocean", Category.OCEAN, Precipitation.SNOW, 0.0F, 0.100F, -1.000F, null);
+    public static final Biome FROZEN_OCEAN = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 10, "frozen_ocean", Category.OCEAN, Precipitation.SNOW, 0.0F, 0.100F, -1.000F, null);
     public static final Biome FROZEN_RIVER = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 11, "frozen_river", Category.RIVER, Precipitation.SNOW, 0.0F, 0.000F, -0.500F, null);
     public static final Biome SNOWY_TUNDRA = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 12, "snowy_tundra", Category.ICY, Precipitation.SNOW, 0.0F, 0.050F, 0.125F, null);
     public static final Biome SNOWY_MOUNTAINS = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 13, "snowy_mountains", Category.ICY, Precipitation.SNOW, 0.0F, 0.300F, 0.450F, null);
