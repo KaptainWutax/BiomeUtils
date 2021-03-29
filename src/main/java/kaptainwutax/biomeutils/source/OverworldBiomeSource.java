@@ -49,10 +49,10 @@ public class OverworldBiomeSource extends BiomeSource {
     public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
         super(version, worldSeed);
 
-        if (this.getVersion().isOlderThan(MCVersion.v1_6_1)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_15_2)) {
             throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
         }
-        if (this.getVersion().isOlderThan(MCVersion.v1_6_1)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_15_2)) {
             System.out.println("WARNING USING TEMPORARY BIOME STACK (NOT VERIFIED)");
         }
 
