@@ -7,14 +7,14 @@ import kaptainwutax.seedutils.mc.MCVersion;
 
 public class MushroomLayer extends XCrossLayer {
 
-	public MushroomLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
-		super(version, worldSeed, salt, parent);
-	}
+    public MushroomLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+        super(version, worldSeed, salt, parent);
+    }
 
-	@Override
-	public int sample(int sw, int se, int ne, int nw, int center) {
-		return Biome.applyAll(Biome::isShallowOcean, center, sw, se, ne, nw)
-				&& this.nextInt(100) == 0 ? Biome.MUSHROOM_FIELDS.getId() : center;
-	}
+    @Override
+    public int sample(int sw, int se, int ne, int nw, int center) {
+        return Biome.applyAll(v->Biome.isShallowOcean(v,this), center, sw, se, ne, nw) &&
+                this.nextInt(100) == 0 ? Biome.MUSHROOM_FIELDS.getId() : center;
+    }
 
 }

@@ -6,10 +6,11 @@ import kaptainwutax.seedutils.mc.MCVersion;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Biome {
+public class Biome extends VersionedGen {
 
     public static Map<Integer, Biome> REGISTRY = new HashMap<>();
 
@@ -24,13 +25,11 @@ public class Biome {
 
     private final Biome parent;
     private Biome child;
-
-    private final MCVersion version;
     private final Dimension dimension;
 
     public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
                  float temperature, float scale, float depth, Biome parent) {
-        this.version = version;
+        super(version);
         this.dimension = dimension;
         this.id = id;
         this.name = name;
@@ -42,10 +41,6 @@ public class Biome {
 		this.parent = parent;
         if (this.parent != null) this.parent.child = this;
         REGISTRY.put(this.id, this);
-    }
-
-    public MCVersion getVersion(){
-        return this.version;
     }
 
     public Dimension getDimension() {
@@ -108,7 +103,10 @@ public class Biome {
         return this.child;
     }
 
-    public static boolean isShallowOcean(int id) {
+    public static boolean isShallowOcean(int id,VersionedGen versionedGen) {
+        if (versionedGen.is1_12down.call()){ // TODO validate me **CRITICAL** (this is an undiscovered bug)
+            return id==Biome.OCEAN.getId();
+        }
         return id == Biome.WARM_OCEAN.getId() || id == Biome.LUKEWARM_OCEAN.getId() || id == Biome.OCEAN.getId()
                 || id == Biome.COLD_OCEAN.getId() || id == Biome.FROZEN_OCEAN.getId();
     }
@@ -346,5 +344,18 @@ public class Biome {
                     (this.weight - other.weight) * (this.weight - other.weight);
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Biome)) return false;
+        Biome biome = (Biome) o;
+        return id == biome.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

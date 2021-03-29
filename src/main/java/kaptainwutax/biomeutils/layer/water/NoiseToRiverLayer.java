@@ -5,6 +5,7 @@ import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.seedutils.mc.MCVersion;
 
+
 public class NoiseToRiverLayer extends CrossLayer {
 
 	public NoiseToRiverLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
@@ -13,8 +14,11 @@ public class NoiseToRiverLayer extends CrossLayer {
 
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
-		int i = isValidForRiver(center);
-		return i == isValidForRiver(w) && i == isValidForRiver(n) && i == isValidForRiver(e) && i == isValidForRiver(s) ? -1 : Biome.RIVER.getId();
+		if (is1_6down.call()){
+			return center!=0 && Biome.applyAll(v->center==v,w,n,e,s) ? -1 : Biome.RIVER.getId();
+		}
+		int validCenter = isValidForRiver(center);
+		return Biome.applyAll(v->validCenter==isValidForRiver(v),w,n,e,s) ? -1 : Biome.RIVER.getId();
 	}
 
 	private static int isValidForRiver(int value) {

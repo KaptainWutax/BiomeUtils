@@ -16,7 +16,7 @@ public class EdgeBiomesLayer extends CrossLayer {
         Biome biome = Biome.REGISTRY.get(center);
 
         if (center == Biome.MUSHROOM_FIELDS.getId()) {
-            if (Biome.applyAll((v) -> !Biome.isShallowOcean(v), n, e, s, w)) {
+            if (Biome.applyAll((v) -> !Biome.isShallowOcean(v,this), n, e, s, w)) {
                 return center;
             }
             return Biome.MUSHROOM_FIELD_SHORE.getId();

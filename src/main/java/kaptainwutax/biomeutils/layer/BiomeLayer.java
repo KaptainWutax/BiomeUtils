@@ -1,13 +1,13 @@
 package kaptainwutax.biomeutils.layer;
 
+import kaptainwutax.biomeutils.VersionedGen;
+import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.seedutils.mc.MCVersion;
 import kaptainwutax.seedutils.mc.seed.SeedMixer;
 
-public abstract class BiomeLayer {
+public abstract class BiomeLayer extends VersionedGen {
 
-    private final MCVersion version;
     private final BiomeLayer[] parents;
-
     public long salt;
     public long layerSeed;
     public long localSeed;
@@ -18,7 +18,7 @@ public abstract class BiomeLayer {
     private final LayerCache layerCache = new LayerCache(1024);
 
     public BiomeLayer(MCVersion version, BiomeLayer... parents) {
-        this.version = version;
+        super(version);
         this.parents = parents;
     }
 
@@ -34,10 +34,6 @@ public abstract class BiomeLayer {
 
     public BiomeLayer(MCVersion version, long worldSeed, long salt) {
         this(version, worldSeed, salt, (BiomeLayer)null);
-    }
-
-    public MCVersion getVersion() {
-        return this.version;
     }
 
     public void setScale(int scale) {
@@ -130,5 +126,4 @@ public abstract class BiomeLayer {
         int i = this.nextInt(4);
         return i == 0 ? a : i == 1 ? b : i == 2 ? c : d;
     }
-
 }

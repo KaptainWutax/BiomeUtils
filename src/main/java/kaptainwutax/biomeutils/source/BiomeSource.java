@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.seedutils.lcg.rand.JRand;
@@ -11,13 +12,11 @@ import kaptainwutax.seedutils.mc.pos.BPos;
 import java.util.*;
 import java.util.function.Predicate;
 
-public abstract class BiomeSource {
-
-    private final MCVersion version;
+public abstract class BiomeSource extends VersionedGen {
     private final long worldSeed;
 
     public BiomeSource(MCVersion version, long worldSeed) {
-        this.version = version;
+        super(version);
         this.worldSeed = worldSeed;
     }
 
@@ -31,10 +30,6 @@ public abstract class BiomeSource {
     public static BiomeSource of(Dimension dimension, MCVersion version, long worldSeed) {
         Factory factory = factory(dimension);
         return factory == null ? null : factory.create(version, worldSeed);
-    }
-
-    public MCVersion getVersion() {
-        return this.version;
     }
 
     public long getWorldSeed() {
@@ -194,5 +189,4 @@ public abstract class BiomeSource {
     public interface Factory {
         BiomeSource create(MCVersion version, long worldSeed);
     }
-
 }

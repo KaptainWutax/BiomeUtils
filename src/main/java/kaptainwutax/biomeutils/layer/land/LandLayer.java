@@ -13,24 +13,30 @@ public class LandLayer extends XCrossLayer {
 
     @Override
     public int sample(int sw, int se, int ne, int nw, int center) {
-        if(!Biome.isShallowOcean(center) || Biome.applyAll(Biome::isShallowOcean, sw, se, ne, nw)) {
-            if(Biome.isShallowOcean(center) || (Biome.applyAll(v -> !Biome.isShallowOcean(v), sw, se, ne, nw)) || this.nextInt(5) != 0) {
+        if (!Biome.isShallowOcean(center, this) || Biome.applyAll(v -> Biome.isShallowOcean(v, this), sw, se, ne, nw)) {
+            if (Biome.isShallowOcean(center, this) ||
+                    Biome.applyAll(v -> !Biome.isShallowOcean(v, this), sw, se, ne, nw) ||
+                    this.nextInt(5) != 0) {
                 return center;
             }
 
-            if(Biome.isShallowOcean(nw)) {
+            if (is1_6down.call()) {
+                return center == Biome.SNOWY_TUNDRA.getId() ? Biome.FROZEN_OCEAN.getId() : Biome.OCEAN.getId();
+            }
+
+            if (Biome.isShallowOcean(nw, this)) {
                 return Biome.equalsOrDefault(center, Biome.FOREST.getId(), nw);
             }
 
-            if(Biome.isShallowOcean(sw)) {
+            if (Biome.isShallowOcean(sw, this)) {
                 return Biome.equalsOrDefault(center, Biome.FOREST.getId(), sw);
             }
 
-            if(Biome.isShallowOcean(ne)) {
+            if (Biome.isShallowOcean(ne, this)) {
                 return Biome.equalsOrDefault(center, Biome.FOREST.getId(), ne);
             }
 
-            if(Biome.isShallowOcean(se)) {
+            if (Biome.isShallowOcean(se, this)) {
                 return Biome.equalsOrDefault(center, Biome.FOREST.getId(), se);
             }
 
@@ -40,26 +46,28 @@ public class LandLayer extends XCrossLayer {
         int i = 1;
         int j = 1;
 
-        if(!Biome.isShallowOcean(nw) && this.nextInt(i++) == 0) {
+        if (!Biome.isShallowOcean(nw, this) && this.nextInt(i++) == 0) {
             j = nw;
         }
 
-        if(!Biome.isShallowOcean(ne) && this.nextInt(i++) == 0) {
+        if (!Biome.isShallowOcean(ne, this) && this.nextInt(i++) == 0) {
             j = ne;
         }
 
-        if(!Biome.isShallowOcean(sw) && this.nextInt(i++) == 0) {
+        if (!Biome.isShallowOcean(sw, this) && this.nextInt(i++) == 0) {
             j = sw;
         }
 
-        if(!Biome.isShallowOcean(se) && this.nextInt(i) == 0) {
+        if (!Biome.isShallowOcean(se, this) && this.nextInt(i) == 0) {
             j = se;
         }
 
-        if(this.nextInt(3) == 0) {
+        if (this.nextInt(3) == 0) {
             return j;
         }
-
+        if (is1_6down.call()) {
+            return j == Biome.SNOWY_TUNDRA.getId() ? Biome.FROZEN_OCEAN.getId() : Biome.OCEAN.getId();
+        }
         return j == Biome.FOREST.getId() ? Biome.FOREST.getId() : center;
     }
 

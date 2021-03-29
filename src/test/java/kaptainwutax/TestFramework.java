@@ -16,4 +16,8 @@ public class TestFramework {
             }
         }
     }
+
+    public static void singleBlockBiomeGen(BiomeLayer layer, int x, int z, int id) {
+        assertEquals(id,layer.sample(x,0,z));
+    }
 }

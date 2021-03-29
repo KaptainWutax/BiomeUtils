@@ -38,13 +38,9 @@ public class OverworldBiomeSource extends BiomeSource {
     public BiomeLayer river;
     public BiomeLayer full;
     public VoronoiLayer voronoi;
+    public BiomeLayer debug;
 
-    public final VersionGate is1_6down=()->this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4); // everything before  1.7
-    public final VersionGate is1_7up=()->this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2); // everything after 1.6
-    public final VersionGate is1_8up=()->this.getVersion().isNewerOrEqualTo(MCVersion.v1_8); // everything after 1.7
-    public final VersionGate is1_12down=()->this.getVersion().isOlderOrEqualTo(MCVersion.v1_12_2); // everything before 1.13
-    public final VersionGate is1_13up=()->this.getVersion().isNewerOrEqualTo(MCVersion.v1_13); // everything after 1.12
-    public final VersionGate is1_14up=()->this.getVersion().isNewerOrEqualTo(MCVersion.v1_14); // everything after 1.13
+
 
     public final int biomeSize;
     public final int riverSize;
@@ -89,6 +85,7 @@ public class OverworldBiomeSource extends BiomeSource {
         //2048
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2000L, ScaleLayer.Type.FUZZY, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 1L, this.base));
+
         //1024
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
@@ -113,9 +110,11 @@ public class OverworldBiomeSource extends BiomeSource {
         if (is1_6down.call()) {
             this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
         }
+
         //256
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
+        debug=this.base;
         this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
         if (is1_7up.call()) {
             this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
@@ -123,6 +122,7 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // new biomes chain
         this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
+        this.debug=this.biomes;
         if (is1_14up.call()) {
             this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));
         }
@@ -133,7 +133,6 @@ public class OverworldBiomeSource extends BiomeSource {
 
         // noise generation for variant and river
         this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
-
         if (is1_12down.call()) {
             // this line needs an explanation : basically back when the stack was recursively initialized, only one parent was
             // initialized with its world seed but the hills layer had 2 parents so the noise was never initialized recursively,
@@ -322,7 +321,5 @@ public class OverworldBiomeSource extends BiomeSource {
         return this.getSpawnPoint(SPAWN_BIOMES);
     }
 
-    public interface VersionGate{
-        boolean call();
-    }
+
 }

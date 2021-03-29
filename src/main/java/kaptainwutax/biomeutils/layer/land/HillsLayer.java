@@ -21,7 +21,7 @@ public class HillsLayer extends BiomeLayer {
 		if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)){
 			int j = this.getParent(1).get(x, y, z); // noise (river)
 			k = (j - 2) % 29;
-			if(!Biome.isShallowOcean(i) && j >= 2 && k == 1) {
+			if(!Biome.isShallowOcean(i,this) && j >= 2 && k == 1) {
 				Biome biome = Biome.REGISTRY.get(i);
 
 				if(biome == null || !biome.hasParent()) {
