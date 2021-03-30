@@ -52,7 +52,7 @@ public class OverworldBiomeSource extends BiomeSource {
         if (this.getVersion().isOlderThan(MCVersion.v1_0)) {
             throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
         }
-        if (this.getVersion().isOlderThan(MCVersion.v1_2_1)) {
+        if (this.getVersion().isOlderThan(MCVersion.v1_1)) {
             System.out.println("WARNING USING TEMPORARY BIOME STACK (NOT VERIFIED)");
         }
 
@@ -146,6 +146,7 @@ public class OverworldBiomeSource extends BiomeSource {
         if (is1_7up.call()){
             this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
         }
+        // TODO add the temperature and rainfall layers here
         for (int i = 0; i < this.biomeSize; i++) {
             this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
 

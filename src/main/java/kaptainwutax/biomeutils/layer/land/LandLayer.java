@@ -14,9 +14,9 @@ public class LandLayer extends XCrossLayer {
     @Override
     public int sample(int sw, int se, int ne, int nw, int center) {
         if (!Biome.isShallowOcean(center, this) || Biome.applyAll(v -> Biome.isShallowOcean(v, this), sw, se, ne, nw)) {
-            if (Biome.isShallowOcean(center, this) ||
-                    Biome.applyAll(v -> !Biome.isShallowOcean(v, this), sw, se, ne, nw) ||
-                    this.nextInt(5) != 0) {
+            if (Biome.isShallowOcean(center, this)
+                    || Biome.applyAll(v -> !Biome.isShallowOcean(v, this), sw, se, ne, nw)
+                    || this.nextInt(5) != 0) {
                 return center;
             }
 
