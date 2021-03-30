@@ -16,11 +16,11 @@ Then there is a noise layer (`NoiseLayer` scaled 2 times) which is fed into 2 di
 *new* biomes (starting at `BaseBiomesLayer` and ending at `SmoothScaleLayer`) and the other for the rivers (starting
 at `NoiseToRiverLayer` and ending at `SmoothScaleLayer`). 
 
-The two split stacks are merged inside `RiverLayer` and the last stack with `OceanTemperatureLayer` is then initialized,
+The two split stacks are merged inside `RiverLayer` and the last stack with `OceanTemperatureLayer` (for 1.13+) is then initialized,
 scaled 6 times and merged again with the rest.
 
 At this point the biome generator give the biomes at 1/4 the scale of what you would encounter, a last layer is 
-applied, called `VoronoiLayer` which takes since 1.14 the sha2 hash of the world seed to initialize it.
+applied, called `VoronoiLayer` which takes since 1.15 the sha2 hash of the world seed to initialize it.
 This means that this last layer can be done on the client side and save both on server performance and bandwidth.
 
 For Nether and End biome generation, Simplex and Perlin noise are used, thus they only use the 48 lower bits of the seed
@@ -30,7 +30,7 @@ compared to the OverWorld.
 
 # How to use
 
-**Here vXXX means any version starting from v1_5_2 (for the moment, we are extending support) till current supported one.**
+**Here vXXX means any version starting from v1_2 (for the moment, we are extending support) till current supported one.**
 
 Before anything, we recommend using gradle buildsystem to import the library as such:
 ```groovy
@@ -54,7 +54,7 @@ To use the library, you have a few possible endpoints depending on your usage:
 
 - If you need simply OverWorld biomes then you use it as follows
   - `OverworldBiomeSource#getBiome` will give you the biome as scale 1/1
-  - `OverworldBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka Voronoi)
+  - `OverworldBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka pre-Voronoi)
   - `OverworldBiomeSource.(base|ocean|noise|variants|biomes|river|full|voronoi)#get` are entry points for different level 
   in the generator.
 
@@ -69,7 +69,7 @@ Biome biome=biomeSource.getBiome(x,y,z); // here y is always 0 no matter what yo
 
 - If you need to use Nether biome generation you need to do as follows
    - `NetherBiomeSource#getBiome` will give you the biome as scale 1/1
-   - `NetherBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka Voronoi)
+   - `NetherBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka pre-Voronoi)
    - `NetherBiomeSource.(full|voronoi)#get` are entry points for different level 
  
    
@@ -83,7 +83,7 @@ Biome biome=netherBiomeSource.getBiome(x,y,z); // here y matters
 
 - If you need to use End biome generation you need to do as follows
    - `EndBiomeSource#getBiome` will give you the biome as scale 1/1
-   - `EndBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka Voronoi)
+   - `EndBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka pre-Voronoi)
    - `EndBiomeSource.(full|simplex|voronoi)#get` are entry points for different level 
  
    
