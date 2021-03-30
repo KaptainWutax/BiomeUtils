@@ -1,4 +1,4 @@
-package kaptainwutax.v1_5_2;
+package kaptainwutax.v1_4_7;
 
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.seedutils.mc.MCVersion;
@@ -20,11 +20,11 @@ public class Overworld {
 
     private OverworldBiomeSource overworldBiomeSource;
     private int size;
-    private static final String version = "1.5.2";
+    private static final String version = "1.4.7";
 
     @BeforeEach
     public void setup() {
-        this.overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_5_2, 489435348641386L);
+        this.overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_4_7, 489435348641386L);
         this.size = 16;
     }
 
