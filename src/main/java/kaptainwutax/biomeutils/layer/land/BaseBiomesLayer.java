@@ -76,13 +76,17 @@ public class BaseBiomesLayer extends BiomeLayer {
     private int sampleOld(int center) {
         if (Biome.isShallowOcean(center, this)) {
             return Biome.OCEAN.getId();
-        } else if (center == Biome.MUSHROOM_FIELDS.getId()) {
+        }
+        if (center == Biome.MUSHROOM_FIELDS.getId()) {
             return Biome.MUSHROOM_FIELDS.getId();
         }
         Biome[] biomeList = isDefault1_1 ? OLD_BIOMES_DEFAULT_1_1 : OLD_BIOMES;
         Biome oldBiome = biomeList[this.nextInt(biomeList.length)];
         if (center == Biome.PLAINS.getId()) {
             return oldBiome.getId();
+        }
+        if (is1_3down.call()){
+            return Biome.SNOWY_TUNDRA.getId();
         }
         if (oldBiome == Biome.TAIGA) {
             return Biome.TAIGA.getId();

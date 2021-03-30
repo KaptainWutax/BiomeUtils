@@ -249,13 +249,13 @@ public class Biome extends VersionedGen {
     public static final Biome SNOWY_MOUNTAINS = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 13, "snowy_mountains", Category.ICY, Precipitation.SNOW, 0.0F, 0.300F, 0.450F, null);
     public static final Biome MUSHROOM_FIELDS = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 14, "mushroom_fields", Category.MUSHROOM, Precipitation.RAIN, 0.9F, 0.300F, 0.200F, null);
     public static final Biome MUSHROOM_FIELD_SHORE = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 15, "mushroom_field_shore", Category.MUSHROOM, Precipitation.RAIN, 0.9F, 0.025F, 0.000F, null);
-    public static final Biome BEACH = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 16, "beach", Category.BEACH, Precipitation.RAIN, 0.8F, 0.025F, 0.000F, null);
-    public static final Biome DESERT_HILLS = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 17, "desert_hills", Category.DESERT, Precipitation.NONE, 2.0F, 0.300F, 0.450F, null);
-    public static final Biome WOODED_HILLS = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 18, "wooded_hills", Category.FOREST, Precipitation.RAIN, 0.7F, 0.300F, 0.450F, null);
-    public static final Biome TAIGA_HILLS = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 19, "taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.25F, 0.300F, 0.450F, null);
-    public static final Biome MOUNTAIN_EDGE = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 20, "mountain_edge", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, 0.300F, 0.800F, null);
-    public static final Biome JUNGLE = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 21, "jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.200F, 0.100F, null);
-    public static final Biome JUNGLE_HILLS = new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 22, "jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.300F, 0.450F, null);
+    public static final Biome BEACH = new Biome(MCVersion.v1_1, Dimension.OVERWORLD, 16, "beach", Category.BEACH, Precipitation.RAIN, 0.8F, 0.025F, 0.000F, null);
+    public static final Biome DESERT_HILLS = new Biome(MCVersion.v1_1, Dimension.OVERWORLD, 17, "desert_hills", Category.DESERT, Precipitation.NONE, 2.0F, 0.300F, 0.450F, null);
+    public static final Biome WOODED_HILLS = new Biome(MCVersion.v1_1, Dimension.OVERWORLD, 18, "wooded_hills", Category.FOREST, Precipitation.RAIN, 0.7F, 0.300F, 0.450F, null);
+    public static final Biome TAIGA_HILLS = new Biome(MCVersion.v1_1, Dimension.OVERWORLD, 19, "taiga_hills", Category.TAIGA, Precipitation.RAIN, 0.25F, 0.300F, 0.450F, null);
+    public static final Biome MOUNTAIN_EDGE = new Biome(MCVersion.v1_1, Dimension.OVERWORLD, 20, "mountain_edge", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, 0.300F, 0.800F, null);
+    public static final Biome JUNGLE = new Biome(MCVersion.v1_2_1, Dimension.OVERWORLD, 21, "jungle", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.200F, 0.100F, null);
+    public static final Biome JUNGLE_HILLS = new Biome(MCVersion.v1_2_1, Dimension.OVERWORLD, 22, "jungle_hills", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.300F, 0.450F, null);
     // 1.6.4 end
     public static final Biome JUNGLE_EDGE = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 23, "jungle_edge", Category.JUNGLE, Precipitation.RAIN, 0.95F, 0.200F, 0.100F, null);
     public static final Biome DEEP_OCEAN = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 24, "deep_ocean", Category.OCEAN, Precipitation.RAIN, 0.5F, 0.100F, -1.800F, null);

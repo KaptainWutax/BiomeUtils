@@ -109,7 +109,7 @@ public class OverworldBiomeSource extends BiomeSource {
         //256
         this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
         this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
-        debug=this.base;
+
         this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
         if (is1_7up.call()) {
             this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
@@ -142,26 +142,35 @@ public class OverworldBiomeSource extends BiomeSource {
         }
 
         // hills and variants chain
-        this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
-        if (is1_7up.call()){
+        if (is1_1up.call()) {
+            this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
+        }
+        if (is1_7up.call()) {
             this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
         }
+        debug = this.variants;
         // TODO add the temperature and rainfall layers here
         for (int i = 0; i < this.biomeSize; i++) {
-            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
+            this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, is1_1down.call() ? this.biomes : this.variants));
 
             if (i == 0) {
+                debug=variants;
                 this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
+
+                if (is1_1down.call()) {
+                    // 1.0 stuff
+                    this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
+
+                }
             }
 
-            if (i == 1 || (this.biomeSize == 1 && is1_8up.call())) {
+            if ((i == 1 || (this.biomeSize == 1 && is1_8up.call())) && is1_1up.call()) {
                 this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
-
             }
-            if (i==1 && is1_6down.call()){
-                // 1.6.4- rivers
-                this.layers.add(this.variants=new OldRiverInBiomes(this.getVersion(),this.getWorldSeed(),1000L,this.variants));
-                this.debug=this.variants;
+            if (i == 1 && is1_6down.call() && is1_1up.call()) {
+                // 1.6.4- rivers (introduced in 1.1)
+                this.layers.add(this.variants = new OldRiverInBiomes(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
+                this.debug = this.variants;
             }
         }
 
