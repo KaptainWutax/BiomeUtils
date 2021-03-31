@@ -21,7 +21,7 @@ public class EdgeBiomesLayer extends CrossLayer {
             }
             return Biome.MUSHROOM_FIELD_SHORE.getId();
         }
-        if (is1_1down.call()) return center;
+        if (is1_0down.call()) return center;
         if (is1_6down.call()) return sampleOld(n, e, s, w, center);
 
         if (biome != null && biome.getCategory() == Biome.Category.JUNGLE) {

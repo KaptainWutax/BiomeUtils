@@ -1,5 +1,6 @@
 package kaptainwutax;
 
+import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,5 +20,16 @@ public class TestFramework {
 
     public static void singleBlockBiomeGen(BiomeLayer layer, int x, int z, int id) {
         assertEquals(id,layer.sample(x,0,z));
+    }
+
+    public static void viewDebug(BiomeLayer layer,int cx,int cz,int size){
+        for (int x = 0; x < size; x++) {
+            for (int z = 0; z < size; z++) {
+                int biome = layer.sample(cx+x-size/2,0, cz+z-size/2);
+                System.out.printf("%d,",biome);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }

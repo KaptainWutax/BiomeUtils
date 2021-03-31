@@ -3,6 +3,8 @@
 This library aims to give easy access to the different biomes generations of Minecraft. It is not direct copy of Minecraft
 source code as it has been rewritten from the ground up with optimizations in mind.
 
+We support release 1.0 to release 1.16.5 (no snapshot support)
+
 ------
 
 # A few words
@@ -30,7 +32,7 @@ compared to the OverWorld.
 
 # How to use
 
-**Here vXXX means any version starting from v1_1 (for the moment, we are extending support) till current supported one.**
+**Here vXXX means any version starting from v1_0 (for the moment, we are extending support) till current supported one.**
 
 Before anything, we recommend using gradle buildsystem to import the library as such:
 ```groovy

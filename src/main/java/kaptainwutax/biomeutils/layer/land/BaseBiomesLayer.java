@@ -85,7 +85,7 @@ public class BaseBiomesLayer extends BiomeLayer {
         if (center == Biome.PLAINS.getId()) {
             return oldBiome.getId();
         }
-        if (is1_3down.call()){
+        if (is1_2down.call()){
             return Biome.SNOWY_TUNDRA.getId();
         }
         if (oldBiome == Biome.TAIGA) {
