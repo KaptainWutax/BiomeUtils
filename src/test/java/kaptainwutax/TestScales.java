@@ -1,3 +1,5 @@
+package kaptainwutax;
+
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.seedutils.mc.MCVersion;

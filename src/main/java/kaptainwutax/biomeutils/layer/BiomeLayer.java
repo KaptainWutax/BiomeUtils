@@ -73,7 +73,11 @@ public abstract class BiomeLayer extends VersionedGen {
     }
 
     public int get(int x, int y, int z) {
-        return this.layerCache.get(x, y, z, this::sample);
+        int id=this.layerCache.get(x, y, z, this::sample);
+        if (DEBUG){
+            System.out.printf("Layer id: %d at (x,z):(%d,%d), got parent id : %d%n",this.layerId,x,z,id);
+        }
+        return id;
     }
 
     public abstract int sample(int x, int y, int z);

@@ -3,6 +3,7 @@ package kaptainwutax.biomeutils;
 import kaptainwutax.seedutils.mc.MCVersion;
 
 public class VersionedGen {
+    public boolean DEBUG=false;
     public boolean isDefault1_1;
     protected final MCVersion version;
     public final VersionGate is1_0down = () -> this.getVersion().isOlderOrEqualTo(MCVersion.v1_0); // everything before  1.2

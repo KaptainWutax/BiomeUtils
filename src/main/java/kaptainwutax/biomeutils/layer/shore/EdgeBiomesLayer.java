@@ -46,8 +46,7 @@ public class EdgeBiomesLayer extends CrossLayer {
             } else if (Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w) && !(Biome.applyAll(EdgeBiomesLayer::isBadlands, n, e, s, w))) {
                 return Biome.DESERT.getId();
             }
-        }
-        if (!Biome.isOcean(center) && !(Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w))) {
+        } else if (!Biome.isOcean(center) && !(Biome.applyAll((v) -> !Biome.isOcean(v), n, e, s, w))) {
             return Biome.STONE_SHORE.getId();
         }
 

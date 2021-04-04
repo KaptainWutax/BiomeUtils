@@ -64,7 +64,9 @@ public class VoronoiLayer extends BiomeLayer {
         // |---|---|   |
         // | 2 | 3 |  \_/
         // |___|___|
-
+        if (DEBUG){
+            System.out.println("VORONOI Coords: (x,z): "+(pX + (offset & 1))+ " "+ (pZ + (offset >> 1)));
+        }
         return this.getParent().get(pX + (offset & 1), 0, pZ + (offset >> 1));
     }
 
@@ -105,6 +107,9 @@ public class VoronoiLayer extends BiomeLayer {
         int xFinal = (index & 4) == 0 ? l : l + 1;
         int yFinal = (index & 2) == 0 ? m : m + 1;
         int zFinal = (index & 1) == 0 ? n : n + 1;
+        if (DEBUG){
+            System.out.printf("Voronoi coords (x,y,z):(%d,%d,%d)%n",xFinal,yFinal,zFinal);
+        }
         return this.getParent().get(xFinal, this.is3D ? yFinal : 0, zFinal);
     }
 

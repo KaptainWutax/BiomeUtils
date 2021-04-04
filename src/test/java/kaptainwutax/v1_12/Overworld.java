@@ -1,5 +1,6 @@
 package kaptainwutax.v1_12;
 
+import kaptainwutax.TestFramework;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.seedutils.mc.MCVersion;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static kaptainwutax.TestFramework.randomBiomeGen;
+import static kaptainwutax.TestFramework.singleBlockBiomeGen;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Overworld {
@@ -76,46 +78,11 @@ public class Overworld {
     public void testBase() {
         randomBiomeGen(size, overworldBiomeSource.base, base);
     }
-}
 
-
-/*
-#define LAYER 24
-#define X 412
-#define Z 107
-#define VERSION MC_1_13
-void multiple(){
-    initBiomes();
-    LayerStack g = setupGenerator(VERSION);
-    applySeed(&g, 541515181818);
-    int *map = allocCache(&g.layers[g.layerNum - 1], 1,1);
-
-    auto *r= new Random(4227552225777);
-    int size=16;
-    printf("{");
-    for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-            int x=r->nextInt(512);
-            int z=r->nextInt(512);
-            genArea(&g.layers[LAYER], map,x,z ,1,1);
-            printf("{%d, %d, %d}, ",x,z,map[0] );
-        }
+    @Test
+    public void testShore(){
+        this.overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_12, 0L);
+        singleBlockBiomeGen(overworldBiomeSource.full,9233, -2516, 6);
+        singleBlockBiomeGen(overworldBiomeSource.voronoi,36934, -10064, 6);
     }
-    printf("};\n");
 }
-
-void one(){
-    initBiomes();
-    LayerStack g = setupGenerator(VERSION);
-    applySeed(&g, 541515181818);
-    int *map = allocCache(&g.layers[g.layerNum - 1], 1,1);
-    int x=X;
-    int z=Z;
-    genArea(&g.layers[LAYER], map,x,z ,1,1);
-    printf("{%d, %d, %d}, \n",x,z,map[0] );
-}
-
-int main(){
-    multiple();
-}
- */
