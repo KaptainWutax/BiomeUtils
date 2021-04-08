@@ -124,12 +124,21 @@ public class Biome extends VersionedGen {
         return id == Biome.RIVER.getId() || id == Biome.FROZEN_RIVER.getId();
     }
 
-    public static boolean areSimilar(int id, Biome b2) {
+    public static boolean areSimilar(int id, Biome b2,VersionedGen versionedGen) {
         if (b2 == null) return false;
         if (id == b2.getId()) return true;
 
         Biome b = Biome.REGISTRY.get(id);
         if (b == null) return false;
+        if (versionedGen.is1_16up.call()){
+            // special check for the new badlands_plateau category
+            if (b==Biome.WOODED_BADLANDS_PLATEAU|| b==Biome.BADLANDS_PLATEAU){
+                return b2 == Biome.WOODED_BADLANDS_PLATEAU || b2 == Biome.BADLANDS_PLATEAU;
+            }else if (b2 == Biome.WOODED_BADLANDS_PLATEAU || b2 == Biome.BADLANDS_PLATEAU){
+                return false; // very important check (non commutativity)
+            }
+            return b.getCategory() == b2.getCategory();
+        }
 
         if (id != Biome.WOODED_BADLANDS_PLATEAU.getId() && id != Biome.BADLANDS_PLATEAU.getId()) {
             if (b.getCategory() != Biome.Category.NONE && b2.getCategory()
@@ -188,8 +197,9 @@ public class Biome extends VersionedGen {
     }
 
     public enum Category {
+        // badlands plateau is a new 1.16 one (they also removed theend and nether)
         NONE("none"), TAIGA("taiga"), EXTREME_HILLS("extreme_hills"),
-        JUNGLE("jungle"), MESA("mesa"), PLAINS("plains"), SAVANNA("savanna"),
+        JUNGLE("jungle"), MESA("mesa"),BADLANDS_PLATEAU("badlands_plateau"), PLAINS("plains"), SAVANNA("savanna"),
         ICY("icy"), THE_END("the_end"), BEACH("beach"), FOREST("forest"),
         OCEAN("ocean"), DESERT("desert"), RIVER("river"), SWAMP("swamp"),
         MUSHROOM("mushroom"), NETHER("nether");

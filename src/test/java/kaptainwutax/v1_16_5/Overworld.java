@@ -1,10 +1,17 @@
 package kaptainwutax.v1_16_5;
 
+import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
+import kaptainwutax.seedutils.lcg.rand.JRand;
 import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.seedutils.mc.pos.BPos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static kaptainwutax.TestFramework.randomBiomeGen;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +39,7 @@ public class Overworld {
 
     @BeforeEach
     public void setup() {
-        this.overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_16_4, 541515181818L);
+        this.overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_16_5, 541515181818L);
         this.size = 16;
     }
 
@@ -76,6 +83,19 @@ public class Overworld {
     @DisplayName("Test First stack against data for " + version)
     public void testBase() {
         randomBiomeGen(size, overworldBiomeSource.base, base);
+    }
+
+    @Test
+    @DisplayName("Test specific for " + version)
+    public void testSpecific() {
+       overworldBiomeSource=new OverworldBiomeSource(MCVersion.v1_16_1,1437905338718953247L);
+//        for (int x = -8; x <= 8; x++) {
+//            for (int z = -8; z <= 8; z++) {
+//                System.out.print(overworldBiomeSource.getBiomeForNoiseGen(3611+x,0,-141+z).getId()+" ");
+//            }
+//            System.out.println();
+//        }
+        assertEquals(Biome.WOODED_BADLANDS_PLATEAU.getName(),overworldBiomeSource.getBiomeForNoiseGen(3611-8,0,-141).getName());
     }
 }
 

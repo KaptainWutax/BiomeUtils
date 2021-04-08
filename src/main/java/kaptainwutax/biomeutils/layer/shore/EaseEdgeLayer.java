@@ -46,14 +46,22 @@ public class EaseEdgeLayer extends CrossLayer {
         return false;
     }
 
-    private boolean replaceEdgeIfNeeded(int[] is, int i, int j, int k, int l, int m, Biome n, Biome o) {
-        if (!Biome.areSimilar(m, n)) {
+    private boolean replaceEdgeIfNeeded(int[] is, int n, int e, int s, int w, int center, Biome biome1, Biome biome2) {
+        if (is1_16up.call()){
+            if (!Biome.areSimilar(center,Biome.MOUNTAINS,this)){
+                return false;
+            }else{
+                is[0]=center;
+                return true;
+            }
+        }
+        if (!Biome.areSimilar(center, biome1,this)) {
             return false;
         } else {
-            if (this.canBeNeighbors(i, n) && this.canBeNeighbors(j, n) && this.canBeNeighbors(l, n) && this.canBeNeighbors(k, n)) {
-                is[0] = m;
+            if (this.canBeNeighbors(n, biome1) && this.canBeNeighbors(e, biome1) && this.canBeNeighbors(w, biome1) && this.canBeNeighbors(s, biome1)) {
+                is[0] = center;
             } else {
-                is[0] = o.getId();
+                is[0] = biome2.getId();
             }
             return true;
         }
@@ -62,7 +70,7 @@ public class EaseEdgeLayer extends CrossLayer {
     private boolean replaceEdge(int[] is, int i, int j, int k, int l, int m, Biome n, Biome o) {
         if (m != n.getId()) return true;
 
-        if (Biome.areSimilar(i, n) && Biome.areSimilar(j, n) && Biome.areSimilar(l, n) && Biome.areSimilar(k, n)) {
+        if (Biome.areSimilar(i, n,this) && Biome.areSimilar(j, n,this) && Biome.areSimilar(l, n,this) && Biome.areSimilar(k, n,this)) {
             is[0] = m;
         } else {
             is[0] = o.getId();
@@ -71,7 +79,7 @@ public class EaseEdgeLayer extends CrossLayer {
     }
 
     private boolean canBeNeighbors(int id, Biome b2) {
-        if (Biome.areSimilar(id, b2)) return true;
+        if (Biome.areSimilar(id, b2,this)) return true;
 
         Biome biome = Biome.REGISTRY.get(id);
 

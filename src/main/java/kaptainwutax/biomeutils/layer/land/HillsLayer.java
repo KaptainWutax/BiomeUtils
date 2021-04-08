@@ -71,7 +71,7 @@ public class HillsLayer extends BiomeLayer {
                 l = is1_6down.call()?Biome.MOUNTAINS.getId(): Biome.WOODED_MOUNTAINS.getId();
             } else if (i == Biome.SAVANNA.getId()) {
                 l = Biome.SAVANNA_PLATEAU.getId();
-            } else if (Biome.areSimilar(i, Biome.WOODED_BADLANDS_PLATEAU)) {
+            } else if (Biome.areSimilar(i, Biome.WOODED_BADLANDS_PLATEAU,this)) {
                 l = Biome.BADLANDS.getId();
             }
             // in 1.12 this check is only for DEEP_OCEAN but since the other can't spawn, its ok
@@ -91,10 +91,10 @@ public class HillsLayer extends BiomeLayer {
             if (l != i) {
                 int m = 0;
                 Biome b = Biome.REGISTRY.get(i);
-                if (Biome.areSimilar(this.getParent(0).get(x, y, z - 1), b)) m++;
-                if (Biome.areSimilar(this.getParent(0).get(x + 1, y, z), b)) m++;
-                if (Biome.areSimilar(this.getParent(0).get(x - 1, y, z), b)) m++;
-                if (Biome.areSimilar(this.getParent(0).get(x, y, z + 1), b)) m++;
+                if (Biome.areSimilar(this.getParent(0).get(x, y, z - 1), b,this)) m++;
+                if (Biome.areSimilar(this.getParent(0).get(x + 1, y, z), b,this)) m++;
+                if (Biome.areSimilar(this.getParent(0).get(x - 1, y, z), b,this)) m++;
+                if (Biome.areSimilar(this.getParent(0).get(x, y, z + 1), b,this)) m++;
                 if (is1_6down.call()){
                     if (m == 4) return l;
                 } else if (m >= 3) return l;

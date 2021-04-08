@@ -169,7 +169,6 @@ public class OverworldBiomeSource extends BiomeSource {
                 this.layers.add(this.variants = new OldRiverInBiomes(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
             }
         }
-        debug = this.variants;
         this.layers.add(this.variants = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
         // river chain
