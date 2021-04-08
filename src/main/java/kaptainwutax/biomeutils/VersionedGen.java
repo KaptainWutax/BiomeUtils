@@ -17,6 +17,7 @@ public class VersionedGen {
     public final VersionGate is1_13up = () -> this.getVersion().isNewerOrEqualTo(MCVersion.v1_13); // everything after 1.12
     public final VersionGate is1_14up = () -> this.getVersion().isNewerOrEqualTo(MCVersion.v1_14); // everything after 1.13
     public final VersionGate is1_16up = () -> this.getVersion().isNewerOrEqualTo(MCVersion.v1_16); // everything after 1.15
+    public final VersionGate is1_16_2up = () -> this.getVersion().isNewerOrEqualTo(MCVersion.v1_16_2); // everything after 1.16.1
 
     public VersionedGen(MCVersion version) {
         this.version = version;

@@ -130,7 +130,7 @@ public class Biome extends VersionedGen {
 
         Biome b = Biome.REGISTRY.get(id);
         if (b == null) return false;
-        if (versionedGen.is1_16up.call()){
+        if (versionedGen.is1_16_2up.call()){
             // special check for the new badlands_plateau category
             if (b==Biome.WOODED_BADLANDS_PLATEAU|| b==Biome.BADLANDS_PLATEAU){
                 return b2 == Biome.WOODED_BADLANDS_PLATEAU || b2 == Biome.BADLANDS_PLATEAU;

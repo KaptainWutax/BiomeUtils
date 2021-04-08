@@ -47,13 +47,12 @@ public class EaseEdgeLayer extends CrossLayer {
     }
 
     private boolean replaceEdgeIfNeeded(int[] is, int n, int e, int s, int w, int center, Biome biome1, Biome biome2) {
-        if (is1_16up.call()){
+        if (is1_16_2up.call()){
             if (!Biome.areSimilar(center,Biome.MOUNTAINS,this)){
                 return false;
-            }else{
-                is[0]=center;
-                return true;
             }
+            is[0]=center;
+            return true;
         }
         if (!Biome.areSimilar(center, biome1,this)) {
             return false;

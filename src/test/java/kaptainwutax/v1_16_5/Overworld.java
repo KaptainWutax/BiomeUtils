@@ -88,13 +88,16 @@ public class Overworld {
     @Test
     @DisplayName("Test specific for " + version)
     public void testSpecific() {
-       overworldBiomeSource=new OverworldBiomeSource(MCVersion.v1_16_1,1437905338718953247L);
+       overworldBiomeSource=new OverworldBiomeSource(MCVersion.v1_16_2,1437905338718953247L);
 //        for (int x = -8; x <= 8; x++) {
 //            for (int z = -8; z <= 8; z++) {
 //                System.out.print(overworldBiomeSource.getBiomeForNoiseGen(3611+x,0,-141+z).getId()+" ");
 //            }
 //            System.out.println();
 //        }
+        overworldBiomeSource=new OverworldBiomeSource(MCVersion.v1_16_1,1437905338718953247L);
+        assertEquals(Biome.BADLANDS.getName(),overworldBiomeSource.getBiomeForNoiseGen(3611-8,0,-141).getName());
+        overworldBiomeSource=new OverworldBiomeSource(MCVersion.v1_16_2,1437905338718953247L);
         assertEquals(Biome.WOODED_BADLANDS_PLATEAU.getName(),overworldBiomeSource.getBiomeForNoiseGen(3611-8,0,-141).getName());
     }
 }
