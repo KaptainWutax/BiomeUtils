@@ -298,7 +298,7 @@ public class Biome extends VersionedGen {
     public static final Biome THE_VOID = new Biome(MCVersion.v1_8, null, 127, "the_void", Category.NONE, Precipitation.NONE, 0.5F, 0.200F, 0.100F, null);
     public static final Biome SUNFLOWER_PLAINS = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 129, "sunflower_plains", Category.PLAINS, Precipitation.RAIN, 0.8F, 0.050F, 0.125F, Biome.PLAINS);
     public static final Biome DESERT_LAKES = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 130, "desert_lakes", Category.DESERT, Precipitation.NONE, 2.0F, 0.250F, 0.225F, Biome.DESERT);
-    public static final Biome GRAVELLY_MOUNTAINS = new Biome(MCVersion.v1_8, Dimension.OVERWORLD, 131, "gravelly_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, 0.500F, 1.000F, Biome.MOUNTAINS);
+    public static final Biome GRAVELLY_MOUNTAINS = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 131, "gravelly_mountains", Category.EXTREME_HILLS, Precipitation.RAIN, 0.2F, 0.500F, 1.000F, Biome.MOUNTAINS);
     public static final Biome FLOWER_FOREST = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 132, "flower_forest", Category.FOREST, Precipitation.RAIN, 0.7F, 0.400F, 0.100F, Biome.FOREST);
     public static final Biome TAIGA_MOUNTAINS = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 133, "taiga_mountains", Category.TAIGA, Precipitation.RAIN, 0.25F, 0.400F, 0.300F, Biome.TAIGA);
     public static final Biome SWAMP_HILLS = new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 134, "swamp_hills", Category.SWAMP, Precipitation.RAIN, 0.8F, 0.300F, -0.100F, Biome.SWAMP);
