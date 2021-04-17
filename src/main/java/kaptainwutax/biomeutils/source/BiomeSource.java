@@ -4,10 +4,10 @@ import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
-import kaptainwutax.seedutils.lcg.rand.JRand;
-import kaptainwutax.seedutils.mc.Dimension;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.pos.BPos;
+import kaptainwutax.seedutils.rand.JRand;
+import kaptainwutax.mcutils.state.Dimension;
+import kaptainwutax.mcutils.version.MCVersion;
+import kaptainwutax.mcutils.util.pos.BPos;
 
 import java.util.*;
 import java.util.function.Predicate;

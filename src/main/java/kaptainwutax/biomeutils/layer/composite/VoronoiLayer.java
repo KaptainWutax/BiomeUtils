@@ -1,9 +1,9 @@
 package kaptainwutax.biomeutils.layer.composite;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.seed.SeedMixer;
-import kaptainwutax.seedutils.mc.seed.WorldSeed;
+import kaptainwutax.mcutils.rand.seed.SeedMixer;
+import kaptainwutax.mcutils.rand.seed.WorldSeed;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class VoronoiLayer extends BiomeLayer {
 

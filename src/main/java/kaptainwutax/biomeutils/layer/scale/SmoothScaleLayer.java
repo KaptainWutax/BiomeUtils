@@ -2,7 +2,7 @@ package kaptainwutax.biomeutils.layer.scale;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class SmoothScaleLayer extends CrossLayer {
 

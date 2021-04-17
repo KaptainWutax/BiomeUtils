@@ -1,8 +1,8 @@
 package kaptainwutax;
 
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.pos.BPos;
+import kaptainwutax.mcutils.version.MCVersion;
+import kaptainwutax.mcutils.util.pos.BPos;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

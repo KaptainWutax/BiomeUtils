@@ -3,7 +3,7 @@ package kaptainwutax.biomeutils.layer.land;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.XCrossLayer;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class LandLayer extends XCrossLayer {
 

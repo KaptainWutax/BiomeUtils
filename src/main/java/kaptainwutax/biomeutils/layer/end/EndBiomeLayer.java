@@ -2,7 +2,7 @@ package kaptainwutax.biomeutils.layer.end;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class EndBiomeLayer extends BiomeLayer {
 

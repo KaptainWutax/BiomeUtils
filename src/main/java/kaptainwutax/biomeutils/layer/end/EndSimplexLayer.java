@@ -3,8 +3,8 @@ package kaptainwutax.biomeutils.layer.end;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.noiseutils.simplex.SimplexNoiseSampler;
 import kaptainwutax.seedutils.lcg.LCG;
-import kaptainwutax.seedutils.lcg.rand.JRand;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.seedutils.rand.JRand;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class EndSimplexLayer extends BiomeLayer {
 

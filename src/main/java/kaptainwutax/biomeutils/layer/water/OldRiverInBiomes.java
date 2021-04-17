@@ -3,7 +3,7 @@ package kaptainwutax.biomeutils.layer.water;
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class OldRiverInBiomes extends BiomeLayer {
     // before the introduction of noise based rivers, river were based on the rare biomes

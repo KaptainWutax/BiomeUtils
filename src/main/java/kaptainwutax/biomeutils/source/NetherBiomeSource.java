@@ -5,9 +5,9 @@ import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.nether.NetherLayer;
-import kaptainwutax.seedutils.mc.Dimension;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.pos.BPos;
+import kaptainwutax.mcutils.state.Dimension;
+import kaptainwutax.mcutils.version.MCVersion;
+import kaptainwutax.mcutils.util.pos.BPos;
 
 public class NetherBiomeSource extends BiomeSource {
 

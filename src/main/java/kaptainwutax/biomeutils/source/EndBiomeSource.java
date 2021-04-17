@@ -7,9 +7,9 @@ import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.end.EndBiomeLayer;
 import kaptainwutax.biomeutils.layer.end.EndHeightLayer;
 import kaptainwutax.biomeutils.layer.end.EndSimplexLayer;
-import kaptainwutax.seedutils.mc.Dimension;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.pos.BPos;
+import kaptainwutax.mcutils.state.Dimension;
+import kaptainwutax.mcutils.version.MCVersion;
+import kaptainwutax.mcutils.util.pos.BPos;
 
 public class EndBiomeSource extends BiomeSource {
 

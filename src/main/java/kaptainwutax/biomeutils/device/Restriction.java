@@ -3,7 +3,7 @@ package kaptainwutax.biomeutils.device;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,7 +1,7 @@
 package kaptainwutax.biomeutils.layer.end;
 
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class EndHeightLayer extends BiomeLayer {
 

@@ -4,8 +4,8 @@ import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.pos.BPos;
+import kaptainwutax.mcutils.version.MCVersion;
+import kaptainwutax.mcutils.util.pos.BPos;
 
 public class Main {
 

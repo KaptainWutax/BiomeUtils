@@ -2,8 +2,9 @@ package kaptainwutax.biomeutils.layer;
 
 import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.seedutils.mc.MCVersion;
-import kaptainwutax.seedutils.mc.seed.SeedMixer;
+import kaptainwutax.mcutils.rand.seed.SeedMixer;
+import kaptainwutax.mcutils.version.MCVersion;
+
 
 public abstract class BiomeLayer extends VersionedGen {
 

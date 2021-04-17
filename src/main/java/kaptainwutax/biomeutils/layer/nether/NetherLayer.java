@@ -2,9 +2,9 @@ package kaptainwutax.biomeutils.layer.nether;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.mcutils.rand.ChunkRand;
 import kaptainwutax.noiseutils.noise.DoublePerlinNoiseSampler;
-import kaptainwutax.seedutils.mc.ChunkRand;
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 import java.util.Comparator;
 import java.util.stream.IntStream;

@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils;
 
-import kaptainwutax.seedutils.mc.MCVersion;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class VersionedGen {
     public boolean DEBUG=false;
