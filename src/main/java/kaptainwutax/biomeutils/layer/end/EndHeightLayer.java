@@ -12,8 +12,7 @@ public class EndHeightLayer extends FloatBiomeLayer {
 
     @Override
     public float sample(int x, int y, int z) {
-        float height=getNoiseValueAt(x,z);
-        return Float.floatToIntBits(height);
+        return this.getNoiseValueAt(x, z);
     }
 
     public float getNoiseValueAt(int x, int z){
@@ -30,7 +29,7 @@ public class EndHeightLayer extends FloatBiomeLayer {
                 long shiftedZ = scaledZ + rz;
                 // TODO make it version dependant (bug in MC)
                 if (shiftedX * shiftedX + shiftedZ * shiftedZ > 4096L
-                        && this.getParent(BoolBiomeLayer.class).get((int)shiftedX, 0, (int) shiftedZ)) {
+                        && this.getParent(BoolBiomeLayer.class).get((int)shiftedX, 0, (int)shiftedZ)) {
                     float elevation = (Math.abs((float)shiftedX) * 3439.0F + Math.abs((float)shiftedZ) * 147.0F) % 13.0F + 9.0F;
                     float smoothX = (float)(oddX - rx * 2);
                     float smoothZ = (float)(oddZ - rz * 2);
