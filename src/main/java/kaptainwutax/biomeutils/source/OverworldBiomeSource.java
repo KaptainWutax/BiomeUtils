@@ -61,11 +61,6 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	@Override
-	public LayerStack<IntBiomeLayer> getLayers() {
-		return this.layers;
-	}
-
-	@Override
 	public Dimension getDimension() {
 		return Dimension.OVERWORLD;
 	}
