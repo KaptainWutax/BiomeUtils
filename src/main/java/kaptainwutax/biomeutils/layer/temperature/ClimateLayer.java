@@ -1,20 +1,20 @@
 package kaptainwutax.biomeutils.layer.temperature;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class ClimateLayer {
 
-	public static class Cold extends BiomeLayer {
-		public Cold(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+	public static class Cold extends IntBiomeLayer {
+		public Cold(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
 		public int sample(int x, int y, int z) {
-			int value = this.getParent().get(x, y, z);
+			int value = this.getParent(IntBiomeLayer.class).get(x, y, z);
 
 			if(Biome.isShallowOcean(value,this)) {
 				return value;
@@ -33,7 +33,7 @@ public class ClimateLayer {
 	}
 
 	public static class Temperate extends CrossLayer {
-		public Temperate(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+		public Temperate(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
@@ -47,7 +47,7 @@ public class ClimateLayer {
 	}
 
 	public static class Cool extends CrossLayer {
-		public Cool(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+		public Cool(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
@@ -60,14 +60,14 @@ public class ClimateLayer {
 		}
 	}
 
-	public static class Special extends BiomeLayer {
-		public Special(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+	public static class Special extends IntBiomeLayer {
+		public Special(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
 		public int sample(int x, int y, int z) {
-			int i = this.getParent().get(x, y, z);
+			int i = this.getParent(IntBiomeLayer.class).get(x, y, z);
 
 			if(Biome.isShallowOcean(i,this))return i;
 			this.setSeed(x, z);

@@ -1,15 +1,15 @@
 package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.nether.NetherLayer;
 import kaptainwutax.mcutils.state.Dimension;
-import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.mcutils.util.pos.BPos;
+import kaptainwutax.mcutils.version.MCVersion;
 
-public class NetherBiomeSource extends BiomeSource {
+public class NetherBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
     private static final Biome.BiomePoint[] DEFAULT_BIOME_POINTS = {
             new Biome.BiomePoint(Biome.NETHER_WASTES, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
@@ -18,7 +18,7 @@ public class NetherBiomeSource extends BiomeSource {
             new Biome.BiomePoint(Biome.WARPED_FOREST, 0.0F, 0.5F, 0.0F, 0.0F, 0.375F),
             new Biome.BiomePoint(Biome.BASALT_DELTAS, -0.5F, 0.0F, 0.0F, 0.0F, 0.175F)
     };
-    protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
+    protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
     private final Biome.BiomePoint[] biomePoints;
     public NetherLayer full;
     public VoronoiLayer voronoi;
@@ -35,7 +35,7 @@ public class NetherBiomeSource extends BiomeSource {
     }
 
     @Override
-    public LayerStack<BiomeLayer> getLayers() {
+    public LayerStack<IntBiomeLayer> getLayers() {
         return this.layers;
     }
 

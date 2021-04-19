@@ -1,25 +1,28 @@
 package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class HillsLayer extends BiomeLayer {
+public class HillsLayer extends IntBiomeLayer {
 
-    public HillsLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+    public HillsLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer... parents) {
         super(version, worldSeed, salt, parents);
     }
 
     @Override
     public int sample(int x, int y, int z) {
         this.setSeed(x, z);
-        int i = this.getParent(0).get(x, y, z); // biomes
+        IntBiomeLayer biomesLayer = this.getParent(0, IntBiomeLayer.class); // biomes
+        IntBiomeLayer noiseLayer = this.getParent(1, IntBiomeLayer.class); // noise (river)
+        int i = biomesLayer.get(x, y, z);
         boolean toHills = this.nextInt(3) == 0;
 
         int k = -1;
         Biome biome3;
-        if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
-            int j = this.getParent(1).get(x, y, z); // noise (river)
+
+        if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
+            int j = noiseLayer.get(x, y, z);
             k = (j - 2) % 29;
             if (!Biome.isShallowOcean(i, this) && j >= 2 && k == 1) {
                 Biome biome = Biome.REGISTRY.get(i);
@@ -91,10 +94,10 @@ public class HillsLayer extends BiomeLayer {
             if (l != i) {
                 int m = 0;
                 Biome b = Biome.REGISTRY.get(i);
-                if (Biome.areSimilar(this.getParent(0).get(x, y, z - 1), b,this)) m++;
-                if (Biome.areSimilar(this.getParent(0).get(x + 1, y, z), b,this)) m++;
-                if (Biome.areSimilar(this.getParent(0).get(x - 1, y, z), b,this)) m++;
-                if (Biome.areSimilar(this.getParent(0).get(x, y, z + 1), b,this)) m++;
+                if (Biome.areSimilar(biomesLayer.get(x, y, z - 1), b,this)) m++;
+                if (Biome.areSimilar(biomesLayer.get(x + 1, y, z), b,this)) m++;
+                if (Biome.areSimilar(biomesLayer.get(x - 1, y, z), b,this)) m++;
+                if (Biome.areSimilar(biomesLayer.get(x, y, z + 1), b,this)) m++;
                 if (is1_6down.call()){
                     if (m == 4) return l;
                 } else if (m >= 3) return l;
@@ -103,4 +106,5 @@ public class HillsLayer extends BiomeLayer {
 
         return i;
     }
+
 }

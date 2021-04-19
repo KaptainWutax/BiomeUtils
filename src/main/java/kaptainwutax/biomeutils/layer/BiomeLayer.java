@@ -1,10 +1,8 @@
 package kaptainwutax.biomeutils.layer;
 
 import kaptainwutax.biomeutils.VersionedGen;
-import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.version.MCVersion;
-
 
 public abstract class BiomeLayer extends VersionedGen {
 
@@ -15,8 +13,6 @@ public abstract class BiomeLayer extends VersionedGen {
 
     protected int scale = -1;
     protected int layerId = -1;
-
-    private final LayerCache layerCache = new LayerCache(1024);
 
     public BiomeLayer(MCVersion version, BiomeLayer... parents) {
         super(version);
@@ -61,8 +57,16 @@ public abstract class BiomeLayer extends VersionedGen {
         return this.getParent(0);
     }
 
+    public <T extends BiomeLayer> T getParent(Class<T> type) {
+        return (T)this.getParent(0);
+    }
+
     public BiomeLayer getParent(int id) {
         return this.parents[id];
+    }
+
+    public <T extends BiomeLayer> T getParent(int id, Class<T> type) {
+        return (T)this.getParent(id);
     }
 
     public boolean isMergingLayer() {
@@ -72,16 +76,6 @@ public abstract class BiomeLayer extends VersionedGen {
     public BiomeLayer[] getParents() {
         return this.parents;
     }
-
-    public int get(int x, int y, int z) {
-        int id=this.layerCache.get(x, y, z, this::sample);
-        if (DEBUG){
-            System.out.printf("Layer id: %d at (x,z):(%d,%d), got parent id : %d%n",this.layerId,x,z,id);
-        }
-        return id;
-    }
-
-    public abstract int sample(int x, int y, int z);
 
     public static long getMidSalt(long salt) {
         long midSalt = SeedMixer.mixSeed(salt, salt);
@@ -131,4 +125,5 @@ public abstract class BiomeLayer extends VersionedGen {
         int i = this.nextInt(4);
         return i == 0 ? a : i == 1 ? b : i == 2 ? c : d;
     }
+
 }

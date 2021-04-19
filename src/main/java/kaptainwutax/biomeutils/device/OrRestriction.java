@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.device;
 
-import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.biomeutils.source.LayeredBiomeSource;
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ public class OrRestriction extends Restriction {
     }
 
     @Override
-    public boolean testSource(BiomeSource source) {
+    public boolean testSource(LayeredBiomeSource source) {
         for(Restriction restriction: this.restrictions) {
             if(restriction.testSource(source))return true;
         }

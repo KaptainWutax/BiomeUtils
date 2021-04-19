@@ -1,10 +1,10 @@
 package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class BaseBiomesLayer extends BiomeLayer {
+public class BaseBiomesLayer extends IntBiomeLayer {
     // TODO introduce Default1_1 back
     public static final Biome[] DRY_BIOMES = new Biome[] {
             Biome.DESERT, Biome.DESERT, Biome.DESERT, Biome.SAVANNA, Biome.SAVANNA, Biome.PLAINS
@@ -30,14 +30,14 @@ public class BaseBiomesLayer extends BiomeLayer {
             Biome.DESERT, Biome.FOREST, Biome.MOUNTAINS, Biome.SWAMP, Biome.PLAINS, Biome.TAIGA
     };
 
-    public BaseBiomesLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+    public BaseBiomesLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
         super(version, worldSeed, salt, parent);
     }
 
     @Override
     public int sample(int x, int y, int z) {
         this.setSeed(x, z);
-        int center = this.getParent().get(x, y, z);
+        int center = this.getParent(IntBiomeLayer.class).get(x, y, z);
         int specialBits = (center >> 8) & 15; //the nextInt(15) + 1 in ClimateLayer.Special
         center &= ~0xF00; //removes the 4 special bits and keeps everything else
 

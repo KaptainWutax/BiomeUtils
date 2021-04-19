@@ -1,7 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.*;
@@ -22,24 +22,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public class OverworldBiomeSource extends BiomeSource {
+public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biome.FOREST, Biome.PLAINS, Biome.TAIGA, Biome.TAIGA_HILLS, Biome.WOODED_HILLS, Biome.JUNGLE, Biome.JUNGLE_HILLS);
 
-	public BiomeLayer base;
-	public BiomeLayer ocean;
-	public BiomeLayer noise;
-	public BiomeLayer variants;
-	public BiomeLayer biomes;
-	public BiomeLayer river;
-	public BiomeLayer full;
+	public IntBiomeLayer base;
+	public IntBiomeLayer ocean;
+	public IntBiomeLayer noise;
+	public IntBiomeLayer variants;
+	public IntBiomeLayer biomes;
+	public IntBiomeLayer river;
+	public IntBiomeLayer full;
 	public VoronoiLayer voronoi;
-	public BiomeLayer debug;
+	public IntBiomeLayer debug;
 
 	public final int biomeSize;
 	public final int riverSize;
 
-	protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
+	protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
 
 	public OverworldBiomeSource(MCVersion version, long worldSeed) {
 		this(version, worldSeed, 4, 4);
@@ -61,7 +61,7 @@ public class OverworldBiomeSource extends BiomeSource {
 	}
 
 	@Override
-	public LayerStack<BiomeLayer> getLayers() {
+	public LayerStack<IntBiomeLayer> getLayers() {
 		return this.layers;
 	}
 
@@ -71,7 +71,7 @@ public class OverworldBiomeSource extends BiomeSource {
 	}
 
 	protected void build() {
-		BiFunction<Long, BiomeLayer, BiomeLayer> NORMAL_SCALE = (salt, parent) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), salt, ScaleLayer.Type.NORMAL, parent);
+		BiFunction<Long, IntBiomeLayer, IntBiomeLayer> NORMAL_SCALE = (salt, parent) -> new ScaleLayer(this.getVersion(), this.getWorldSeed(), salt, ScaleLayer.Type.NORMAL, parent);
 
 		// first legacy stack
 		//4096
@@ -198,7 +198,7 @@ public class OverworldBiomeSource extends BiomeSource {
 		this.layers.setScales();
 	}
 
-	public BiomeLayer stack(long salt, BiFunction<Long, BiomeLayer, BiomeLayer> layer, BiomeLayer parent, int count) {
+	public IntBiomeLayer stack(long salt, BiFunction<Long, IntBiomeLayer, IntBiomeLayer> layer, IntBiomeLayer parent, int count) {
 		for (int i = 0; i < count; i++) {
 			this.layers.add(parent = layer.apply(salt + i, parent));
 		}

@@ -1,9 +1,7 @@
 package kaptainwutax.biomeutils.device;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.mathutils.util.Mth;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class ModRestriction extends Restriction {
@@ -41,7 +39,7 @@ public abstract class ModRestriction extends Restriction {
 
     @Override
     public boolean testSeed(long seed, long bits) {
-        long localSeed = BiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
+        long localSeed = IntBiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
 
         int val = (int) Math.floorMod(localSeed >> 24, this.bound);
 

@@ -1,12 +1,13 @@
 package kaptainwutax.biomeutils.layer.end;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.FloatBiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class EndBiomeLayer extends BiomeLayer {
+public class EndBiomeLayer extends IntBiomeLayer {
 
-    public EndBiomeLayer(MCVersion version, long worldSeed, BiomeLayer parent) {
+    public EndBiomeLayer(MCVersion version, long worldSeed, FloatBiomeLayer parent) {
         super(version, parent);
     }
 
@@ -19,8 +20,7 @@ public class EndBiomeLayer extends BiomeLayer {
             return Biome.THE_END.getId();
         }
 
-        // this not a fail proof method
-        float height = Float.intBitsToFloat(this.getParent().get(x * 2 + 1, 0, z * 2 + 1));
+        float height = this.getParent(FloatBiomeLayer.class).get(x * 2 + 1, 0, z * 2 + 1);
 
         if(height > 40.0F) {
             return Biome.END_HIGHLANDS.getId();
@@ -32,7 +32,5 @@ public class EndBiomeLayer extends BiomeLayer {
 
         return Biome.SMALL_END_ISLANDS.getId();
     }
-
-
 
 }

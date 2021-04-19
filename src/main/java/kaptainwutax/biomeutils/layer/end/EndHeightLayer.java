@@ -1,16 +1,17 @@
 package kaptainwutax.biomeutils.layer.end;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.BoolBiomeLayer;
+import kaptainwutax.biomeutils.layer.FloatBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class EndHeightLayer extends BiomeLayer {
+public class EndHeightLayer extends FloatBiomeLayer {
 
-    public EndHeightLayer(MCVersion version, long worldSeed, BiomeLayer parent) {
+    public EndHeightLayer(MCVersion version, long worldSeed, BoolBiomeLayer parent) {
         super(version, parent);
     }
 
     @Override
-    public int sample(int x, int y, int z) {
+    public float sample(int x, int y, int z) {
         float height=getNoiseValueAt(x,z);
         return Float.floatToIntBits(height);
     }
@@ -28,7 +29,8 @@ public class EndHeightLayer extends BiomeLayer {
                 long shiftedX = scaledX + rx; // this is under 32 bits since the max is 15M+12 at max
                 long shiftedZ = scaledZ + rz;
                 // TODO make it version dependant (bug in MC)
-                if (shiftedX * shiftedX + shiftedZ * shiftedZ > 4096L && this.getParent().get((int)shiftedX, 0, (int) shiftedZ) == 1) {
+                if (shiftedX * shiftedX + shiftedZ * shiftedZ > 4096L
+                        && this.getParent(BoolBiomeLayer.class).get((int)shiftedX, 0, (int) shiftedZ)) {
                     float elevation = (Math.abs((float)shiftedX) * 3439.0F + Math.abs((float)shiftedZ) * 147.0F) % 13.0F + 9.0F;
                     float smoothX = (float)(oddX - rx * 2);
                     float smoothZ = (float)(oddZ - rz * 2);
@@ -38,6 +40,7 @@ public class EndHeightLayer extends BiomeLayer {
                 }
             }
         }
+
         return height;
     }
 

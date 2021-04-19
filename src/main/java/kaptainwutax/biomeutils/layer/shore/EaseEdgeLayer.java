@@ -1,13 +1,13 @@
 package kaptainwutax.biomeutils.layer.shore;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class EaseEdgeLayer extends CrossLayer {
 
-    public EaseEdgeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+    public EaseEdgeLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
         super(version, worldSeed, salt, parent);
     }
 

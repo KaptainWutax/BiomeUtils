@@ -1,12 +1,12 @@
 package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.noiseutils.perlin.PerlinNoiseSampler;
 import kaptainwutax.seedutils.rand.JRand;
-import kaptainwutax.mcutils.version.MCVersion;
 
-public class OceanTemperatureLayer extends BiomeLayer {
+public class OceanTemperatureLayer extends IntBiomeLayer {
 
 	private final PerlinNoiseSampler perlin;
 
@@ -32,21 +32,21 @@ public class OceanTemperatureLayer extends BiomeLayer {
 		return Biome.OCEAN.getId();
 	}
 
-	public static class Apply extends BiomeLayer {
-		public Apply(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+	public static class Apply extends IntBiomeLayer {
+		public Apply(MCVersion version, long worldSeed, long salt, IntBiomeLayer... parents) {
 			super(version, worldSeed, salt, parents);
 		}
 
 		@Override
 		public int sample(int x, int y, int z) {
-			int fullStackCenter = this.getParent(0).get(x, y, z);
+			int fullStackCenter = this.getParent(0, IntBiomeLayer.class).get(x, y, z);
 			if(!Biome.isOcean(fullStackCenter))return fullStackCenter;
 
-			int oceanStackCenter = this.getParent(1).get(x, y, z);
+			int oceanStackCenter = this.getParent(1, IntBiomeLayer.class).get(x, y, z);
 
 			for(int rx = -8; rx <= 8; rx += 4) {
 				for(int rz = -8; rz <= 8; rz += 4) {
-					int shiftedXZ = this.getParent(0).get(x + rx, y, z + rz);
+					int shiftedXZ = this.getParent(0, IntBiomeLayer.class).get(x + rx, y, z + rz);
 					if(Biome.isOcean(shiftedXZ))continue;
 
 					if(oceanStackCenter == Biome.WARM_OCEAN.getId()) {
