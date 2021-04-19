@@ -33,7 +33,7 @@ public abstract class IntBiomeLayer extends BiomeLayer {
 
     public abstract int sample(int x, int y, int z);
 
-    public int sample(int x, int y, int z, int xSize, int ySize, int zSize) {
+    public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
         throw new UnsupportedOperationException();
     }
 

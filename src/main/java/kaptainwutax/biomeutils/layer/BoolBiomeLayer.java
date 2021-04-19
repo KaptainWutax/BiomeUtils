@@ -29,7 +29,7 @@ public abstract class BoolBiomeLayer extends BiomeLayer {
 
     public abstract boolean sample(int x, int y, int z);
 
-    public boolean sample(int x, int y, int z, int xSize, int ySize, int zSize) {
+    public boolean[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
         throw new UnsupportedOperationException();
     }
 

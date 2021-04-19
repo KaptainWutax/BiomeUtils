@@ -29,7 +29,7 @@ public abstract class FloatBiomeLayer extends BiomeLayer {
 
     public abstract float sample(int x, int y, int z);
 
-    public float sample(int x, int y, int z, int xSize, int ySize, int zSize) {
+    public float[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
         throw new UnsupportedOperationException();
     }
 
