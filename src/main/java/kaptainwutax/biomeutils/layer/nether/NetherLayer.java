@@ -1,16 +1,16 @@
 package kaptainwutax.biomeutils.layer.nether;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.rand.ChunkRand;
-import kaptainwutax.noiseutils.noise.DoublePerlinNoiseSampler;
 import kaptainwutax.mcutils.version.MCVersion;
+import kaptainwutax.noiseutils.noise.DoublePerlinNoiseSampler;
 
 import java.util.Comparator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class NetherLayer extends BiomeLayer {
+public class NetherLayer extends IntBiomeLayer {
 
     private DoublePerlinNoiseSampler temperature;
     private DoublePerlinNoiseSampler humidity;
@@ -21,7 +21,7 @@ public class NetherLayer extends BiomeLayer {
     private final boolean is3D;
 
     public NetherLayer(MCVersion version, long worldSeed, boolean is3D, Biome.BiomePoint[] biomePoints) {
-        super(version, (BiomeLayer)null);
+        super(version, (IntBiomeLayer)null);
         this.is3D = is3D;
 
         if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {

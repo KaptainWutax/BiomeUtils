@@ -1,19 +1,19 @@
 package kaptainwutax.biomeutils.layer.water;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class RiverLayer extends BiomeLayer {
+public class RiverLayer extends IntBiomeLayer {
 
-    public RiverLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
+    public RiverLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer... parents) {
         super(version, worldSeed, salt, parents);
     }
 
     @Override
     public int sample(int x, int y, int z) {
-        int landStackCenter = this.getParent(0).get(x, y, z);
-        int riverStackCenter = this.getParent(1).get(x, y, z);
+        int landStackCenter = this.getParent(0, IntBiomeLayer.class).get(x, y, z);
+        int riverStackCenter = this.getParent(1, IntBiomeLayer.class).get(x, y, z);
 
         if (is1_6down.call()) {
             // Warning this is the only case like so because isOcean have Frozen ocean which is bypassed everywhere except here

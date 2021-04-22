@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.device;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mathutils.util.Mth;
 
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public abstract class BoundRestriction extends Restriction {
 
     @Override
     public boolean testSeed(long seed, long bits) {
-        long localSeed = BiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
+        long localSeed = IntBiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
 
         if(bits == 64) {
             int val = (int)Math.floorMod(localSeed >> 24, this.bound);

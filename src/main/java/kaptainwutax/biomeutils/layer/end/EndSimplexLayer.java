@@ -1,12 +1,12 @@
 package kaptainwutax.biomeutils.layer.end;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.BoolBiomeLayer;
+import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.noiseutils.simplex.SimplexNoiseSampler;
 import kaptainwutax.seedutils.lcg.LCG;
 import kaptainwutax.seedutils.rand.JRand;
-import kaptainwutax.mcutils.version.MCVersion;
 
-public class EndSimplexLayer extends BiomeLayer {
+public class EndSimplexLayer extends BoolBiomeLayer {
 
     public static final LCG SIMPLEX_SKIP = LCG.JAVA.combine(17292);
     protected final SimplexNoiseSampler simplex;
@@ -19,8 +19,8 @@ public class EndSimplexLayer extends BiomeLayer {
     }
 
     @Override
-    public int sample(int x, int y, int z) {
-        return this.simplex.sample2D(x, z) < (double)-0.9F ? 1 : 0;
+    public boolean sample(int x, int y, int z) {
+        return this.simplex.sample2D(x, z) < (double)-0.9F;
     }
 
 }

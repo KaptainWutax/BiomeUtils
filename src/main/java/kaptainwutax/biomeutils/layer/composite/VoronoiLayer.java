@@ -1,16 +1,16 @@
 package kaptainwutax.biomeutils.layer.composite;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.rand.seed.WorldSeed;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class VoronoiLayer extends BiomeLayer {
+public class VoronoiLayer extends IntBiomeLayer {
 
     private final long seed;
     private final boolean is3D;
 
-    public VoronoiLayer(MCVersion version, long worldSeed, boolean is3D, BiomeLayer parent) {
+    public VoronoiLayer(MCVersion version, long worldSeed, boolean is3D, IntBiomeLayer parent) {
         super(version, worldSeed, version.isOlderThan(MCVersion.v1_15) ? 10L : 0L, parent);
         this.seed = version.isOlderThan(MCVersion.v1_15) ? worldSeed : WorldSeed.toHash(worldSeed);
         this.is3D = is3D;
@@ -67,7 +67,7 @@ public class VoronoiLayer extends BiomeLayer {
         if (DEBUG){
             System.out.println("VORONOI Coords: (x,z): "+(pX + (offset & 1))+ " "+ (pZ + (offset >> 1)));
         }
-        return this.getParent().get(pX + (offset & 1), 0, pZ + (offset >> 1));
+        return this.getParent(IntBiomeLayer.class).get(pX + (offset & 1), 0, pZ + (offset >> 1));
     }
 
     private int sample15plus(int x, int y, int z) {
@@ -110,7 +110,7 @@ public class VoronoiLayer extends BiomeLayer {
         if (DEBUG){
             System.out.printf("Voronoi coords (x,y,z):(%d,%d,%d)%n",xFinal,yFinal,zFinal);
         }
-        return this.getParent().get(xFinal, this.is3D ? yFinal : 0, zFinal);
+        return this.getParent(IntBiomeLayer.class).get(xFinal, this.is3D ? yFinal : 0, zFinal);
     }
 
     private static double calcContribution(double[] d, int x, int z) {

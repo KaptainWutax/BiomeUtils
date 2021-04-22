@@ -1,12 +1,12 @@
 package kaptainwutax.biomeutils.layer.scale;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class SmoothScaleLayer extends CrossLayer {
 
-	public SmoothScaleLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+	public SmoothScaleLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 		super(version, worldSeed, salt, parent);
 	}
 

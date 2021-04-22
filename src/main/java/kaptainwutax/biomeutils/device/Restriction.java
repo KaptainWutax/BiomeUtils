@@ -1,7 +1,7 @@
 package kaptainwutax.biomeutils.device;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.biomeutils.source.LayeredBiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -39,9 +39,9 @@ public abstract class Restriction {
 
     public abstract boolean testSeed(long seed, long bits);
 
-    public abstract boolean testSource(BiomeSource source);
+    public abstract boolean testSource(LayeredBiomeSource<IntBiomeLayer> source);
 
-    protected static BiomeLayer getLayer(MCVersion version, Class<? extends BiomeLayer> layerClass) {
+    protected static IntBiomeLayer getLayer(MCVersion version, Class<? extends IntBiomeLayer> layerClass) {
         OverworldBiomeSource source = new OverworldBiomeSource(version, 0L);
 
         for(int i = 0; i < source.getLayers().size(); i++) {
@@ -51,11 +51,11 @@ public abstract class Restriction {
         return null;
     }
 
-    protected static int getLayerId(MCVersion version, Class<? extends BiomeLayer> layerClass) {
+    protected static int getLayerId(MCVersion version, Class<? extends IntBiomeLayer> layerClass) {
         return Objects.requireNonNull(getLayer(version, layerClass)).getLayerId();
     }
 
-    protected static long getSalt(MCVersion version, Class<? extends BiomeLayer> layerClass) {
+    protected static long getSalt(MCVersion version, Class<? extends IntBiomeLayer> layerClass) {
         return Objects.requireNonNull(getLayer(version, layerClass)).salt;
     }
 

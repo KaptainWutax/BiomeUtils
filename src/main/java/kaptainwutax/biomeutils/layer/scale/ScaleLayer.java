@@ -1,13 +1,13 @@
 package kaptainwutax.biomeutils.layer.scale;
 
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class ScaleLayer extends BiomeLayer {
+public class ScaleLayer extends IntBiomeLayer {
 
     private final Type type;
 
-    public ScaleLayer(MCVersion version, long worldSeed, long salt, Type type, BiomeLayer parent) {
+    public ScaleLayer(MCVersion version, long worldSeed, long salt, Type type, IntBiomeLayer parent) {
         super(version, worldSeed, salt, parent);
         this.type = type;
     }
@@ -18,23 +18,25 @@ public class ScaleLayer extends BiomeLayer {
 
     @Override
     public int sample(int x, int y, int z) {
-        int center = this.getParent().get(x >> 1, y, z >> 1);
+        IntBiomeLayer parent = this.getParent(IntBiomeLayer.class);
+
+        int center = parent.get(x >> 1, y, z >> 1);
         this.setSeed(x & -2, z & -2);
         int xb = x & 1, zb = z & 1;
 
         if (xb == 0 && zb == 0) return center;
 
-        int s = this.getParent().get(x >> 1, y, (z + 1) >> 1);
+        int s = parent.get(x >> 1, y, (z + 1) >> 1);
         int zPlus = this.choose(center, s);
 
         if (xb == 0) return zPlus;
 
-        int e = this.getParent().get((x + 1) >> 1, y, z >> 1);
+        int e = parent.get((x + 1) >> 1, y, z >> 1);
         int xPlus = this.choose(center, e);
 
         if (zb == 0) return xPlus;
 
-        int se = getParent().get((x + 1) >> 1, y, (z + 1) >> 1);
+        int se = parent.get((x + 1) >> 1, y, (z + 1) >> 1);
         return this.sample(center, e, s, se);
     }
 

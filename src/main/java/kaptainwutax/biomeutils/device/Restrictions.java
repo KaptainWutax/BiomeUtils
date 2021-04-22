@@ -2,9 +2,10 @@ package kaptainwutax.biomeutils.device;
 
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.land.*;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
-import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.biomeutils.source.LayeredBiomeSource;
 
 import static kaptainwutax.biomeutils.device.Restriction.getSalt;
 
@@ -16,7 +17,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, ContinentLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.PLAINS.getId();
             }
         };
@@ -28,7 +29,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, IslandLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.PLAINS.getId();
             }
         };
@@ -40,7 +41,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, ClimateLayer.Cold.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.FOREST.getId();
             }
         };
@@ -50,7 +51,7 @@ public class Restrictions {
     public static final Restriction.Factory<BoundRestriction> HILLS_PLATEAU = (version, x, z) -> {
         return new BoundRestriction("PLATEAU", x, z, getSalt(version, HillsLayer.class), 3, 0) {
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return true; // no test can really be made since it is a off by 1 stuff
             }
         };
@@ -62,7 +63,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, ClimateLayer.Cold.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.MOUNTAINS.getId();
             }
         };
@@ -74,7 +75,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, NoiseLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 int id = source.getLayer(this.ID).get(this.getX(), 0, this.getZ());
                 return (id >> 7) == 1;
             }
@@ -86,7 +87,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, NoiseLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 int id = source.getLayer(this.ID).get(this.getX(), 0, this.getZ());
                 return (id >> 7) == 1;
             }
@@ -99,7 +100,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, BaseBiomesLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 int id = source.getLayer(this.ID).get(this.getX(), 0, this.getZ());
                 return id == Biome.SAVANNA.getId();
             }
@@ -113,7 +114,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, ClimateLayer.Cold.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.PLAINS.getId();
             }
         };
@@ -125,7 +126,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, ClimateLayer.Special.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) >> 8 != 0;
             }
         };
@@ -137,7 +138,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, MushroomLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.MUSHROOM_FIELDS.getId();
             }
         };
@@ -149,7 +150,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, SunflowerPlainsLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.SUNFLOWER_PLAINS.getId();
             }
         };
@@ -161,7 +162,7 @@ public class Restrictions {
             private final int ID = getLayerId(version, BambooJungleLayer.class);
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.BAMBOO_JUNGLE.getId();
             }
         };

@@ -1,10 +1,10 @@
 package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class ContinentLayer extends BiomeLayer {
+public class ContinentLayer extends IntBiomeLayer {
 
     public ContinentLayer(MCVersion version, long worldSeed, long salt) {
         super(version, worldSeed, salt);

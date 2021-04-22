@@ -2,32 +2,24 @@ package kaptainwutax.biomeutils.source;
 
 import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
-import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.end.EndBiomeLayer;
 import kaptainwutax.biomeutils.layer.end.EndHeightLayer;
 import kaptainwutax.biomeutils.layer.end.EndSimplexLayer;
 import kaptainwutax.mcutils.state.Dimension;
-import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.mcutils.util.pos.BPos;
+import kaptainwutax.mcutils.version.MCVersion;
 
-public class EndBiomeSource extends BiomeSource {
+public class EndBiomeSource extends LayeredBiomeSource<BiomeLayer> {
 
     public EndSimplexLayer simplex;
     public EndHeightLayer height;
     public EndBiomeLayer full;
     public VoronoiLayer voronoi;
 
-    protected final LayerStack<BiomeLayer> layers = new LayerStack<>();
-
     public EndBiomeSource(MCVersion version, long worldSeed) {
         super(version, worldSeed);
         this.build();
-    }
-
-    @Override
-    public LayerStack<BiomeLayer> getLayers() {
-        return this.layers;
     }
 
     @Override

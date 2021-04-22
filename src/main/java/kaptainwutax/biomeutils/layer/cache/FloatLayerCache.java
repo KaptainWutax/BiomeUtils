@@ -1,27 +1,27 @@
-package kaptainwutax.biomeutils.layer;
+package kaptainwutax.biomeutils.layer.cache;
 
 import kaptainwutax.mathutils.util.Mth;
 
 import java.util.Arrays;
 
-public class LayerCache {
+public class FloatLayerCache {
 
 	private final long[] keys;
-	private final int[] values;
+	private final float[] values;
 	private final int mask;
 
-	public LayerCache(int capacity) {
+	public FloatLayerCache(int capacity) {
 		if(capacity < 1 || !Mth.isPowerOf2(capacity)) {
 			throw new UnsupportedOperationException("capacity must be a power of 2");
 		}
 
 		this.keys = new long[capacity];
 		Arrays.fill(this.keys, -1);
-		this.values = new int[capacity];
+		this.values = new float[capacity];
 		this.mask = (int)Mth.getMask(Long.numberOfTrailingZeros(capacity));
 	}
 
-	public int get(int x, int y, int z, Sampler sampler) {
+	public float get(int x, int y, int z, Sampler sampler) {
 		long key = this.uniqueHash(x, y, z);
 		int id = this.murmur64(key) & this.mask;
 
@@ -29,7 +29,7 @@ public class LayerCache {
 			return this.values[id];
 		}
 
-		int value = sampler.sample(x, y, z);
+		float value = sampler.sample(x, y, z);
 		this.keys[id] = key;
 		this.values[id] = value;
 		return value;
@@ -53,7 +53,7 @@ public class LayerCache {
 
 	@FunctionalInterface
 	public interface Sampler {
-		int sample(int x, int y, int z);
+		float sample(int x, int y, int z);
 	}
 
 }

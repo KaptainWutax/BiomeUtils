@@ -1,13 +1,13 @@
 package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.Biome;
-import kaptainwutax.biomeutils.layer.BiomeLayer;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.XCrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class MushroomLayer extends XCrossLayer {
 
-    public MushroomLayer(MCVersion version, long worldSeed, long salt, BiomeLayer parent) {
+    public MushroomLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
         super(version, worldSeed, salt, parent);
     }
 

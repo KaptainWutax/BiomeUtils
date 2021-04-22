@@ -1,11 +1,12 @@
 package kaptainwutax.biomeutils.device;
 
 import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
-import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.biomeutils.source.LayeredBiomeSource;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.mcutils.util.pos.BPos;
+import kaptainwutax.mcutils.version.MCVersion;
 
 public class Main {
 
@@ -20,7 +21,7 @@ public class Main {
             }
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return (source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) & ~0xF00) == Biome.PLAINS.getId();
             }
         };
@@ -36,7 +37,7 @@ public class Main {
             }
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return (source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) & ~0xF00) == Biome.MOUNTAINS.getId();
             }
         };
@@ -54,7 +55,7 @@ public class Main {
             }
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return (source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) & ~0xF00) == Biome.DESERT.getId();
             }
         };
@@ -71,7 +72,7 @@ public class Main {
             }
 
             @Override
-            public boolean testSource(BiomeSource source) {
+            public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
                 return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) != Biome.PLAINS.getId();
             }
         };
