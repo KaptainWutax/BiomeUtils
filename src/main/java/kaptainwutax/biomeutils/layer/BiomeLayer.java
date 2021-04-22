@@ -1,6 +1,8 @@
 package kaptainwutax.biomeutils.layer;
 
 import kaptainwutax.biomeutils.VersionedGen;
+import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
+import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.version.MCVersion;
 
