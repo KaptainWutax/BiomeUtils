@@ -35,6 +35,26 @@ public class IntLayerCache {
 		return value;
 	}
 
+	public int getWithoutStore(int x, int y, int z, Sampler sampler){
+		long key = this.uniqueHash(x, y, z);
+		int id = this.murmur64(key) & this.mask;
+
+		if (this.keys[id] == key) {
+			return this.values[id];
+		}
+
+		return sampler.sample(x, y, z);
+	}
+
+	public int forceStoreAndGet(int x, int y, int z, Sampler sampler){
+		long key = this.uniqueHash(x, y, z);
+		int id = this.murmur64(key) & this.mask;
+		int value = sampler.sample(x, y, z);
+		this.keys[id] = key;
+		this.values[id] = value;
+		return value;
+	}
+
 	public long uniqueHash(int x, int y, int z) {
 		long hash = (long) x & Mth.getMask(26);
 		hash |= ((long) z & Mth.getMask(26)) << 26;

@@ -11,6 +11,8 @@ public abstract class BiomeLayer extends VersionedGen {
 	public long salt;
 	public long layerSeed;
 	public long localSeed;
+	protected int hintSize = 1;
+
 
 	protected int scale = -1;
 	protected int layerId = -1;
@@ -56,6 +58,31 @@ public abstract class BiomeLayer extends VersionedGen {
 
 	public BiomeLayer getParent() {
 		return this.getParent(0);
+	}
+
+	public int getHintSize() {
+		return hintSize;
+	}
+
+	public void setHintSize(int size){
+		this.setHintSize(size,true);
+	}
+
+	public void setHintSize(int size,boolean recursive) {
+		if (recursive) setRecursiveHintSize(this,size+2);
+		else this.hintSize=size;
+	}
+
+	public void setRecursiveHintSize(BiomeLayer last, int hintSize) {
+		if (last == null) return;
+		last.setHintSize(hintSize,false);
+		for (BiomeLayer biomeLayer : last.getParents()) {
+			int shift = 0;
+			if (last instanceof ScaleLayer) shift = 2;
+			else if (last instanceof VoronoiLayer) shift = 4;
+
+			this.setRecursiveHintSize(biomeLayer, hintSize + shift);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
