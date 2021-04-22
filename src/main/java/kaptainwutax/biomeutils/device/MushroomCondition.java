@@ -58,16 +58,14 @@ public class MushroomCondition {
 	}
 
 	//stolen, will replace with faster version I write eventually
-	private long modInverse(long a, long m)
-	{
+	private long modInverse(long a, long m) {
 		long m0 = m;
 		long y = 0, x = 1;
 
 		if (m == 1)
 			return 0;
 
-		while (a > 1)
-		{
+		while (a > 1) {
 			long q = a / m;
 			long t = m;
 			m = a % m;
@@ -84,9 +82,10 @@ public class MushroomCondition {
 
 	/**
 	 * A method to get an important intermediate value used to select mushroom areas
+	 *
 	 * @param ws the world seed
-	 * @param x the x coordinate to be checked (scale = 256)
-	 * @param z the z coordinate to be checked (scale = 256)
+	 * @param x  the x coordinate to be checked (scale = 256)
+	 * @param z  the z coordinate to be checked (scale = 256)
 	 * @return a number used to choose mushroom islands. If the returned value (retval >> 24) % 100 == 0
 	 */
 	static long getShroomSeed(long ws, int x, int z) {
@@ -99,7 +98,7 @@ public class MushroomCondition {
 		ws += shroom_layer_seed;
 		ws *= ws * 6364136223846793005L + 1442695040888963407L;
 
-		long ss=ws;
+		long ss = ws;
 		ss += x;
 		ss *= ss * 6364136223846793005L + 1442695040888963407L;
 		ss += z;
@@ -135,16 +134,16 @@ public class MushroomCondition {
 	}
 
 	public static void main(String[] args) {
-		MushroomCondition c = new MushroomCondition(10,0,0);
+		MushroomCondition c = new MushroomCondition(10, 0, 0);
 		System.out.println(c.getUpperSeedAddend());
 		System.out.println(c.getUpperSeedMultiplier());
 		System.out.println(c.getNumValidSeeds());
 
-		for(long lowerBits = 0; lowerBits < 1L << 32; lowerBits++) {
-			c = new MushroomCondition(lowerBits,0,0);
+		for (long lowerBits = 0; lowerBits < 1L << 32; lowerBits++) {
+			c = new MushroomCondition(lowerBits, 0, 0);
 
 			for (long i = 0; i < c.getNumValidSeeds(); i++) {
-				long seed = MushroomCondition.getShroomSeed(((c.getUpperSeedAddend()+i*c.getUpperSeedMultiplier()) << 32) + 10,0,0);
+				long seed = MushroomCondition.getShroomSeed(((c.getUpperSeedAddend() + i * c.getUpperSeedMultiplier()) << 32) + 10, 0, 0);
 				//System.out.println(seed + ": " + (seed >>> 24) % ARG);
 			}
 		}

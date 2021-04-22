@@ -16,18 +16,18 @@ public class ClimateLayer {
 		public int sample(int x, int y, int z) {
 			int value = this.getParent(IntBiomeLayer.class).get(x, y, z);
 
-			if(Biome.isShallowOcean(value,this)) {
+			if (Biome.isShallowOcean(value, this)) {
 				return value;
 			}
 
 			this.setSeed(x, z);
 
-			if (is1_6down.call()){
+			if (is1_6down.call()) {
 				int i = this.nextInt(5);
-				return i==0?Biome.SNOWY_TUNDRA.getId():Biome.PLAINS.getId();
+				return i == 0 ? Biome.SNOWY_TUNDRA.getId() : Biome.PLAINS.getId();
 			}
 			int i = this.nextInt(6);
-			if(i == 0)return Biome.FOREST.getId();
+			if (i == 0) return Biome.FOREST.getId();
 			return i == 1 ? Biome.MOUNTAINS.getId() : Biome.PLAINS.getId();
 		}
 	}
@@ -69,10 +69,10 @@ public class ClimateLayer {
 		public int sample(int x, int y, int z) {
 			int i = this.getParent(IntBiomeLayer.class).get(x, y, z);
 
-			if(Biome.isShallowOcean(i,this))return i;
+			if (Biome.isShallowOcean(i, this)) return i;
 			this.setSeed(x, z);
 
-			if(this.nextInt(13) == 0) {
+			if (this.nextInt(13) == 0) {
 				i |= (1 + this.nextInt(15)) << 8;
 			}
 

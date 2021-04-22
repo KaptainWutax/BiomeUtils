@@ -5,7 +5,7 @@ import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 
 import java.util.ArrayList;
 
-public  class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
+public class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
 
 	protected int layerIdCounter = 0;
 
@@ -20,13 +20,13 @@ public  class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
 	}
 
 	public void setRecursiveScale(BiomeLayer last, int scale) {
-		if(last == null)return;
+		if (last == null) return;
 		int max = 0;
 
-		for(BiomeLayer biomeLayer: last.getParents()) {
+		for (BiomeLayer biomeLayer : last.getParents()) {
 			int shift = 0;
-			if(last instanceof ScaleLayer)shift = 1;
-			else if(last instanceof VoronoiLayer)shift = 2;
+			if (last instanceof ScaleLayer) shift = 1;
+			else if (last instanceof VoronoiLayer) shift = 2;
 
 			this.setRecursiveScale(biomeLayer, scale << shift);
 			max = Math.max(max, scale);

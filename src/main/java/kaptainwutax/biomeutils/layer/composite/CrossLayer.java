@@ -16,10 +16,10 @@ public abstract class CrossLayer extends IntBiomeLayer {
 		return this.sample(
 				this.getParent(IntBiomeLayer.class).get(x, y, z - 1),
 				this.getParent(IntBiomeLayer.class).get(x + 1, y, z),
-				this.getParent(IntBiomeLayer.class).get(x, y,z + 1),
+				this.getParent(IntBiomeLayer.class).get(x, y, z + 1),
 				this.getParent(IntBiomeLayer.class).get(x - 1, y, z),
 				this.getParent(IntBiomeLayer.class).get(x, y, z)
-			);
+		);
 	}
 
 	public abstract int sample(int n, int e, int s, int w, int center);

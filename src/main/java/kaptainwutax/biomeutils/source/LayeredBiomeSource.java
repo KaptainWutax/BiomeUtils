@@ -8,22 +8,22 @@ import java.util.List;
 
 public abstract class LayeredBiomeSource<T extends BiomeLayer> extends BiomeSource {
 
-    protected LayerStack<T> layers = new LayerStack<>();
+	protected LayerStack<T> layers = new LayerStack<>();
 
-    public LayeredBiomeSource(MCVersion version, long worldSeed) {
-        super(version, worldSeed);
-    }
+	public LayeredBiomeSource(MCVersion version, long worldSeed) {
+		super(version, worldSeed);
+	}
 
-    public List<T> getLayers() {
-        return this.layers;
-    }
+	public List<T> getLayers() {
+		return this.layers;
+	}
 
-    public T getLayer(int index) {
-        return this.getLayers().get(index);
-    }
+	public T getLayer(int index) {
+		return this.getLayers().get(index);
+	}
 
-    public int getLayerCount() {
-        return this.getLayers().size();
-    }
+	public int getLayerCount() {
+		return this.getLayers().size();
+	}
 
 }

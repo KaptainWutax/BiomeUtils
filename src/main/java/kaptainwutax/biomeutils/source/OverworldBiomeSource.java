@@ -25,7 +25,9 @@ import java.util.function.BiFunction;
 public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biome.FOREST, Biome.PLAINS, Biome.TAIGA, Biome.TAIGA_HILLS, Biome.WOODED_HILLS, Biome.JUNGLE, Biome.JUNGLE_HILLS);
-
+	public final int biomeSize;
+	public final int riverSize;
+	protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
 	public IntBiomeLayer base;
 	public IntBiomeLayer ocean;
 	public IntBiomeLayer noise;
@@ -35,11 +37,6 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public IntBiomeLayer full;
 	public VoronoiLayer voronoi;
 	public IntBiomeLayer debug;
-
-	public final int biomeSize;
-	public final int riverSize;
-
-	protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
 
 	public OverworldBiomeSource(MCVersion version, long worldSeed) {
 		this(version, worldSeed, 4, 4);
