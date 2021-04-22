@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.water;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -24,12 +25,12 @@ public class DeepOceanLayer extends CrossLayer {
 		if (Biome.isShallowOcean(s, this)) i++;
 
 		if (i > 3) {
-			if (center == Biome.WARM_OCEAN.getId()) return Biome.DEEP_WARM_OCEAN.getId();
-			if (center == Biome.LUKEWARM_OCEAN.getId()) return Biome.DEEP_LUKEWARM_OCEAN.getId();
-			if (center == Biome.OCEAN.getId()) return Biome.DEEP_OCEAN.getId();
-			if (center == Biome.COLD_OCEAN.getId()) return Biome.DEEP_COLD_OCEAN.getId();
-			if (center == Biome.FROZEN_OCEAN.getId()) return Biome.DEEP_FROZEN_OCEAN.getId();
-			return Biome.DEEP_OCEAN.getId();
+			if (center == Biomes.WARM_OCEAN.getId()) return Biomes.DEEP_WARM_OCEAN.getId();
+			if (center == Biomes.LUKEWARM_OCEAN.getId()) return Biomes.DEEP_LUKEWARM_OCEAN.getId();
+			if (center == Biomes.OCEAN.getId()) return Biomes.DEEP_OCEAN.getId();
+			if (center == Biomes.COLD_OCEAN.getId()) return Biomes.DEEP_COLD_OCEAN.getId();
+			if (center == Biomes.FROZEN_OCEAN.getId()) return Biomes.DEEP_FROZEN_OCEAN.getId();
+			return Biomes.DEEP_OCEAN.getId();
 		}
 
 		return center;

@@ -60,6 +60,19 @@ dependencies {
 
 To use the library, you have a few possible endpoints depending on your usage:
 
+- If you want to programmatically use a dimension please use this method, remember only 3 dimensions exists yet 
+  (OVERWORLD, NETHER, END)
+  
+```java
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.source.BiomeSource;
+import kaptainwutax.mcutils.state.Dimension;
+import kaptainwutax.mcutils.version.MCVersion;
+BiomeSource biomeSource = BiomeSource.of(Dimension.<YOUR_DIMENSION>,MCVersion.vXXX, seed);
+assert biomeSource != null;
+Biome biome=biomeSource.getBiome(x,y,z);
+```
+
 - If you need simply OverWorld biomes then you use it as follows
   - `OverworldBiomeSource#getBiome` will give you the biome as scale 1/1
   - `OverworldBiomeSource#getBiomeForNoiseGen` will give you the biome as scale 1/4 (aka pre-Voronoi)
@@ -68,7 +81,7 @@ To use the library, you have a few possible endpoints depending on your usage:
 
 The common approach:     
 ```java
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
 OverworldBiomeSource biomeSource = new OverworldBiomeSource(MCVersion.vXXX, seed);
@@ -82,7 +95,7 @@ Biome biome=biomeSource.getBiome(x,y,z); // here y is always 0 no matter what yo
  
    
 ```java
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.source.NetherBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
 NetherBiomeSource netherBiomeSource=new NetherBiomeSource(MCVersion.vXXX, seed);
@@ -96,9 +109,26 @@ Biome biome=netherBiomeSource.getBiome(x,y,z); // here y matters
  
    
 ```java
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.source.EndBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
 EndBiomeSource endBiomeSource=new EndBiomeSource(MCVersion.vXXX, seed);
 Biome biome=endBiomeSource.getBiome(x,y,z); // here y is always 0 no matter what you pass
+```
+
+- If you want to get information about biomes, there is a registry available with all 79 of them
+
+```java
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
+
+import java.util.Map;
+
+public class Main {
+  public static void main(String[] args) {
+    for (Map.Entry<Integer,Biome> entry: Biomes.REGISTRY.entrySet()){
+      System.out.printf("Id %d belong to %s%n",entry.getKey(),entry.getValue());
+    }
+  }
+}
 ```

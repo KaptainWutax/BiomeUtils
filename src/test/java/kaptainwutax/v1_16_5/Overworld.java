@@ -1,7 +1,8 @@
 package kaptainwutax.v1_16_5;
 
 import kaptainwutax.TestFramework;
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,9 +88,9 @@ public class Overworld {
 //            System.out.println();
 //        }
 		overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_16_1, 1437905338718953247L);
-		assertEquals(Biome.BADLANDS.getName(), overworldBiomeSource.getBiomeForNoiseGen(3611 - 8, 0, -141).getName());
+		assertEquals(Biomes.BADLANDS.getName(), overworldBiomeSource.getBiomeForNoiseGen(3611 - 8, 0, -141).getName());
 		overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_16_2, 1437905338718953247L);
-		assertEquals(Biome.WOODED_BADLANDS_PLATEAU.getName(), overworldBiomeSource.getBiomeForNoiseGen(3611 - 8, 0, -141).getName());
+		assertEquals(Biomes.WOODED_BADLANDS_PLATEAU.getName(), overworldBiomeSource.getBiomeForNoiseGen(3611 - 8, 0, -141).getName());
 	}
 }
 

@@ -1,7 +1,9 @@
 package kaptainwutax.v1_16_5;
 
 import kaptainwutax.TestFramework;
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.source.EndBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +21,7 @@ public class End {
 	@DisplayName("Test End layers 3D")
 	public void testEnd3D() {
 		EndBiomeSource source = new EndBiomeSource(MCVersion.v1_16, 1551515151585454L);
-		assertEquals(Biome.SMALL_END_ISLANDS, source.getBiome3D(10000, 251, 10000));
+		assertEquals(Biomes.SMALL_END_ISLANDS, source.getBiome3D(10000, 251, 10000));
 		int sum = 0;
 		for (int y = 0; y < 256; y++) {
 			sum += source.getBiome3D(10000, y, 10000).getId();

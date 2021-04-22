@@ -1,7 +1,8 @@
 package kaptainwutax.speed;
 
 import kaptainwutax.TestFramework;
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.version.MCVersion;

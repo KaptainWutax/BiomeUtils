@@ -4,6 +4,7 @@ import kaptainwutax.biomeutils.source.LayeredBiomeSource;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class OrRestriction extends Restriction {
 
 	private final Restriction[] restrictions;
@@ -37,6 +38,7 @@ public class OrRestriction extends Restriction {
 		return false;
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public boolean testSource(LayeredBiomeSource source) {
 		for (Restriction restriction : this.restrictions) {

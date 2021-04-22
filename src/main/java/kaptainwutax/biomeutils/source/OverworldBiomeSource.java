@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
@@ -24,7 +25,7 @@ import java.util.function.BiFunction;
 
 public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
-	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biome.FOREST, Biome.PLAINS, Biome.TAIGA, Biome.TAIGA_HILLS, Biome.WOODED_HILLS, Biome.JUNGLE, Biome.JUNGLE_HILLS);
+	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biomes.FOREST, Biomes.PLAINS, Biomes.TAIGA, Biomes.TAIGA_HILLS, Biomes.WOODED_HILLS, Biomes.JUNGLE, Biomes.JUNGLE_HILLS);
 	public final int biomeSize;
 	public final int riverSize;
 	protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
@@ -200,17 +201,17 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 	@Override
 	public Biome getBiome(BPos bpos) {
-		return Biome.REGISTRY.get(this.voronoi.get(bpos.getX(), 0, bpos.getZ()));
+		return Biomes.REGISTRY.get(this.voronoi.get(bpos.getX(), 0, bpos.getZ()));
 	}
 
 	@Override
 	public Biome getBiome(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.voronoi.get(x, 0, z));
+		return Biomes.REGISTRY.get(this.voronoi.get(x, 0, z));
 	}
 
 	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.full.get(x, 0, z));
+		return Biomes.REGISTRY.get(this.full.get(x, 0, z));
 	}
 
 	public BPos getSpawnPoint(Collection<Biome> spawnBiomes) {
@@ -223,55 +224,55 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	public double getGrassStats(Biome biome) {
-		if (Biome.PLAINS.equals(biome)) {
+		if (Biomes.PLAINS.equals(biome)) {
 			return 1.0;
-		} else if (Biome.MOUNTAINS.equals(biome)) {
+		} else if (Biomes.MOUNTAINS.equals(biome)) {
 			return 0.8; // height dependent
-		} else if (Biome.FOREST.equals(biome)) {
+		} else if (Biomes.FOREST.equals(biome)) {
 			return 1.0;
-		} else if (Biome.TAIGA.equals(biome)) {
+		} else if (Biomes.TAIGA.equals(biome)) {
 			return 1.0;
-		} else if (Biome.SWAMP.equals(biome)) {
+		} else if (Biomes.SWAMP.equals(biome)) {
 			return 0.6; // height dependent
-		} else if (Biome.RIVER.equals(biome)) {
+		} else if (Biomes.RIVER.equals(biome)) {
 			return 0.2;
-		} else if (Biome.BEACH.equals(biome)) {
+		} else if (Biomes.BEACH.equals(biome)) {
 			return 0.1;
-		} else if (Biome.WOODED_HILLS.equals(biome)) {
+		} else if (Biomes.WOODED_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biome.TAIGA_HILLS.equals(biome)) {
+		} else if (Biomes.TAIGA_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biome.MOUNTAIN_EDGE.equals(biome)) {
+		} else if (Biomes.MOUNTAIN_EDGE.equals(biome)) {
 			return 1.0; // height dependent
-		} else if (Biome.JUNGLE.equals(biome)) {
+		} else if (Biomes.JUNGLE.equals(biome)) {
 			return 1.0;
-		} else if (Biome.JUNGLE_HILLS.equals(biome)) {
+		} else if (Biomes.JUNGLE_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biome.JUNGLE_EDGE.equals(biome)) {
+		} else if (Biomes.JUNGLE_EDGE.equals(biome)) {
 			return 1.0;
-		} else if (Biome.BIRCH_FOREST.equals(biome)) {
+		} else if (Biomes.BIRCH_FOREST.equals(biome)) {
 			return 1.0;
-		} else if (Biome.BIRCH_FOREST_HILLS.equals(biome)) {
+		} else if (Biomes.BIRCH_FOREST_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biome.DARK_FOREST.equals(biome)) {
+		} else if (Biomes.DARK_FOREST.equals(biome)) {
 			return 0.9;
-		} else if (Biome.SNOWY_TAIGA.equals(biome)) {
+		} else if (Biomes.SNOWY_TAIGA.equals(biome)) {
 			return 0.1; // below trees
-		} else if (Biome.SNOWY_TAIGA_HILLS.equals(biome)) {
+		} else if (Biomes.SNOWY_TAIGA_HILLS.equals(biome)) {
 			return 0.1; // below trees
-		} else if (Biome.GIANT_TREE_TAIGA.equals(biome)) {
+		} else if (Biomes.GIANT_TREE_TAIGA.equals(biome)) {
 			return 0.6;
-		} else if (Biome.GIANT_TREE_TAIGA_HILLS.equals(biome)) {
+		} else if (Biomes.GIANT_TREE_TAIGA_HILLS.equals(biome)) {
 			return 0.6;
-		} else if (Biome.MODIFIED_GRAVELLY_MOUNTAINS.equals(biome)) {
+		} else if (Biomes.MODIFIED_GRAVELLY_MOUNTAINS.equals(biome)) {
 			return 0.2; // height dependent
-		} else if (Biome.SAVANNA.equals(biome)) {
+		} else if (Biomes.SAVANNA.equals(biome)) {
 			return 1.0;
-		} else if (Biome.SAVANNA_PLATEAU.equals(biome)) {
+		} else if (Biomes.SAVANNA_PLATEAU.equals(biome)) {
 			return 1.0;
-		} else if (Biome.BADLANDS.equals(biome)) {
+		} else if (Biomes.BADLANDS.equals(biome)) {
 			return 0.1; // height dependent
-		} else if (Biome.BADLANDS_PLATEAU.equals(biome)) {
+		} else if (Biomes.BADLANDS_PLATEAU.equals(biome)) {
 			return 0.1; // height dependent
 			// NOTE: in rare circumstances you can get also get grass islands that are
 			// completely ocean variants...

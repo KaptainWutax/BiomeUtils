@@ -1,7 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
-import kaptainwutax.biomeutils.Biome;
 import kaptainwutax.biomeutils.VersionedGen;
+import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;

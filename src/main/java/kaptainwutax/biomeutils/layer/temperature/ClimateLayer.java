@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.temperature;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -24,11 +25,11 @@ public class ClimateLayer {
 
 			if (is1_6down.call()) {
 				int i = this.nextInt(5);
-				return i == 0 ? Biome.SNOWY_TUNDRA.getId() : Biome.PLAINS.getId();
+				return i == 0 ? Biomes.SNOWY_TUNDRA.getId() : Biomes.PLAINS.getId();
 			}
 			int i = this.nextInt(6);
-			if (i == 0) return Biome.FOREST.getId();
-			return i == 1 ? Biome.MOUNTAINS.getId() : Biome.PLAINS.getId();
+			if (i == 0) return Biomes.FOREST.getId();
+			return i == 1 ? Biomes.MOUNTAINS.getId() : Biomes.PLAINS.getId();
 		}
 	}
 
@@ -39,10 +40,10 @@ public class ClimateLayer {
 
 		@Override
 		public int sample(int n, int e, int s, int w, int center) {
-			return center != Biome.PLAINS.getId() || n != Biome.MOUNTAINS.getId() && e != Biome.MOUNTAINS.getId()
-					&& w != Biome.MOUNTAINS.getId() && s != Biome.MOUNTAINS.getId() && n != Biome.FOREST.getId()
-					&& e != Biome.FOREST.getId() && w != Biome.FOREST.getId()
-					&& s != Biome.FOREST.getId() ? center : Biome.DESERT.getId();
+			return center != Biomes.PLAINS.getId() || n != Biomes.MOUNTAINS.getId() && e != Biomes.MOUNTAINS.getId()
+					&& w != Biomes.MOUNTAINS.getId() && s != Biomes.MOUNTAINS.getId() && n != Biomes.FOREST.getId()
+					&& e != Biomes.FOREST.getId() && w != Biomes.FOREST.getId()
+					&& s != Biomes.FOREST.getId() ? center : Biomes.DESERT.getId();
 		}
 	}
 
@@ -53,10 +54,10 @@ public class ClimateLayer {
 
 		@Override
 		public int sample(int n, int e, int s, int w, int center) {
-			return center != Biome.FOREST.getId() || n != Biome.PLAINS.getId() && e != Biome.PLAINS.getId()
-					&& w != Biome.PLAINS.getId() && s != Biome.PLAINS.getId() && n != Biome.DESERT.getId()
-					&& e != Biome.DESERT.getId() && w != Biome.DESERT.getId()
-					&& s != Biome.DESERT.getId() ? center : Biome.MOUNTAINS.getId();
+			return center != Biomes.FOREST.getId() || n != Biomes.PLAINS.getId() && e != Biomes.PLAINS.getId()
+					&& w != Biomes.PLAINS.getId() && s != Biomes.PLAINS.getId() && n != Biomes.DESERT.getId()
+					&& e != Biomes.DESERT.getId() && w != Biomes.DESERT.getId()
+					&& s != Biomes.DESERT.getId() ? center : Biomes.MOUNTAINS.getId();
 		}
 	}
 

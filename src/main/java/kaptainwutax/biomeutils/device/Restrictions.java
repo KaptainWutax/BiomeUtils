@@ -1,7 +1,7 @@
 package kaptainwutax.biomeutils.device;
 
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.land.*;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
@@ -18,7 +18,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.PLAINS.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.PLAINS.getId();
 			}
 		};
 	};
@@ -30,7 +30,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.PLAINS.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.PLAINS.getId();
 			}
 		};
 	};
@@ -42,7 +42,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.FOREST.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.FOREST.getId();
 			}
 		};
 	};
@@ -64,7 +64,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.MOUNTAINS.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.MOUNTAINS.getId();
 			}
 		};
 	};
@@ -102,7 +102,7 @@ public class Restrictions {
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
 				int id = source.getLayer(this.ID).get(this.getX(), 0, this.getZ());
-				return id == Biome.SAVANNA.getId();
+				return id == Biomes.SAVANNA.getId();
 			}
 		};
 
@@ -115,7 +115,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.PLAINS.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.PLAINS.getId();
 			}
 		};
 	};
@@ -139,7 +139,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.MUSHROOM_FIELDS.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.MUSHROOM_FIELDS.getId();
 			}
 		};
 	};
@@ -151,7 +151,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.SUNFLOWER_PLAINS.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.SUNFLOWER_PLAINS.getId();
 			}
 		};
 	};
@@ -163,7 +163,7 @@ public class Restrictions {
 
 			@Override
 			public boolean testSource(LayeredBiomeSource<IntBiomeLayer> source) {
-				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biome.BAMBOO_JUNGLE.getId();
+				return source.getLayer(this.ID).get(this.getX(), 0, this.getZ()) == Biomes.BAMBOO_JUNGLE.getId();
 			}
 		};
 	};

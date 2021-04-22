@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer.end;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.FloatBiomeLayer;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -17,20 +17,20 @@ public class EndBiomeLayer extends IntBiomeLayer {
 		z >>= 2;
 
 		if ((long) x * (long) x + (long) z * (long) z <= 4096L) {
-			return Biome.THE_END.getId();
+			return Biomes.THE_END.getId();
 		}
 
 		float height = this.getParent(FloatBiomeLayer.class).get(x * 2 + 1, 0, z * 2 + 1);
 
 		if (height > 40.0F) {
-			return Biome.END_HIGHLANDS.getId();
+			return Biomes.END_HIGHLANDS.getId();
 		} else if (height >= 0.0F) {
-			return Biome.END_MIDLANDS.getId();
+			return Biomes.END_MIDLANDS.getId();
 		} else if (height >= -20.0F) {
-			return Biome.END_BARRENS.getId();
+			return Biomes.END_BARRENS.getId();
 		}
 
-		return Biome.SMALL_END_ISLANDS.getId();
+		return Biomes.SMALL_END_ISLANDS.getId();
 	}
 
 }

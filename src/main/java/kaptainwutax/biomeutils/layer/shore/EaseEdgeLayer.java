@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.shore;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -14,21 +15,21 @@ public class EaseEdgeLayer extends CrossLayer {
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
 		int[] is = new int[1];
-		if (!this.replaceEdgeIfNeeded(is, n, e, s, w, center, Biome.MOUNTAINS, Biome.MOUNTAIN_EDGE) &&
-				this.replaceEdge(is, n, e, s, w, center, Biome.WOODED_BADLANDS_PLATEAU, Biome.BADLANDS) &&
-				this.replaceEdge(is, n, e, s, w, center, Biome.BADLANDS_PLATEAU, Biome.BADLANDS) &&
-				this.replaceEdge(is, n, e, s, w, center, Biome.GIANT_TREE_TAIGA, Biome.TAIGA)) {
+		if (!this.replaceEdgeIfNeeded(is, n, e, s, w, center, Biomes.MOUNTAINS, Biomes.MOUNTAIN_EDGE) &&
+				this.replaceEdge(is, n, e, s, w, center, Biomes.WOODED_BADLANDS_PLATEAU, Biomes.BADLANDS) &&
+				this.replaceEdge(is, n, e, s, w, center, Biomes.BADLANDS_PLATEAU, Biomes.BADLANDS) &&
+				this.replaceEdge(is, n, e, s, w, center, Biomes.GIANT_TREE_TAIGA, Biomes.TAIGA)) {
 
-			if (center == Biome.DESERT.getId() && anyMatch(Biome.SNOWY_TUNDRA, n, e, w, s)) {
-				return Biome.WOODED_MOUNTAINS.getId();
+			if (center == Biomes.DESERT.getId() && anyMatch(Biomes.SNOWY_TUNDRA, n, e, w, s)) {
+				return Biomes.WOODED_MOUNTAINS.getId();
 			} else {
-				if (center == Biome.SWAMP.getId()) {
-					if (anyMatch(Biome.DESERT, n, e, w, s) || anyMatch(Biome.SNOWY_TUNDRA, n, e, w, s) || anyMatch(Biome.SNOWY_TAIGA, n, e, w, s)) {
-						return Biome.PLAINS.getId();
+				if (center == Biomes.SWAMP.getId()) {
+					if (anyMatch(Biomes.DESERT, n, e, w, s) || anyMatch(Biomes.SNOWY_TUNDRA, n, e, w, s) || anyMatch(Biomes.SNOWY_TAIGA, n, e, w, s)) {
+						return Biomes.PLAINS.getId();
 					}
 
-					if (anyMatch(Biome.JUNGLE, n, e, w, s) || anyMatch(Biome.BAMBOO_JUNGLE, n, e, w, s)) {
-						return Biome.JUNGLE_EDGE.getId();
+					if (anyMatch(Biomes.JUNGLE, n, e, w, s) || anyMatch(Biomes.BAMBOO_JUNGLE, n, e, w, s)) {
+						return Biomes.JUNGLE_EDGE.getId();
 					}
 				}
 
@@ -48,7 +49,7 @@ public class EaseEdgeLayer extends CrossLayer {
 
 	private boolean replaceEdgeIfNeeded(int[] is, int n, int e, int s, int w, int center, Biome biome1, Biome biome2) {
 		if (is1_16_2up.call()) {
-			if (!Biome.areSimilar(center, Biome.MOUNTAINS, this)) {
+			if (!Biome.areSimilar(center, Biomes.MOUNTAINS, this)) {
 				return false;
 			}
 			is[0] = center;
@@ -80,7 +81,7 @@ public class EaseEdgeLayer extends CrossLayer {
 	private boolean canBeNeighbors(int id, Biome b2) {
 		if (Biome.areSimilar(id, b2, this)) return true;
 
-		Biome biome = Biome.REGISTRY.get(id);
+		Biome biome = Biomes.REGISTRY.get(id);
 
 		if (biome != null && b2 != null) {
 			Biome.Temperature t = biome.getTemperatureGroup();

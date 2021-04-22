@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer.water;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -14,10 +14,10 @@ public class OldRiverInBiomes extends IntBiomeLayer {
 	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
 		int center = this.getParent(IntBiomeLayer.class).get(x, y, z);
-		if ((center != Biome.SWAMP.getId() || this.nextInt(6) != 0)
-				&& (center != Biome.JUNGLE.getId() && center != Biome.JUNGLE_HILLS.getId() || this.nextInt(8) != 0)) {
+		if ((center != Biomes.SWAMP.getId() || this.nextInt(6) != 0)
+				&& (center != Biomes.JUNGLE.getId() && center != Biomes.JUNGLE_HILLS.getId() || this.nextInt(8) != 0)) {
 			return center;
 		}
-		return Biome.RIVER.getId();
+		return Biomes.RIVER.getId();
 	}
 }

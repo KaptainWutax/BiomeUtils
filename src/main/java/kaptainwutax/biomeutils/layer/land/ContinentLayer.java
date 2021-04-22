@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer.land;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -13,8 +13,8 @@ public class ContinentLayer extends IntBiomeLayer {
 	@Override
 	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
-		if (x == 0 && z == 0) return Biome.PLAINS.getId();
-		return this.nextInt(10) == 0 ? Biome.PLAINS.getId() : Biome.OCEAN.getId();
+		if (x == 0 && z == 0) return Biomes.PLAINS.getId();
+		return this.nextInt(10) == 0 ? Biomes.PLAINS.getId() : Biomes.OCEAN.getId();
 	}
 
 }

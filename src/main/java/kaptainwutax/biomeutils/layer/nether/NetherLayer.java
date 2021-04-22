@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.nether;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.BiomePoint;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.rand.ChunkRand;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -12,14 +13,14 @@ import java.util.stream.Stream;
 
 public class NetherLayer extends IntBiomeLayer {
 
-	private final Biome.BiomePoint[] biomePoints;
+	private final BiomePoint[] biomePoints;
 	private final boolean is3D;
 	private DoublePerlinNoiseSampler temperature;
 	private DoublePerlinNoiseSampler humidity;
 	private DoublePerlinNoiseSampler altitude;
 	private DoublePerlinNoiseSampler weirdness;
 
-	public NetherLayer(MCVersion version, long worldSeed, boolean is3D, Biome.BiomePoint[] biomePoints) {
+	public NetherLayer(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints) {
 		super(version, (IntBiomeLayer) null);
 		this.is3D = is3D;
 
@@ -35,18 +36,18 @@ public class NetherLayer extends IntBiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
-		if (this.getVersion().isOlderThan(MCVersion.v1_16)) return Biome.NETHER_WASTES.getId();
+		if (this.getVersion().isOlderThan(MCVersion.v1_16)) return Biomes.NETHER_WASTES.getId();
 
 		y = this.is3D ? y : 0;
 
-		Biome.BiomePoint point = new Biome.BiomePoint(null,
+		BiomePoint point = new BiomePoint(null,
 				(float) this.temperature.sample(x, y, z),
 				(float) this.humidity.sample(x, y, z),
 				(float) this.altitude.sample(x, y, z),
 				(float) this.weirdness.sample(x, y, z), 0.0F);
 
 		return Stream.of(this.biomePoints).min(Comparator.comparing(m -> m.distanceTo(point)))
-				.map(Biome.BiomePoint::getBiome).orElse(Biome.THE_VOID).getId();
+				.map(BiomePoint::getBiome).orElse(Biomes.THE_VOID).getId();
 	}
 
 }

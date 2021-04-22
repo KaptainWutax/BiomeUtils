@@ -4,6 +4,7 @@ import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.version.MCVersion;
 
+@SuppressWarnings("unused")
 public abstract class BiomeLayer extends VersionedGen {
 
 	private final BiomeLayer[] parents;
@@ -57,6 +58,7 @@ public abstract class BiomeLayer extends VersionedGen {
 		return this.getParent(0);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends BiomeLayer> T getParent(Class<T> type) {
 		return (T) this.getParent(0);
 	}
@@ -65,6 +67,7 @@ public abstract class BiomeLayer extends VersionedGen {
 		return this.parents[id];
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends BiomeLayer> T getParent(int id, Class<T> type) {
 		return (T) this.getParent(id);
 	}

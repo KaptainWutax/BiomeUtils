@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.source;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.BiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.end.EndBiomeLayer;
@@ -37,22 +38,22 @@ public class EndBiomeSource extends LayeredBiomeSource<BiomeLayer> {
 
 	@Override
 	public Biome getBiome(BPos bpos) {
-		return Biome.REGISTRY.get(this.voronoi.get(bpos.getX(), 0, bpos.getZ()));
+		return Biomes.REGISTRY.get(this.voronoi.get(bpos.getX(), 0, bpos.getZ()));
 	}
 
 	@Override
 	public Biome getBiome(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.voronoi.get(x, 0, z));
+		return Biomes.REGISTRY.get(this.voronoi.get(x, 0, z));
 	}
 
 	// warning end biomes displayed on f3 are actually the sampled 2d map with voronoi on all the different y
 	public Biome getBiome3D(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.voronoi.get(x, y, z));
+		return Biomes.REGISTRY.get(this.voronoi.get(x, y, z));
 	}
 
 	@Override
 	public Biome getBiomeForNoiseGen(int x, int y, int z) {
-		return Biome.REGISTRY.get(this.full.get(x, 0, z));
+		return Biomes.REGISTRY.get(this.full.get(x, 0, z));
 	}
 
 }

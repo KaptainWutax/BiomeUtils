@@ -1,6 +1,6 @@
 package kaptainwutax.biomeutils.layer.land;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 

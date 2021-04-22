@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.water;
 
-import kaptainwutax.biomeutils.Biome;
+import kaptainwutax.biomeutils.biome.Biome;
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -18,14 +19,14 @@ public class RiverLayer extends IntBiomeLayer {
 		if (is1_6down.call()) {
 			// Warning this is the only case like so because isOcean have Frozen ocean which is bypassed everywhere except here
 			// thus we make this weird case, sorry about the confusion.
-			if (landStackCenter == Biome.OCEAN.getId()) return landStackCenter;
+			if (landStackCenter == Biomes.OCEAN.getId()) return landStackCenter;
 		} else if (Biome.isOcean(landStackCenter)) return landStackCenter;
 
-		if (riverStackCenter == Biome.RIVER.getId()) {
-			if (landStackCenter == Biome.SNOWY_TUNDRA.getId()) {
-				return Biome.FROZEN_RIVER.getId();
+		if (riverStackCenter == Biomes.RIVER.getId()) {
+			if (landStackCenter == Biomes.SNOWY_TUNDRA.getId()) {
+				return Biomes.FROZEN_RIVER.getId();
 			} else {
-				return landStackCenter != Biome.MUSHROOM_FIELDS.getId() && landStackCenter != Biome.MUSHROOM_FIELD_SHORE.getId() ? riverStackCenter & 255 : Biome.MUSHROOM_FIELD_SHORE.getId();
+				return landStackCenter != Biomes.MUSHROOM_FIELDS.getId() && landStackCenter != Biomes.MUSHROOM_FIELD_SHORE.getId() ? riverStackCenter & 255 : Biomes.MUSHROOM_FIELD_SHORE.getId();
 			}
 		}
 
