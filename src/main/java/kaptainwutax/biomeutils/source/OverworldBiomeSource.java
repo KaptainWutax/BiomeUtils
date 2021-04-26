@@ -318,5 +318,15 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		return this.getSpawnPoint(SPAWN_BIOMES);
 	}
 
+	public List<IntBiomeLayer> getLayers() {
+		return this.layers;
+	}
 
+	public IntBiomeLayer getLayer(int index) {
+		return this.getLayers().get(index);
+	}
+
+	public int getLayerCount() {
+		return this.getLayers().size();
+	}
 }
