@@ -66,18 +66,18 @@ public abstract class BiomeLayer extends VersionedGen {
 		return hintSize;
 	}
 
-	public void setHintSize(int size){
-		this.setHintSize(size,true);
+	public void setHintSize(int size) {
+		this.setHintSize(size, true);
 	}
 
-	public void setHintSize(int size,boolean recursive) {
-		if (recursive) setRecursiveHintSize(this,size+2);
-		else this.hintSize=size;
+	public void setHintSize(int size, boolean recursive) {
+		if (recursive) setRecursiveHintSize(this, size + 2);
+		else this.hintSize = size;
 	}
 
 	public void setRecursiveHintSize(BiomeLayer last, int hintSize) {
 		if (last == null) return;
-		last.setHintSize(hintSize,false);
+		last.setHintSize(hintSize, false);
 		for (BiomeLayer biomeLayer : last.getParents()) {
 			int shift = 0;
 			if (last instanceof ScaleLayer) shift = 2;
@@ -156,6 +156,17 @@ public abstract class BiomeLayer extends VersionedGen {
 	public int choose(int a, int b, int c, int d) {
 		int i = this.nextInt(4);
 		return i == 0 ? a : i == 1 ? b : i == 2 ? c : d;
+	}
+
+	public int getBiome(int x, int y, int z) {
+		if (this instanceof FloatBiomeLayer) {
+			return Float.floatToIntBits(((FloatBiomeLayer) this).get(x, y, z));
+		} else if (this instanceof BoolBiomeLayer) {
+			return ((BoolBiomeLayer) this).get(x, y, z) ? 1 : 0;
+		} else if (this instanceof IntBiomeLayer) {
+			return ((IntBiomeLayer) this).get(x, y, z);
+		}
+		return -1;
 	}
 
 }
