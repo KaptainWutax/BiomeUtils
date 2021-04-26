@@ -4,18 +4,14 @@ import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.BiomePoint;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
-import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.nether.NetherLayer;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;
 
-import java.util.List;
-
 public class NetherBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
-	protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
 	private static final BiomePoint[] DEFAULT_BIOME_POINTS = {
 			new BiomePoint(Biomes.NETHER_WASTES, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
 			new BiomePoint(Biomes.SOUL_SAND_VALLEY, 0.0F, -0.5F, 0.0F, 0.0F, 0.0F),
@@ -83,15 +79,4 @@ public class NetherBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		return Biomes.REGISTRY.get(this.full.get(x, y, z));
 	}
 
-	public List<IntBiomeLayer> getLayers() {
-		return this.layers;
-	}
-
-	public IntBiomeLayer getLayer(int index) {
-		return this.getLayers().get(index);
-	}
-
-	public int getLayerCount() {
-		return this.getLayers().size();
-	}
 }

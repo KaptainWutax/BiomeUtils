@@ -3,7 +3,6 @@ package kaptainwutax.biomeutils.source;
 import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
-import kaptainwutax.biomeutils.layer.LayerStack;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.*;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
@@ -28,7 +27,6 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biomes.FOREST, Biomes.PLAINS, Biomes.TAIGA, Biomes.TAIGA_HILLS, Biomes.WOODED_HILLS, Biomes.JUNGLE, Biomes.JUNGLE_HILLS);
 	public final int biomeSize;
 	public final int riverSize;
-	protected final LayerStack<IntBiomeLayer> layers = new LayerStack<>();
 	public IntBiomeLayer base;
 	public IntBiomeLayer ocean;
 	public IntBiomeLayer noise;
@@ -318,15 +316,4 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		return this.getSpawnPoint(SPAWN_BIOMES);
 	}
 
-	public List<IntBiomeLayer> getLayers() {
-		return this.layers;
-	}
-
-	public IntBiomeLayer getLayer(int index) {
-		return this.getLayers().get(index);
-	}
-
-	public int getLayerCount() {
-		return this.getLayers().size();
-	}
 }
