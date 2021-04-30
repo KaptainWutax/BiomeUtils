@@ -19,8 +19,8 @@ repositories {
 dependencies {
     implementation('com.github.KaptainWutax:MathUtils:5531c4a87b0f1bb85d1dab2bdd18ce375400626a') { transitive = false }
     implementation('com.github.KaptainWutax:SeedUtils:b6a383113ce5d8d09a59e91b28ff064fb97c0709') { transitive = false }
-    implementation('com.github.KaptainWutax:MCUtils:cb9c78e4e37e12dca0ddaefc3a7f3053dfbd237b') { transitive = false }
-    implementation('com.github.KaptainWutax:NoiseUtils:bb71e46efe0f8d930bac8af94fecf250b70e0c23') { transitive = false }
+    implementation('com.github.KaptainWutax:MCUtils:dd9eaf04cb14dd89ed72fe874aa2049457d83904') { transitive = false }
+    implementation('com.github.KaptainWutax:NoiseUtils:a3954932b15a889aa51c82176942d62f291c3b12') { transitive = false }
 
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.7.1')
     testImplementation('org.junit.jupiter:junit-jupiter-params:5.7.1')
