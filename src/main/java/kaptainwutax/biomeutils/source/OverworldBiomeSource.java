@@ -80,7 +80,6 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
 			this.layers.add(this.base = new IslandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
-		debug=base;
 		if (is_1_0_up.call()){
 			this.layers.add(this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
