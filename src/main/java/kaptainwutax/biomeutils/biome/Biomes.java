@@ -10,16 +10,16 @@ import java.util.Map;
 public class Biomes {
 
 	public static Map<Integer, Biome> REGISTRY = new HashMap<>();
-	public static final Biome OCEAN = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 0, "ocean", Biome.Category.OCEAN, Biome.Precipitation.RAIN, 0.5F, 0.100F, -1.000F, null));
-	public static final Biome PLAINS = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 1, "plains", Biome.Category.PLAINS, Biome.Precipitation.RAIN, 0.8F, 0.050F, 0.125F, null));
-	public static final Biome DESERT = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 2, "desert", Biome.Category.DESERT, Biome.Precipitation.NONE, 2.0F, 0.050F, 0.125F, null));
-	public static final Biome MOUNTAINS = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 3, "mountains", Biome.Category.EXTREME_HILLS, Biome.Precipitation.RAIN, 0.2F, 0.500F, 1.000F, null));
-	public static final Biome FOREST = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 4, "forest", Biome.Category.FOREST, Biome.Precipitation.RAIN, 0.7F, 0.200F, 0.100F, null));
-	public static final Biome TAIGA = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 5, "taiga", Biome.Category.TAIGA, Biome.Precipitation.RAIN, 0.25F, 0.200F, 0.200F, null));
-	public static final Biome SWAMP = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 6, "swamp", Biome.Category.SWAMP, Biome.Precipitation.RAIN, 0.8F, 0.100F, -0.200F, null));
-	public static final Biome RIVER = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 7, "river", Biome.Category.RIVER, Biome.Precipitation.RAIN, 0.5F, 0.000F, -0.500F, null));
-	public static final Biome NETHER_WASTES = register(new Biome(MCVersion.v1_0, Dimension.NETHER, 8, "nether_wastes", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.200F, 0.100F, null));
-	public static final Biome THE_END = register(new Biome(MCVersion.v1_0, Dimension.END, 9, "the_end", Biome.Category.THE_END, Biome.Precipitation.NONE, 0.5F, 0.200F, 0.100F, null));
+	public static final Biome OCEAN = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 0, "ocean", Biome.Category.OCEAN, Biome.Precipitation.RAIN, 0.5F, 0.100F, -1.000F, null));
+	public static final Biome PLAINS = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 1, "plains", Biome.Category.PLAINS, Biome.Precipitation.RAIN, 0.8F, 0.050F, 0.125F, null));
+	public static final Biome DESERT = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 2, "desert", Biome.Category.DESERT, Biome.Precipitation.NONE, 2.0F, 0.050F, 0.125F, null));
+	public static final Biome MOUNTAINS = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 3, "mountains", Biome.Category.EXTREME_HILLS, Biome.Precipitation.RAIN, 0.2F, 0.500F, 1.000F, null));
+	public static final Biome FOREST = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 4, "forest", Biome.Category.FOREST, Biome.Precipitation.RAIN, 0.7F, 0.200F, 0.100F, null));
+	public static final Biome TAIGA = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 5, "taiga", Biome.Category.TAIGA, Biome.Precipitation.RAIN, 0.25F, 0.200F, 0.200F, null));
+	public static final Biome SWAMP = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 6, "swamp", Biome.Category.SWAMP, Biome.Precipitation.RAIN, 0.8F, 0.100F, -0.200F, null));
+	public static final Biome RIVER = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 7, "river", Biome.Category.RIVER, Biome.Precipitation.RAIN, 0.5F, 0.000F, -0.500F, null));
+	public static final Biome NETHER_WASTES = register(new Biome(MCVersion.vb1_8_1, Dimension.NETHER, 8, "nether_wastes", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.200F, 0.100F, null));
+	public static final Biome THE_END = register(new Biome(MCVersion.vb1_8_1, Dimension.END, 9, "the_end", Biome.Category.THE_END, Biome.Precipitation.NONE, 0.5F, 0.200F, 0.100F, null));
 	public static final Biome FROZEN_OCEAN = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 10, "frozen_ocean", Biome.Category.OCEAN, Biome.Precipitation.SNOW, 0.0F, 0.100F, -1.000F, null));
 	public static final Biome FROZEN_RIVER = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 11, "frozen_river", Biome.Category.RIVER, Biome.Precipitation.SNOW, 0.0F, 0.000F, -0.500F, null));
 	public static final Biome SNOWY_TUNDRA = register(new Biome(MCVersion.v1_0, Dimension.OVERWORLD, 12, "snowy_tundra", Biome.Category.ICY, Biome.Precipitation.SNOW, 0.0F, 0.050F, 0.125F, null));

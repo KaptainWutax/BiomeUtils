@@ -2,7 +2,6 @@ package kaptainwutax.speed;
 
 import kaptainwutax.TestFramework;
 import kaptainwutax.biomeutils.biome.Biome;
-import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -55,9 +54,11 @@ public class testSpeedArea {
 	@CartesianEnumSource(MCVersion.class)
 	@CartesianEnumSource(Dimension.class)
 	public void speedArea(MCVersion version, Dimension dimension, TestInfo info) {
-		init(dimension, version, info);
-		long elapsed = run(64, 0);
-		System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
+		if (version.isNewerOrEqualTo(MCVersion.vb1_8_1)){
+			init(dimension, version, info);
+			long elapsed = run(64, 0);
+			System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
+		}
 	}
 
 	@DisplayName("Minecraft Speed Single Block")
@@ -66,8 +67,10 @@ public class testSpeedArea {
 	@CartesianEnumSource(MCVersion.class)
 	@CartesianEnumSource(Dimension.class)
 	public void speedSingleBlock(MCVersion version, Dimension dimension, TestInfo info) {
-		init(dimension, version, info);
-		long elapsed = run(1, 0);
-		System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
+		if (version.isNewerOrEqualTo(MCVersion.vb1_8_1)) {
+			init(dimension, version, info);
+			long elapsed = run(1, 0);
+			System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
+		}
 	}
 }

@@ -44,10 +44,10 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
 		super(version, worldSeed);
 
-		if (this.getVersion().isOlderThan(MCVersion.v1_0)) {
+		if (this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
 			throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
 		}
-		if (this.getVersion().isOlderThan(MCVersion.v1_0)) {
+		if (this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
 			System.out.println("WARNING USING TEMPORARY BIOME STACK (NOT VERIFIED)");
 		}
 
@@ -80,8 +80,10 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
 			this.layers.add(this.base = new IslandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
-
-		this.layers.add(this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base));
+		debug=base;
+		if (is_1_0_up.call()){
+			this.layers.add(this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base));
+		}
 
 		if (is1_7up.call()) {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
@@ -98,9 +100,15 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 		//256
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
-		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
+		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), is_1_0_up.call()?4L:3L, this.base));
 
-		this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
+		if (is_1_0_up.call()){
+			this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
+		}else{
+			this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2004L, ScaleLayer.Type.NORMAL, this.base));
+			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
+		}
+
 		if (is1_7up.call()) {
 			this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
 		}
@@ -150,7 +158,10 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 			}
 
 			if ((is1_1up.call() && (i == 1 || (this.biomeSize == 1 && is1_8up.call())))
-					|| (is1_0down.call() && i == 0)) {
+					|| (is1_0down.call() && i == 0 && is_1_0_up.call())) {
+				// this will trigger for i==1 for 1.1+
+				// or for biomesize=1 if 1.8+
+				// or for i==0 for 1.0 only
 				this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
 			}

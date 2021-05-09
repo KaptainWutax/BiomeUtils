@@ -14,6 +14,10 @@ public class LandLayer extends XCrossLayer {
 
 	@Override
 	public int sample(int sw, int se, int ne, int nw, int center) {
+		if (is_beta_1_8_1down.call()) {
+			// we don't want to clutter, technically it could be merged with the current stack
+			return sample_beta(sw, se, ne, nw, center);
+		}
 		if (!Biome.isShallowOcean(center, this) || Biome.applyAll(v -> Biome.isShallowOcean(v, this), sw, se, ne, nw)) {
 			if (Biome.isShallowOcean(center, this)
 					|| Biome.applyAll(v -> !Biome.isShallowOcean(v, this), sw, se, ne, nw)
@@ -72,4 +76,16 @@ public class LandLayer extends XCrossLayer {
 		return j == Biomes.FOREST.getId() ? Biomes.FOREST.getId() : center;
 	}
 
+	public int sample_beta(int sw, int se, int ne, int nw, int center) {
+		if (!Biome.isShallowOcean(center, this) || Biome.applyAll(v -> Biome.isShallowOcean(v, this), sw, se, ne, nw)) {
+			if (center != Biomes.PLAINS.getId() || Biome.applyAll(v -> v == Biomes.PLAINS.getId(), sw, se, ne, nw)) {
+				return center;
+			} else {
+				// 1-nextInt(5)/4 => nextInt(5)==4 gives 0 the rest is 1
+				return nextInt(5) == 4 ? Biomes.OCEAN.getId() : Biomes.PLAINS.getId();
+			}
+		}
+		// 0+nextInt(3)/2 => nextInt(3)==2 gives 1 the rest is 0
+		return nextInt(3) == 2 ? Biomes.PLAINS.getId() : Biomes.OCEAN.getId();
+	}
 }

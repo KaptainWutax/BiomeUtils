@@ -30,7 +30,7 @@ public class TestFramework {
 	public static void viewDebug(IntBiomeLayer layer, int cx, int cz, int size) {
 		for (int x = 0; x < size; x++) {
 			for (int z = 0; z < size; z++) {
-				int biome = layer.sample(cx + x - size / 2, 0, cz + z - size / 2);
+				int biome = layer.sample(cx + x, 0, cz + z);
 				System.out.printf("%d,", biome);
 			}
 			System.out.println();

@@ -4,7 +4,9 @@ import kaptainwutax.mcutils.version.MCVersion;
 
 public class VersionedGen {
 	protected final MCVersion version;
-	public final VersionGate is1_0down = () -> this.getVersion().isOlderOrEqualTo(MCVersion.v1_0); // everything before  1.2
+	public final VersionGate is_beta_1_8_1down = () -> this.getVersion().isOlderOrEqualTo(MCVersion.vb1_8_1); // everything before 1.0
+	public final VersionGate is_1_0_up = () -> this.getVersion().isNewerOrEqualTo(MCVersion.v1_0); // everything after  b1.8.1
+	public final VersionGate is1_0down = () -> this.getVersion().isOlderOrEqualTo(MCVersion.v1_0); // everything before  1.1
 	public final VersionGate is1_1up = () -> this.getVersion().isNewerOrEqualTo(MCVersion.v1_1); // everything after  1.0
 	public final VersionGate is1_1down = () -> this.getVersion().isOlderOrEqualTo(MCVersion.v1_1); // everything  before 1.2
 	public final VersionGate is1_2down = () -> this.getVersion().isOlderOrEqualTo(MCVersion.v1_2_5); // everything before 1.3

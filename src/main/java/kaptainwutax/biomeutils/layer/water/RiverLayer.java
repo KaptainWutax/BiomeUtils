@@ -23,6 +23,10 @@ public class RiverLayer extends IntBiomeLayer {
 		} else if (Biome.isOcean(landStackCenter)) return landStackCenter;
 
 		if (riverStackCenter == Biomes.RIVER.getId()) {
+			if (is_beta_1_8_1down.call()){
+				// FROZEN RIVER didn't exists back then nor SNOWY_TAIGA but let's not play with fire (98%)
+				return riverStackCenter;
+			}
 			if (landStackCenter == Biomes.SNOWY_TUNDRA.getId()) {
 				return Biomes.FROZEN_RIVER.getId();
 			} else {

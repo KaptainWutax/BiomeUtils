@@ -78,11 +78,15 @@ public class BaseBiomesLayer extends IntBiomeLayer {
 		if (Biome.isShallowOcean(center, this)) {
 			return Biomes.OCEAN.getId();
 		}
+		// this will not be hit in b1.8.1-
 		if (center == Biomes.MUSHROOM_FIELDS.getId()) {
 			return Biomes.MUSHROOM_FIELDS.getId();
 		}
 		Biome[] biomeList = isDefault1_1 ? OLD_BIOMES_DEFAULT_1_1 : OLD_BIOMES;
 		Biome oldBiome = biomeList[this.nextInt(biomeList.length)];
+		if (is_beta_1_8_1down.call()){
+			return oldBiome.getId();
+		}
 		if (center == Biomes.PLAINS.getId()) {
 			return oldBiome.getId();
 		}
