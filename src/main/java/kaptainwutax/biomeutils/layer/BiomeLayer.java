@@ -2,7 +2,12 @@ package kaptainwutax.biomeutils.layer;
 
 import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
+import kaptainwutax.biomeutils.layer.land.BaseBiomesLayer;
+import kaptainwutax.biomeutils.layer.land.ContinentLayer;
+import kaptainwutax.biomeutils.layer.land.HillsLayer;
+import kaptainwutax.biomeutils.layer.land.NoiseLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
+import kaptainwutax.biomeutils.layer.water.RiverLayer;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -71,20 +76,34 @@ public abstract class BiomeLayer extends VersionedGen {
 	}
 
 	public void setHintSize(int size, boolean recursive) {
-		if (recursive) setRecursiveHintSize(this, size + 2);
-		else this.hintSize = size;
+		if (recursive) {
+			setRecursiveHintSize(this, size);
+		}
+		else {
+			this.hintSize = size;
+		}
 	}
 
 	public void setRecursiveHintSize(BiomeLayer last, int hintSize) {
 		if (last == null) return;
-		last.setHintSize(hintSize, false);
+		int max = 0;
+
 		for (BiomeLayer biomeLayer : last.getParents()) {
 			int shift = 0;
-			if (last instanceof ScaleLayer) shift = 2;
-			else if (last instanceof VoronoiLayer) shift = 4;
+			// TODO check new version
+			int offset = last instanceof BaseBiomesLayer || last instanceof NoiseLayer || last instanceof ContinentLayer || last instanceof RiverLayer ?0:2;
+			if (last instanceof ScaleLayer) {
+				shift = 1;
+				offset = 3;
+			} else if (last instanceof VoronoiLayer) {
+				shift = 2;
+				offset = 3;
+			}
 
-			this.setRecursiveHintSize(biomeLayer, hintSize + shift);
+			this.setRecursiveHintSize(biomeLayer, (hintSize >> shift) + offset);
+			max = Math.max(max, hintSize);
 		}
+		last.setHintSize(max, false);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -30,7 +30,6 @@ public class BiomeDevice {
 
 	public void findSeeds(LongConsumer onSeedFound) {
 		List<BitGroup> groups = this.groupRestrictions();
-		System.out.println(groups);
 
 		BitGroup entry = groups.get(0);
 

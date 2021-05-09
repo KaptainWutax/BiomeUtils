@@ -17,6 +17,8 @@ public class LayerStack<T extends BiomeLayer> extends ArrayList<T> {
 
 	public void setScales() {
 		this.setRecursiveScale(this.get(this.size() - 1), 1);
+		// by default we have a hintsize of 1
+		this.get(this.size() - 1).setHintSize(1);
 	}
 
 	public void setRecursiveScale(BiomeLayer last, int scale) {
