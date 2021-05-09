@@ -15,6 +15,5 @@ public class SpawnTest {
 		OverworldBiomeSource bs = new OverworldBiomeSource(MCVersion.v1_12, 4L);
 		// wrong its -710, 64, 569 just to illustrate a point
 		assertEquals(bs.getSpawnPoint(), new BPos(-76, 64, 128));
-
 	}
 }

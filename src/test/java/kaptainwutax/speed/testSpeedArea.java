@@ -11,6 +11,7 @@ import org.junitpioneer.jupiter.CartesianProductTest;
 
 import java.util.concurrent.TimeUnit;
 
+
 @DisplayName("Measure speed")
 @Tag("Speed")
 @TestFramework.Overworld
@@ -54,10 +55,12 @@ public class testSpeedArea {
 	@CartesianEnumSource(MCVersion.class)
 	@CartesianEnumSource(Dimension.class)
 	public void speedArea(MCVersion version, Dimension dimension, TestInfo info) {
-		if (version.isNewerOrEqualTo(MCVersion.vb1_8_1)){
+		if (version.isNewerOrEqualTo(MCVersion.vb1_8_1)) {
 			init(dimension, version, info);
 			long elapsed = run(64, 0);
 			System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
+		} else {
+			System.out.println("Ignored version " + version);
 		}
 	}
 
@@ -71,6 +74,8 @@ public class testSpeedArea {
 			init(dimension, version, info);
 			long elapsed = run(1, 0);
 			System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
+		} else {
+			System.out.println("Ignored version " + version);
 		}
 	}
 }
