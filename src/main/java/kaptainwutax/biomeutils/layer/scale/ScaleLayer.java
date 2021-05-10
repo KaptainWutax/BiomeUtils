@@ -1,10 +1,19 @@
 package kaptainwutax.biomeutils.layer.scale;
 
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class ScaleLayer extends IntBiomeLayer {
+import java.util.HashSet;
+import java.util.Set;
 
+public class ScaleLayer extends IntBiomeLayer {
+	public static Integer minX=null;
+	public static Integer maxX=null;
+	public static Integer minZ=null;
+	public static Integer maxZ=null;
+	public static Set<Integer> xx=new HashSet<>();
+	public static Set<Integer> zz=new HashSet<>();
 	private final Type type;
 
 	public ScaleLayer(MCVersion version, long worldSeed, long salt, Type type, IntBiomeLayer parent) {
@@ -18,6 +27,22 @@ public class ScaleLayer extends IntBiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
+		if (this.hasParent() && this.getParent() instanceof EdgeBiomesLayer) {
+			//if (this.getParent().hasParent() && this.getParent().getParent() instanceof EdgeBiomesLayer) {
+				//if (this.getParent().getParent().hasParent() && this.getParent().getParent().getParent() instanceof EdgeBiomesLayer) {
+					ScaleLayer.xx.add(x);
+					ScaleLayer.zz.add(z);
+					if (ScaleLayer.minX == null) ScaleLayer.minX = x;
+					if (ScaleLayer.minZ == null) ScaleLayer.minZ = z;
+					if (ScaleLayer.maxX == null) ScaleLayer.maxX = x;
+					if (ScaleLayer.maxZ == null) ScaleLayer.maxZ = z;
+					ScaleLayer.minX = Math.min(ScaleLayer.minX, x);
+					ScaleLayer.minZ = Math.min(ScaleLayer.minZ, z);
+					ScaleLayer.maxX = Math.max(ScaleLayer.maxX, x);
+					ScaleLayer.maxZ = Math.max(ScaleLayer.maxZ, z);
+				//}
+			//}
+		}
 		IntBiomeLayer parent = this.getParent(IntBiomeLayer.class);
 
 		int center = parent.get(x >> 1, y, z >> 1);
@@ -43,12 +68,18 @@ public class ScaleLayer extends IntBiomeLayer {
 	@Override
 	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
 		System.out.println(this.getClass().getName()+" "+x+" "+z+" "+xSize+" "+zSize+" : "+this.getScale());
-		for (int offsetX = -2; offsetX <= 2; offsetX++) {
-			for (int offsetZ = -2; offsetZ <= 2; offsetZ++) {
+		int[] parents=this.getParent( IntBiomeLayer.class).sample(x>>1,y,z>>1,(xSize>>1)+1,ySize,(zSize>>1)+1);
+		int yz=ySize*zSize;
+		int[] res=new int[xSize*yz];
+		for (int offsetX = 0; offsetX < xSize; offsetX++) {
+			for (int offsetY = 0; offsetY < ySize; offsetY++) {
+				for (int offsetZ = 0; offsetZ < zSize; offsetZ++) {
+					int pos=offsetX*yz+offsetY*zSize+offsetZ;
 
+				}
 			}
 		}
-		return new int[xSize*ySize*zSize];
+		return res;
 	}
 
 	public int sample(int center, int e, int s, int se) {

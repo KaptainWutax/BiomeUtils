@@ -46,6 +46,16 @@ public class BaseBiomesLayer extends ComputeLayer {
 
 	@Override
 	public int compute(int value, int x, int z) {
+		xx.add(x);
+		zz.add(z);
+		if (minX==null) minX=x;
+		if (minZ==null) minZ=z;
+		if (maxX==null) maxX=x;
+		if (maxZ==null) maxZ=z;
+		minX=Math.min(minX,x);
+		minZ=Math.min(minZ,z);
+		maxX=Math.max(maxX,x);
+		maxZ=Math.max(maxZ,z);
 		this.setSeed(x, z);
 		int specialBits = (value >> 8) & 15; //the nextInt(15) + 1 in ClimateLayer.Special
 		value &= ~0xF00; //removes the 4 special bits and keeps everything else
