@@ -34,7 +34,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public IntBiomeLayer biomes;
 	public IntBiomeLayer river;
 	public IntBiomeLayer full;
-	public VoronoiLayer voronoi;
+	public IntBiomeLayer voronoi;
 	public IntBiomeLayer debug;
 
 	public OverworldBiomeSource(MCVersion version, long worldSeed) {

@@ -77,8 +77,21 @@ public class VoronoiLayer extends IntBiomeLayer {
 				}
 			}
 		}
-		this.getParent(IntBiomeLayer.class).sample(minX,minY,minZ,maxX-minX+1,maxY-minY+1,maxZ-minZ+1);
-		return new int[xSize*ySize*zSize];
+		int[] res=new int[xSize*zSize];
+		int sizeX=maxX-minX+1;
+		int sizeY=maxY-minY+1;
+		int sizeZ=maxZ-minZ+1;
+		int[] parents=this.getParent(IntBiomeLayer.class).sample(minX,minY,minZ,sizeX,sizeY,sizeZ);
+		int yz=ySize*zSize;
+		for (int offsetX = 0; offsetX < xSize; offsetX++) {
+			for (int offsetY = 0; offsetY < ySize; offsetY++) {
+				for (int offsetZ = 0; offsetZ < zSize; offsetZ++) {
+					coords=getCoords(x+offsetX,y+offsetY,z+offsetZ);
+					res[offsetX*yz+offsetY*zSize+offsetZ]=parents[(coords[0]-minX)*sizeY*sizeY+(coords[1]-minY)*sizeZ+(coords[2]-minZ)];
+				}
+			}
+		}
+		return res;
 	}
 
 	private int[] sample14minus(int x, int z) {
