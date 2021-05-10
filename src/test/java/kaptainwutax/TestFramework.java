@@ -23,6 +23,17 @@ public class TestFramework {
 		}
 	}
 
+	public static long getHash(IntBiomeLayer layer,int x, int z, int size) {
+		long hash=0;
+		for (int offsetX = 0; offsetX < size; offsetX++) {
+			for (int offsetZ = 0; offsetZ < size; offsetZ++) {
+				int id = layer.sample(x+offsetX, 0, z+offsetZ);
+				hash+=id;
+							}
+		}
+		return hash;
+	}
+
 	public static void singleBlockBiomeGen(IntBiomeLayer layer, int x, int z, int id) {
 		assertEquals(id, layer.sample(x, 0, z));
 	}
