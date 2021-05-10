@@ -65,19 +65,20 @@ public abstract class IntBiomeLayer extends BiomeLayer {
 	}
 
 
-	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
-		try {
-			this._sample(x,z,xSize,zSize);
-		} catch (UnexpectedException e) {
-			e.printStackTrace();
-		}
-		int[] ids=new int[xSize*zSize];
-		for (int offX = 0; offX < xSize; offX++) {
-			for (int offZ = 0; offZ < zSize; offZ++) {
-				ids[offX*zSize+offZ]=this.layerCache.get(x+offX,0,z+offZ,this::sample);
-			}
-		}
-		return ids;
-	}
+	public abstract int[] sample(int x, int y, int z, int xSize, int ySize, int zSize);
+//	{
+//		try {
+//			this._sample(x,z,xSize,zSize);
+//		} catch (UnexpectedException e) {
+//			e.printStackTrace();
+//		}
+//		int[] ids=new int[xSize*zSize];
+//		for (int offX = 0; offX < xSize; offX++) {
+//			for (int offZ = 0; offZ < zSize; offZ++) {
+//				ids[offX*zSize+offZ]=this.layerCache.get(x+offX,0,z+offZ,this::sample);
+//			}
+//		}
+//		return ids;
+//	}
 
 }

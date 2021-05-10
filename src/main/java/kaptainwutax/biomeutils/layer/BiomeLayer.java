@@ -4,10 +4,9 @@ import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.BaseBiomesLayer;
 import kaptainwutax.biomeutils.layer.land.ContinentLayer;
-import kaptainwutax.biomeutils.layer.land.HillsLayer;
 import kaptainwutax.biomeutils.layer.land.NoiseLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
-import kaptainwutax.biomeutils.layer.water.RiverLayer;
+import kaptainwutax.biomeutils.layer.water.RiverMixLayer;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -91,7 +90,7 @@ public abstract class BiomeLayer extends VersionedGen {
 		for (BiomeLayer biomeLayer : last.getParents()) {
 			int shift = 0;
 			// TODO check new version
-			int offset = last instanceof BaseBiomesLayer || last instanceof NoiseLayer || last instanceof ContinentLayer || last instanceof RiverLayer ?0:2;
+			int offset = last instanceof BaseBiomesLayer || last instanceof NoiseLayer || last instanceof ContinentLayer || last instanceof RiverMixLayer ?0:2;
 			if (last instanceof ScaleLayer) {
 				shift = 1;
 				offset = 3;

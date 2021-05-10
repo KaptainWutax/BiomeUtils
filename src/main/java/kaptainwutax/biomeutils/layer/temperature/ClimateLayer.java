@@ -3,20 +3,18 @@ package kaptainwutax.biomeutils.layer.temperature;
 import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.biomeutils.layer.composite.ComputeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class ClimateLayer {
 
-	public static class Cold extends IntBiomeLayer {
+	public static class Cold extends ComputeLayer {
 		public Cold(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
-		@Override
-		public int sample(int x, int y, int z) {
-			int value = this.getParent(IntBiomeLayer.class).get(x, y, z);
-
+		public int compute(int value,int x,int z){
 			if (Biome.isShallowOcean(value, this)) {
 				return value;
 			}
@@ -61,23 +59,21 @@ public class ClimateLayer {
 		}
 	}
 
-	public static class Special extends IntBiomeLayer {
+	public static class Special extends ComputeLayer {
 		public Special(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
 		@Override
-		public int sample(int x, int y, int z) {
-			int i = this.getParent(IntBiomeLayer.class).get(x, y, z);
-
-			if (Biome.isShallowOcean(i, this)) return i;
+		public int compute(int value, int x, int z) {
+			if (Biome.isShallowOcean(value, this)) return value;
 			this.setSeed(x, z);
 
 			if (this.nextInt(13) == 0) {
-				i |= (1 + this.nextInt(15)) << 8;
+				value |= (1 + this.nextInt(15)) << 8;
 			}
 
-			return i;
+			return value;
 		}
 	}
 

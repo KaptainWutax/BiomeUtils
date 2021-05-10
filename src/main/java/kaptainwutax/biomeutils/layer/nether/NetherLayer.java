@@ -50,4 +50,15 @@ public class NetherLayer extends IntBiomeLayer {
 				.map(BiomePoint::getBiome).orElse(Biomes.THE_VOID).getId();
 	}
 
+	@Override
+	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
+		System.out.println(this.getClass().getName()+" "+x+" "+z+" "+xSize+" "+zSize+" : "+this.getScale());
+		for (int offsetX = -2; offsetX <= 2; offsetX++) {
+			for (int offsetZ = -2; offsetZ <= 2; offsetZ++) {
+
+			}
+		}
+		return new int[xSize*ySize*zSize];
+	}
+
 }

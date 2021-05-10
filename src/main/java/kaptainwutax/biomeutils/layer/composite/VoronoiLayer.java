@@ -5,8 +5,17 @@ import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.rand.seed.WorldSeed;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class VoronoiLayer extends IntBiomeLayer {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+public class VoronoiLayer extends IntBiomeLayer {
+	public static Integer minX=null;
+	public static Integer maxX=null;
+	public static Integer minZ=null;
+	public static Integer maxZ=null;
+	public static Set<Integer> xx=new HashSet<>();
+	public static Set<Integer> zz=new HashSet<>();
 	private final long seed;
 	private final boolean is3D;
 
@@ -26,10 +35,53 @@ public class VoronoiLayer extends IntBiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
+		xx.add(x);
+		zz.add(z);
+		if (minX==null) minX=x;
+		if (minZ==null) minZ=z;
+		if (maxX==null) maxX=x;
+		if (maxZ==null) maxZ=z;
+		minX=Math.min(minX,x);
+		minZ=Math.min(minZ,z);
+		maxX=Math.max(maxX,x);
+		maxZ=Math.max(maxZ,z);
+		int[] coords=getCoords(x,y,z);
+		return this.getParent(IntBiomeLayer.class).get(coords[0],coords[1],coords[2]);
+	}
+
+	public int[] getCoords(int x,int y, int z){
 		return this.getVersion().isOlderThan(MCVersion.v1_15) ? this.sample14minus(x, z) : this.sample15plus(x, y, z);
 	}
 
-	private int sample14minus(int x, int z) {
+	@Override
+	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
+		System.out.println(this.getClass().getName()+" "+x+" "+z+" "+xSize+" "+zSize+" : "+this.getScale());
+		// TODO OPTIMIZE THE HELL OF THIS
+		int[] coords=getCoords(x,y,z);
+		int minX=coords[0];
+		int minY=coords[1];
+		int minZ=coords[2];
+		int maxX=coords[0];
+		int maxY=coords[1];
+		int maxZ=coords[2];
+		for (int offsetX = 0; offsetX < xSize; offsetX++) {
+			for (int offsetY = 0; offsetY < ySize; offsetY++) {
+				for (int offsetZ = 0; offsetZ < zSize; offsetZ++) {
+					coords=getCoords(x+offsetX,y+offsetY,z+offsetZ);
+					minX=Math.min(coords[0],minX);
+					minY=Math.min(coords[1],minY);
+					minZ=Math.min(coords[2],minZ);
+					maxX=Math.max(coords[0],maxX);
+					maxY=Math.max(coords[1],maxY);
+					maxZ=Math.max(coords[2],maxZ);
+				}
+			}
+		}
+		this.getParent(IntBiomeLayer.class).sample(minX,minY,minZ,maxX-minX+1,maxY-minY+1,maxZ-minZ+1);
+		return new int[xSize*ySize*zSize];
+	}
+
+	private int[] sample14minus(int x, int z) {
 		int offset;
 		x -= 2;
 		z -= 2;
@@ -67,50 +119,50 @@ public class VoronoiLayer extends IntBiomeLayer {
 		if (DEBUG) {
 			System.out.println("VORONOI Coords: (x,z): " + (pX + (offset & 1)) + " " + (pZ + (offset >> 1)));
 		}
-		return this.getParent(IntBiomeLayer.class).get(pX + (offset & 1), 0, pZ + (offset >> 1));
+		return new int[]{pX + (offset & 1), 0, pZ + (offset >> 1)};
 	}
 
-	private int sample15plus(int x, int y, int z) {
-		int i = x - 2;
-		int j = y - 2;
-		int k = z - 2;
-		int l = i >> 2;
-		int m = j >> 2;
-		int n = k >> 2;
-		double d = (double) (i & 3) / 4.0D;
-		double e = (double) (j & 3) / 4.0D;
-		double f = (double) (k & 3) / 4.0D;
-		double[] ds = new double[8];
+	private int[] sample15plus(int x, int y, int z) {
+		x-=2;
+		y-=2;
+		z-=2;
+		int pX = x >> 2;
+		int pY = y >> 2;
+		int pZ = z >> 2;
+		double sX = (double) (x & 3) / 4.0D;
+		double sY = (double) (y & 3) / 4.0D;
+		double sZ = (double) (z & 3) / 4.0D;
+		double[] cells = new double[8];
 
-		for (int cell = 0; cell < 8; ++cell) {
-			boolean bl = (cell & 4) == 0;
-			boolean bl2 = (cell & 2) == 0;
-			boolean bl3 = (cell & 1) == 0;
-			int aa = bl ? l : l + 1;
-			int ab = bl2 ? m : m + 1;
-			int ac = bl3 ? n : n + 1;
-			double g = bl ? d : d - 1.0D;
-			double h = bl2 ? e : e - 1.0D;
-			double s = bl3 ? f : f - 1.0D;
-			ds[cell] = calcSquaredDistance(this.seed, aa, ab, ac, g, h, s);
+		for (int cellId = 0; cellId < 8; ++cellId) {
+			boolean highBit = (cellId & 4) == 0;
+			boolean midBit = (cellId & 2) == 0;
+			boolean lowBit = (cellId & 1) == 0;
+			int xx = highBit ? pX : pX + 1;
+			int yy = midBit ? pY : pY + 1;
+			int zz = lowBit ? pZ : pZ + 1;
+			double xFrac = highBit ? sX : sX - 1.0D;
+			double yFrac = midBit ? sY : sY - 1.0D;
+			double zFrac = lowBit ? sZ : sZ - 1.0D;
+			cells[cellId] = calcSquaredDistance(this.seed, xx, yy, zz, xFrac, yFrac, zFrac);
 		}
 
 		int index = 0;
-		double min = ds[0];
+		double min = cells[0];
 
-		for (int cell = 1; cell < 8; ++cell) {
-			if (ds[cell] >= min) continue;
-			index = cell;
-			min = ds[cell];
+		for (int cellId = 1; cellId < 8; ++cellId) {
+			if (cells[cellId] >= min) continue;
+			index = cellId;
+			min = cells[cellId];
 		}
 
-		int xFinal = (index & 4) == 0 ? l : l + 1;
-		int yFinal = (index & 2) == 0 ? m : m + 1;
-		int zFinal = (index & 1) == 0 ? n : n + 1;
+		int xFinal = (index & 4) == 0 ? pX : pX + 1;
+		int yFinal = (index & 2) == 0 ? pY : pY + 1;
+		int zFinal = (index & 1) == 0 ? pZ : pZ + 1;
 		if (DEBUG) {
 			System.out.printf("Voronoi coords (x,y,z):(%d,%d,%d)%n", xFinal, yFinal, zFinal);
 		}
-		return this.getParent(IntBiomeLayer.class).get(xFinal, this.is3D ? yFinal : 0, zFinal);
+		return  new int[]{xFinal, this.is3D ? yFinal : 0, zFinal};
 	}
 
 	private static double calcContribution(double[] d, int x, int z) {

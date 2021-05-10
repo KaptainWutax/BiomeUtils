@@ -2,19 +2,19 @@ package kaptainwutax.biomeutils.layer.land;
 
 import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.biomeutils.layer.composite.ComputeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class NoiseLayer extends IntBiomeLayer {
+public class NoiseLayer extends ComputeLayer {
 
 	public NoiseLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 		super(version, worldSeed, salt, parent);
 	}
 
 	@Override
-	public int sample(int x, int y, int z) {
+	public int compute(int value, int x, int z) {
 		this.setSeed(x, z);
-		int i = this.getParent(IntBiomeLayer.class).get(x, y, z);
-		return Biome.isShallowOcean(i, this) ? i : this.nextInt(is1_6down.call() ? 2 : 299999) + 2;
+		return Biome.isShallowOcean(value, this) ? value : this.nextInt(is1_6down.call() ? 2 : 299999) + 2;
 	}
 
 }

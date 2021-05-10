@@ -12,7 +12,7 @@ public class TestScales {
 
 	private static final String scales_1_14 = "50 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
 			"49 4 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer$Apply\n" +
-			"41 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
+			"41 4 kaptainwutax.biomeutils.layer.water.RiverMixLayer\n" +
 			"34 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
 			"33 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
 			"32 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -102,7 +102,7 @@ public class TestScales {
 			"42 256 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer\n";
 	private static final String scales_1_13 = "49 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
 			"48 4 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer$Apply\n" +
-			"40 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
+			"40 4 kaptainwutax.biomeutils.layer.water.RiverMixLayer\n" +
 			"33 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
 			"32 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
 			"31 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
@@ -191,7 +191,7 @@ public class TestScales {
 			"41 256 kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer\n";
 
 	private static final String scales_1_12 = "43 1 kaptainwutax.biomeutils.layer.composite.VoronoiLayer\n" +
-			"42 4 kaptainwutax.biomeutils.layer.water.RiverLayer\n" +
+			"42 4 kaptainwutax.biomeutils.layer.water.RiverMixLayer\n" +
 			"35 4 kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer\n" +
 			"34 4 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +
 			"33 8 kaptainwutax.biomeutils.layer.scale.ScaleLayer\n" +

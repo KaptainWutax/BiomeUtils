@@ -35,5 +35,4 @@ public class DeepOceanLayer extends CrossLayer {
 
 		return center;
 	}
-
 }

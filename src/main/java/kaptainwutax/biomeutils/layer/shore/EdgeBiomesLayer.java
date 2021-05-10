@@ -79,5 +79,4 @@ public class EdgeBiomesLayer extends CrossLayer {
 		}
 		return center;
 	}
-
 }

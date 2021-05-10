@@ -185,7 +185,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
 		// mixing of the river with the hills and variants
-		this.layers.add(this.full = new RiverLayer(this.getVersion(), this.getWorldSeed(), 100L, this.variants, this.river));
+		this.layers.add(this.full = new RiverMixLayer(this.getVersion(), this.getWorldSeed(), 100L, this.variants, this.river));
 
 		if (is1_13up.call()) {
 			// ocean chains

@@ -17,5 +17,4 @@ public class IslandLayer extends CrossLayer {
 		return Biome.applyAll(v -> Biome.isShallowOcean(v, this), center, n, e, s, w)
 				&& this.nextInt(2) == 0 ? Biomes.PLAINS.getId() : center;
 	}
-
 }

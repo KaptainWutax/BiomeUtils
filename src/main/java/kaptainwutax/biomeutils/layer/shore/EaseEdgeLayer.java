@@ -91,6 +91,5 @@ public class EaseEdgeLayer extends CrossLayer {
 
 		return false;
 	}
-
 }
 

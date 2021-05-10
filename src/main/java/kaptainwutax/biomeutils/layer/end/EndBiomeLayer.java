@@ -33,4 +33,9 @@ public class EndBiomeLayer extends IntBiomeLayer {
 		return Biomes.SMALL_END_ISLANDS.getId();
 	}
 
+	@Override
+	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
+		return new int[xSize*ySize*zSize];
+	}
+
 }

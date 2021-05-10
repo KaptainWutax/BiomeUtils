@@ -4,8 +4,16 @@ import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class SmoothScaleLayer extends CrossLayer {
+import java.util.HashSet;
+import java.util.Set;
 
+public class SmoothScaleLayer extends CrossLayer {
+	public static Integer minX=null;
+	public static Integer maxX=null;
+	public static Integer minZ=null;
+	public static Integer maxZ=null;
+	public static Set<Integer> xx=new HashSet<>();
+	public static Set<Integer> zz=new HashSet<>();
 	public SmoothScaleLayer(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 		super(version, worldSeed, salt, parent);
 	}
@@ -25,5 +33,4 @@ public class SmoothScaleLayer extends CrossLayer {
 			return n;
 		}
 	}
-
 }

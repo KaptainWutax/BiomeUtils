@@ -3,10 +3,19 @@ package kaptainwutax.biomeutils.layer.land;
 import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.biomeutils.layer.composite.ComputeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-public class BaseBiomesLayer extends IntBiomeLayer {
-	// TODO introduce Default1_1 back
+import java.util.HashSet;
+import java.util.Set;
+
+public class BaseBiomesLayer extends ComputeLayer {
+	public static Integer minX=null;
+	public static Integer maxX=null;
+	public static Integer minZ=null;
+	public static Integer maxZ=null;
+	public static Set<Integer> xx=new HashSet<>();
+	public static Set<Integer> zz=new HashSet<>();
 	public static final Biome[] DRY_BIOMES = new Biome[] {
 			Biomes.DESERT, Biomes.DESERT, Biomes.DESERT, Biomes.SAVANNA, Biomes.SAVANNA, Biomes.PLAINS
 	};
@@ -36,38 +45,37 @@ public class BaseBiomesLayer extends IntBiomeLayer {
 	}
 
 	@Override
-	public int sample(int x, int y, int z) {
+	public int compute(int value, int x, int z) {
 		this.setSeed(x, z);
-		int center = this.getParent(IntBiomeLayer.class).get(x, y, z);
-		int specialBits = (center >> 8) & 15; //the nextInt(15) + 1 in ClimateLayer.Special
-		center &= ~0xF00; //removes the 4 special bits and keeps everything else
+		int specialBits = (value >> 8) & 15; //the nextInt(15) + 1 in ClimateLayer.Special
+		value &= ~0xF00; //removes the 4 special bits and keeps everything else
 
 		if (is1_6down.call()) {
 			// adapting the code below is too hard for this one
-			return this.sampleOld(center);
+			return this.sampleOld(value);
 		}
 
-		if (Biome.isOcean(center) || center == Biomes.MUSHROOM_FIELDS.getId()) return center;
+		if (Biome.isOcean(value) || value == Biomes.MUSHROOM_FIELDS.getId()) return value;
 
-		if (center == Biomes.PLAINS.getId()) {
+		if (value == Biomes.PLAINS.getId()) {
 			if (specialBits > 0) {
 				return this.nextInt(3) == 0 ? Biomes.BADLANDS_PLATEAU.getId() : Biomes.WOODED_BADLANDS_PLATEAU.getId();
 			}
 
 			return DRY_BIOMES[this.nextInt(DRY_BIOMES.length)].getId();
-		} else if (center == Biomes.DESERT.getId()) {
+		} else if (value == Biomes.DESERT.getId()) {
 			if (specialBits > 0) {
 				return Biomes.JUNGLE.getId();
 			}
 
 			return TEMPERATE_BIOMES[this.nextInt(TEMPERATE_BIOMES.length)].getId();
-		} else if (center == Biomes.MOUNTAINS.getId()) {
+		} else if (value == Biomes.MOUNTAINS.getId()) {
 			if (specialBits > 0) {
 				return Biomes.GIANT_TREE_TAIGA.getId();
 			}
 
 			return COOL_BIOMES[this.nextInt(COOL_BIOMES.length)].getId();
-		} else if (center == Biomes.FOREST.getId()) {
+		} else if (value == Biomes.FOREST.getId()) {
 			return SNOWY_BIOMES[this.nextInt(SNOWY_BIOMES.length)].getId();
 		}
 
