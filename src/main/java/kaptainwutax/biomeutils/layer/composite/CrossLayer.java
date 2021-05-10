@@ -2,8 +2,11 @@ package kaptainwutax.biomeutils.layer.composite;
 
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer;
+import kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer;
 import kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer;
 import kaptainwutax.mcutils.version.MCVersion;
+
+import java.util.Arrays;
 
 public abstract class CrossLayer extends IntBiomeLayer {
 
@@ -37,6 +40,19 @@ public abstract class CrossLayer extends IntBiomeLayer {
 			NoiseToRiverLayer.maxX = Math.max(NoiseToRiverLayer.maxX, x);
 			NoiseToRiverLayer.maxZ = Math.max(NoiseToRiverLayer.maxZ, z);
 		}
+		if (this instanceof EdgeBiomesLayer) {
+			EdgeBiomesLayer.xx.add(x);
+			EdgeBiomesLayer.zz.add(z);
+			if (EdgeBiomesLayer.minX == null) EdgeBiomesLayer.minX = x;
+			if (EdgeBiomesLayer.minZ == null) EdgeBiomesLayer.minZ = z;
+			if (EdgeBiomesLayer.maxX == null) EdgeBiomesLayer.maxX = x;
+			if (EdgeBiomesLayer.maxZ == null) EdgeBiomesLayer.maxZ = z;
+			EdgeBiomesLayer.minX = Math.min(EdgeBiomesLayer.minX, x);
+			EdgeBiomesLayer.minZ = Math.min(EdgeBiomesLayer.minZ, z);
+			EdgeBiomesLayer.maxX = Math.max(EdgeBiomesLayer.maxX, x);
+			EdgeBiomesLayer.maxZ = Math.max(EdgeBiomesLayer.maxZ, z);
+		}
+
 		this.setSeed(x, z);
 
 		return this.sample(
@@ -63,12 +79,14 @@ public abstract class CrossLayer extends IntBiomeLayer {
 		int newXSize=xSize+2;
 		int newZSize=zSize+2;
 		int[] parents=this.getParent(IntBiomeLayer.class).sample(x-1,y,z-1,newXSize,ySize,newZSize);
+		System.out.println(Arrays.toString(parents));
 		int yz=ySize*zSize;
 		int[] res=new int[xSize*yz];
 		for (int offsetX = 0; offsetX < xSize; offsetX++) {
 			for (int offsetY = 0; offsetY < ySize; offsetY++) {
 				for (int offsetZ = 0; offsetZ < zSize; offsetZ++) {
 					int pos=offsetX*yz+offsetY*zSize+offsetZ;
+					this.setSeed(x+offsetX, z+offsetZ);
 					res[pos]=this.apply(parents,offsetX+1,offsetY,offsetZ+1,ySize,newZSize,this::sample);
 				}
 			}

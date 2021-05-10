@@ -67,14 +67,16 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		// first legacy stack
 		//4096
 		this.layers.add(this.base = new ContinentLayer(this.getVersion(), this.getWorldSeed(), 1L));
+
 		//2048
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2000L, ScaleLayer.Type.FUZZY, this.base));
+
 		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 1L, this.base));
 
 		//1024
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base));
 		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
-
+		debug=base;
 		if (is1_7up.call()) {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base));
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));

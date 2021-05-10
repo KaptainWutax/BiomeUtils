@@ -7,14 +7,33 @@ import kaptainwutax.biomeutils.layer.composite.ComputeLayer;
 import kaptainwutax.biomeutils.layer.composite.CrossLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ClimateLayer {
 
 	public static class Cold extends ComputeLayer {
+		public static Integer minX=null;
+		public static Integer maxX=null;
+		public static Integer minZ=null;
+		public static Integer maxZ=null;
+		public static Set<Integer> xx=new HashSet<>();
+		public static Set<Integer> zz=new HashSet<>();
 		public Cold(MCVersion version, long worldSeed, long salt, IntBiomeLayer parent) {
 			super(version, worldSeed, salt, parent);
 		}
 
 		public int compute(int value,int x,int z){
+			xx.add(x);
+			zz.add(z);
+			if (minX==null) minX=x;
+			if (minZ==null) minZ=z;
+			if (maxX==null) maxX=x;
+			if (maxZ==null) maxZ=z;
+			minX=Math.min(minX,x);
+			minZ=Math.min(minZ,z);
+			maxX=Math.max(maxX,x);
+			maxZ=Math.max(maxZ,z);
 			if (Biome.isShallowOcean(value, this)) {
 				return value;
 			}

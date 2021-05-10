@@ -1,6 +1,7 @@
 package kaptainwutax.biomeutils.layer.scale;
 
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
+import kaptainwutax.biomeutils.layer.land.ContinentLayer;
 import kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -27,39 +28,48 @@ public class ScaleLayer extends IntBiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
-		if (this.hasParent() && this.getParent() instanceof EdgeBiomesLayer) {
+		if (this.hasParent() && this.getParent() instanceof ContinentLayer) {
 			//if (this.getParent().hasParent() && this.getParent().getParent() instanceof EdgeBiomesLayer) {
-			//if (this.getParent().getParent().hasParent() && this.getParent().getParent().getParent() instanceof EdgeBiomesLayer) {
-			ScaleLayer.xx.add(x);
-			ScaleLayer.zz.add(z);
-			if (ScaleLayer.minX == null) ScaleLayer.minX = x;
-			if (ScaleLayer.minZ == null) ScaleLayer.minZ = z;
-			if (ScaleLayer.maxX == null) ScaleLayer.maxX = x;
-			if (ScaleLayer.maxZ == null) ScaleLayer.maxZ = z;
-			ScaleLayer.minX = Math.min(ScaleLayer.minX, x);
-			ScaleLayer.minZ = Math.min(ScaleLayer.minZ, z);
-			ScaleLayer.maxX = Math.max(ScaleLayer.maxX, x);
-			ScaleLayer.maxZ = Math.max(ScaleLayer.maxZ, z);
-			//}
+				//if (this.getParent().getParent().hasParent() && this.getParent().getParent().getParent() instanceof EdgeBiomesLayer) {
+				ScaleLayer.xx.add(x);
+				ScaleLayer.zz.add(z);
+				if (ScaleLayer.minX == null) ScaleLayer.minX = x;
+				if (ScaleLayer.minZ == null) ScaleLayer.minZ = z;
+				if (ScaleLayer.maxX == null) ScaleLayer.maxX = x;
+				if (ScaleLayer.maxZ == null) ScaleLayer.maxZ = z;
+				ScaleLayer.minX = Math.min(ScaleLayer.minX, x);
+				ScaleLayer.minZ = Math.min(ScaleLayer.minZ, z);
+				ScaleLayer.maxX = Math.max(ScaleLayer.maxX, x);
+				ScaleLayer.maxZ = Math.max(ScaleLayer.maxZ, z);
+				//}
 			//}
 		}
 		IntBiomeLayer parent = this.getParent(IntBiomeLayer.class);
 		this.setSeed(x & -2, z & -2);
-
+		if (DEBUG)System.out.println(x+" "+z);
 		int center = parent.get(x >> 1, y, z >> 1);
 		int xb = x & 1, zb = z & 1;
-		if (xb == 0 && zb == 0) return center;
+		if (xb == 0 && zb == 0) {
+			if (DEBUG)System.out.println("branch1");
+			return center;
+		}
 
 		int s = parent.get(x >> 1, y, (z + 1) >> 1);
 		int zPlus = this.choose(center, s);
 
-		if (xb == 0) return zPlus;
+		if (xb == 0) {
+			if (DEBUG)System.out.println("branch2");
+			return zPlus;
+		}
 
 		int e = parent.get((x + 1) >> 1, y, z >> 1);
 		int xPlus = this.choose(center, e);
 
-		if (zb == 0) return xPlus;
-
+		if (zb == 0) {
+			if (DEBUG)System.out.println("branch3");
+			return xPlus;
+		}
+		if (DEBUG)System.out.println("branch4");
 		int se = parent.get((x + 1) >> 1, y, (z + 1) >> 1);
 		return this.sample(center, e, s, se);
 	}
@@ -68,23 +78,28 @@ public class ScaleLayer extends IntBiomeLayer {
 	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
 		// we will not try to have sample and sample[] match because they don't use the same paradigm, one shortcut the other don't
 		System.out.println(this.getClass().getName() + " " + x + " " + z + " " + xSize + " " + zSize + " : " + this.getScale());
-		int[] parents = this.getParent(IntBiomeLayer.class).sample(x >> 1, y, z >> 1, (xSize >> 1) + 1, ySize, (zSize >> 1) + 1);
+		int newXSize = ((x+1+xSize)>>1)-(x>>1)+1;
+		int newZSize = ((z+1+zSize)>>1)-(z>>1)+1;
+		int[] parents = this.getParent(IntBiomeLayer.class).sample(x >> 1, y, z >> 1, newXSize, ySize, newZSize);
 		int yz = ySize * zSize;
-		int dimXZ = ySize * ((zSize >> 1) + 1);
+		int dimXZ = ySize * newZSize;
 		int[] res = new int[xSize * yz];
 		for (int offsetX = 0; offsetX < xSize; offsetX++) {
 			int xPos = offsetX * yz;
 			int xPos1 = (offsetX >> 1) * dimXZ;
 			int xPos11 = ((offsetX + 1) >> 1) * dimXZ;
 			for (int offsetY = 0; offsetY < ySize; offsetY++) {
-				int yPos = offsetY * ((zSize >> 1) + 1);
+				int yPos = offsetY * newZSize;
 				for (int offsetZ = 0; offsetZ < zSize; offsetZ++) {
 					int pos = xPos + yPos + offsetZ;
 					int zPos1 = offsetZ >> 1;
 					int zPos11 = (offsetZ + 1) >> 1;
 					int center = parents[xPos1 + yPos + zPos1];
-					int xb = x & 1, zb = z & 1;
+					if (DEBUG)System.out.println((x+offsetX) +" "+(z+offsetZ) );
+					this.setSeed( (x+offsetX) & -2, (z+offsetZ) & -2);
+					int xb = (x+offsetX) & 1, zb = (z+offsetZ) & 1;
 					if (xb == 0 && zb == 0) {
+						if (DEBUG)System.out.println("branch1");
 						res[pos] = center;
 						continue;
 					}
@@ -92,6 +107,7 @@ public class ScaleLayer extends IntBiomeLayer {
 					int zPlus = this.choose(center, s);
 
 					if (xb == 0) {
+						if (DEBUG)System.out.println("branch2");
 						res[pos] = zPlus;
 						continue;
 					}
@@ -100,10 +116,11 @@ public class ScaleLayer extends IntBiomeLayer {
 					int xPlus = this.choose(center, e);
 
 					if (zb == 0) {
+						if (DEBUG)System.out.println("branch3");
 						res[pos] = xPlus;
 						continue;
 					}
-
+					if (DEBUG)System.out.println("branch4");
 					int se = parents[xPos11 + yPos + zPos11];
 					res[pos] = this.sample(center, e, s, se);
 				}
