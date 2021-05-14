@@ -86,10 +86,10 @@ public class Biomes {
 	public static final Biome MODIFIED_BADLANDS_PLATEAU = register(new Biome(MCVersion.v1_7_2, Dimension.OVERWORLD, 167, "modified_badlands_plateau", Biome.Category.MESA, Biome.Precipitation.NONE, 2.0F, 0.300F, 0.450F, Biomes.BADLANDS_PLATEAU));
 	public static final Biome BAMBOO_JUNGLE = register(new Biome(MCVersion.v1_14, Dimension.OVERWORLD, 168, "bamboo_jungle", Biome.Category.JUNGLE, Biome.Precipitation.RAIN, 0.95F, 0.200F, 0.100F, null));
 	public static final Biome BAMBOO_JUNGLE_HILLS = register(new Biome(MCVersion.v1_14, Dimension.OVERWORLD, 169, "bamboo_jungle_hills", Biome.Category.JUNGLE, Biome.Precipitation.RAIN, 0.95F, 0.300F, 0.450F, null));
-	public static final Biome SOUL_SAND_VALLEY = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 170, "soul_sand_valley", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0F, 0F, null));
-	public static final Biome CRIMSON_FOREST = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 171, "crimson_forest", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0F, 0F, null));
-	public static final Biome WARPED_FOREST = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 172, "warped_forest", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0F, 0F, null));
-	public static final Biome BASALT_DELTAS = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 173, "basalt_deltas", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0F, 0F, null));
+	public static final Biome SOUL_SAND_VALLEY = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 170, "soul_sand_valley", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.2F, 0.1F, null));
+	public static final Biome CRIMSON_FOREST = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 171, "crimson_forest", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.2F, 0.1F, null));
+	public static final Biome WARPED_FOREST = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 172, "warped_forest", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.2F, 0.1F, null));
+	public static final Biome BASALT_DELTAS = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 173, "basalt_deltas", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.2F, 0.1F, null));
 
 
 	public static Biome register(Biome biome) {
