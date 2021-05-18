@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
-
 	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biomes.FOREST, Biomes.PLAINS, Biomes.TAIGA, Biomes.TAIGA_HILLS, Biomes.WOODED_HILLS, Biomes.JUNGLE, Biomes.JUNGLE_HILLS);
 	public final int biomeSize;
 	public final int riverSize;
