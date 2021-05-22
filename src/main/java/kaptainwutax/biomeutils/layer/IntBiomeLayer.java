@@ -5,7 +5,6 @@ import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-import java.rmi.UnexpectedException;
 
 public abstract class IntBiomeLayer extends BiomeLayer {
 
@@ -37,9 +36,9 @@ public abstract class IntBiomeLayer extends BiomeLayer {
 
 	public abstract int sample(int x, int y, int z);
 
-	public void _sample(int x,int z,int xSize,int zSize) throws UnexpectedException {
+	public void _sample(int x,int z,int xSize,int zSize) throws UnsupportedOperationException {
 		if (this.getParents()== null){
-			throw new UnexpectedException("Error, in our model, this should not happen (we use a null parent array)");
+			throw new UnsupportedOperationException("Error, in our model, this should not happen (we use a null parent array)");
 		}
 		for (BiomeLayer biomeLayer : this.getParents()) {
 			int shift = 0;
@@ -68,7 +67,7 @@ public abstract class IntBiomeLayer extends BiomeLayer {
 	public int[] sample(int x, int y, int z, int xSize, int ySize, int zSize) {
 		try {
 			this._sample(x,z,xSize,zSize);
-		} catch (UnexpectedException e) {
+		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
 		}
 		int[] ids=new int[xSize*zSize];

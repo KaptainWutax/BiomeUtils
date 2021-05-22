@@ -148,25 +148,18 @@ public class Main {
 	public static void main(String[] args) {
 		BiomeDevice device = new BiomeDevice(MCVersion.v1_16_2);
 
-		int bound = 1;
-//        for (int x = -bound; x <= bound; x++) {
-//            for (int z = -bound; z <= bound; z++) {
-//                if (x!=0 && z!=0){
-//                    device.add(Restrictions.SAVANNAH_BIOME,x,z);
-//                }
-//            }
-//        }
-		device.add(Restrictions.SAVANNAH_BIOME, 0, 0);
-		device.add(Restrictions.HILLS_PLATEAU, 0, 0);
-		device.add(Restrictions.MUTATED_SECOND, 0, 0);
+		int bound = 2;
+        for (int x = -bound; x <= bound; x++) {
+            for (int z = -bound; z <= bound; z++) {
+				device.add(Restrictions.MUTATED,x,z);
+            }
+        }
+//		device.add(Restrictions.SAVANNAH_BIOME, 0, 0);
+//		device.add(Restrictions.HILLS_PLATEAU, 0, 0);
+//		device.add(Restrictions.MUTATED_SECOND, 0, 0);
 
 		device.findSeeds(seed -> {
-			OverworldBiomeSource biomeSource = new OverworldBiomeSource(MCVersion.v1_16_2, seed);
-			BPos bpos = biomeSource.getSpawnPoint();
-			Biome biome = biomeSource.getBiome(bpos);
-			if (biome.getCategory() == Biome.Category.SAVANNA) {
-				System.out.println(seed);
-			}
+			System.out.println(seed);
 		});
 	}
 

@@ -10,3 +10,4 @@ bin/
 
 # this is mainly because this file is used for local test and this should never be included in a library
 Main.java
+src/main/java/kaptainwutax/biomeutils/Test.java
