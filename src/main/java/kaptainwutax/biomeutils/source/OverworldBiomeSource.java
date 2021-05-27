@@ -26,6 +26,8 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public static final List<Biome> SPAWN_BIOMES = Arrays.asList(Biomes.FOREST, Biomes.PLAINS, Biomes.TAIGA, Biomes.TAIGA_HILLS, Biomes.WOODED_HILLS, Biomes.JUNGLE, Biomes.JUNGLE_HILLS);
 	public final int biomeSize;
 	public final int riverSize;
+	public static final int DEFAULT_BIOME_SIZE = 4;
+	public static final int DEFAULT_RIVER_SIZE = 4;
 	public IntBiomeLayer base;
 	public IntBiomeLayer ocean;
 	public IntBiomeLayer noise;
@@ -37,7 +39,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public IntBiomeLayer debug;
 
 	public OverworldBiomeSource(MCVersion version, long worldSeed) {
-		this(version, worldSeed, 4, 4);
+		this(version, worldSeed, DEFAULT_BIOME_SIZE, DEFAULT_RIVER_SIZE);
 	}
 
 	public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
@@ -79,7 +81,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
 			this.layers.add(this.base = new IslandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
-		if (is_1_0_up.call()){
+		if (is_1_0_up.call()) {
 			this.layers.add(this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
 
@@ -98,11 +100,11 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 		//256
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
-		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), is_1_0_up.call()?4L:3L, this.base));
+		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), is_1_0_up.call() ? 4L : 3L, this.base));
 
-		if (is_1_0_up.call()){
+		if (is_1_0_up.call()) {
 			this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
-		}else{
+		} else {
 			this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2004L, ScaleLayer.Type.NORMAL, this.base));
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
 		}
