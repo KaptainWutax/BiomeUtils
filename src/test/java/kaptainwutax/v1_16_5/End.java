@@ -1,8 +1,6 @@
 package kaptainwutax.v1_16_5;
 
 import kaptainwutax.TestFramework;
-import kaptainwutax.biomeutils.biome.Biome;
-import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.source.EndBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 @DisplayName("Minecraft v1.16.5 End")
 @Tag("v1.16.5")
@@ -23,7 +20,7 @@ public class End {
 		EndBiomeSource source = new EndBiomeSource(MCVersion.v1_16, 1551515151585454L);
 		assertEquals(Biomes.SMALL_END_ISLANDS, source.getBiome3D(10000, 251, 10000));
 		int sum = 0;
-		for (int y = 0; y < 256; y++) {
+		for(int y = 0; y < 256; y++) {
 			sum += source.getBiome3D(10000, y, 10000).getId();
 		}
 		assertEquals(10689, sum);
@@ -34,8 +31,8 @@ public class End {
 	public void testEnd2D() {
 		EndBiomeSource source = new EndBiomeSource(MCVersion.v1_16, 1551515151585454L);
 		int sum = 0;
-		for (int x = 0; x < 1000; x++) {
-			for (int z = 0; z < 1000; z++) {
+		for(int x = 0; x < 1000; x++) {
+			for(int z = 0; z < 1000; z++) {
 				sum += source.getBiome(10000 + x, 0, 10000 + z).getId();
 			}
 		}

@@ -28,37 +28,37 @@ public class Overworld {
 	@Test
 	@DisplayName("Test full for " + version)
 	public void testFull() {
-		assertEquals(5839678890417025249L,getHash(1, 84), "One biome was wrong");
-		assertEquals(8370355333428707571L,getHash(2, 84), "One biome was wrong");
-		assertEquals(-165205488069234670L,getHash(4, 84), "One biome was wrong");
-		assertEquals(3844629667750350445L,getHash(8, 84), "One biome was wrong");
-		assertEquals(6540824892827124293L,getHash(16, 84), "One biome was wrong");
-		assertEquals(-8968826312020734049L,getHash(32, 84), "One biome was wrong");
-		assertEquals(7838822547083600260L,getHash(64, 84), "One biome was wrong");
-		assertEquals(6922406005583211374L,getHash(128, 84), "One biome was wrong");
-		assertEquals(6819316744870579513L,getHash(256, 84), "One biome was wrong");
-		assertEquals(-7733744126525058874L,getHash(512, 84), "One biome was wrong");
-		assertEquals(653477928679205168L,getHash(1024, 84), "One biome was wrong");
-		assertEquals(-6601932306769119281L,getHash(2048, 84), "One biome was wrong");
-		assertEquals(-6909801988874714309L,getHash(4096, 84), "One biome was wrong");
+		assertEquals(5839678890417025249L, getHash(1, 84), "One biome was wrong");
+		assertEquals(8370355333428707571L, getHash(2, 84), "One biome was wrong");
+		assertEquals(-165205488069234670L, getHash(4, 84), "One biome was wrong");
+		assertEquals(3844629667750350445L, getHash(8, 84), "One biome was wrong");
+		assertEquals(6540824892827124293L, getHash(16, 84), "One biome was wrong");
+		assertEquals(-8968826312020734049L, getHash(32, 84), "One biome was wrong");
+		assertEquals(7838822547083600260L, getHash(64, 84), "One biome was wrong");
+		assertEquals(6922406005583211374L, getHash(128, 84), "One biome was wrong");
+		assertEquals(6819316744870579513L, getHash(256, 84), "One biome was wrong");
+		assertEquals(-7733744126525058874L, getHash(512, 84), "One biome was wrong");
+		assertEquals(653477928679205168L, getHash(1024, 84), "One biome was wrong");
+		assertEquals(-6601932306769119281L, getHash(2048, 84), "One biome was wrong");
+		assertEquals(-6909801988874714309L, getHash(4096, 84), "One biome was wrong");
 	}
 
 	@Test
 	@DisplayName("Test voronoi for " + version)
 	public void testVoronoi() {
-		assertEquals(5839678890417025249L,getHashVoronoi(1, 84), "One biome was wrong");
-		assertEquals(8370355333428707571L,getHashVoronoi(2, 84), "One biome was wrong");
-		assertEquals(-165205488069234670L,getHashVoronoi(4, 84), "One biome was wrong");
-		assertEquals(-79735791615299849L,getHashVoronoi(8, 84), "One biome was wrong");
-		assertEquals(-2132543437809608847L,getHashVoronoi(16, 84), "One biome was wrong");
-		assertEquals(2342560580002914529L,getHashVoronoi(32, 84), "One biome was wrong");
-		assertEquals(7013273056434338339L,getHashVoronoi(64, 84), "One biome was wrong");
-		assertEquals(-1505716045303541443L,getHashVoronoi(128, 84), "One biome was wrong");
-		assertEquals(-2457046325124408004L,getHashVoronoi(256, 84), "One biome was wrong");
-		assertEquals(-8709344793858922284L,getHashVoronoi(512, 84), "One biome was wrong");
-		assertEquals(5675689783006304125L,getHashVoronoi(1024, 84), "One biome was wrong");
-		assertEquals(-3925323828398010134L,getHashVoronoi(2048, 84), "One biome was wrong");
-		assertEquals(-8990950935806208166L,getHashVoronoi(4096, 84), "One biome was wrong");
+		assertEquals(5839678890417025249L, getHashVoronoi(1, 84), "One biome was wrong");
+		assertEquals(8370355333428707571L, getHashVoronoi(2, 84), "One biome was wrong");
+		assertEquals(-165205488069234670L, getHashVoronoi(4, 84), "One biome was wrong");
+		assertEquals(-79735791615299849L, getHashVoronoi(8, 84), "One biome was wrong");
+		assertEquals(-2132543437809608847L, getHashVoronoi(16, 84), "One biome was wrong");
+		assertEquals(2342560580002914529L, getHashVoronoi(32, 84), "One biome was wrong");
+		assertEquals(7013273056434338339L, getHashVoronoi(64, 84), "One biome was wrong");
+		assertEquals(-1505716045303541443L, getHashVoronoi(128, 84), "One biome was wrong");
+		assertEquals(-2457046325124408004L, getHashVoronoi(256, 84), "One biome was wrong");
+		assertEquals(-8709344793858922284L, getHashVoronoi(512, 84), "One biome was wrong");
+		assertEquals(5675689783006304125L, getHashVoronoi(1024, 84), "One biome was wrong");
+		assertEquals(-3925323828398010134L, getHashVoronoi(2048, 84), "One biome was wrong");
+		assertEquals(-8990950935806208166L, getHashVoronoi(4096, 84), "One biome was wrong");
 	}
 
 	public static long murmur64(long value) {
@@ -73,8 +73,8 @@ public class Overworld {
 	public static long getHash(int size, long worldSeed) {
 		BiomeSource overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_16_1, worldSeed);
 		long hash = 0;
-		for (int x = -size; x <= size; x++) {
-			for (int z = -size; z <= size; z++) {
+		for(int x = -size; x <= size; x++) {
+			for(int z = -size; z <= size; z++) {
 				int id = overworldBiomeSource.getBiomeForNoiseGen(x >> 2, 0, z >> 2).getId();
 				hash = murmur64(id * hash ^ id);
 			}
@@ -85,8 +85,8 @@ public class Overworld {
 	public static long getHashVoronoi(int size, long worldSeed) {
 		BiomeSource overworldBiomeSource = new OverworldBiomeSource(MCVersion.v1_16_1, worldSeed);
 		long hash = 0;
-		for (int x = -size; x <= size; x++) {
-			for (int z = -size; z <= size; z++) {
+		for(int x = -size; x <= size; x++) {
+			for(int z = -size; z <= size; z++) {
 				int id = overworldBiomeSource.getBiome(x, 0, z).getId();
 				hash = murmur64(id * hash ^ id);
 			}

@@ -1,12 +1,9 @@
 package kaptainwutax.biomeutils.device;
 
-import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.source.LayeredBiomeSource;
-import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class Main {
@@ -44,7 +41,6 @@ public class Main {
 		};
 	};
 
-
 	//1024:1
 	public static final Restriction.Factory<Restriction> CLIMATE_DESERT = (version, x, z) -> {
 		return new Restriction("CLIMATE_DESERT", x, z) {
@@ -80,30 +76,30 @@ public class Main {
 	};
 
 	public static final int[][] MAP = new int[][] {
-			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-			{1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 2, 2},
-			{1, 0, 1, 0, 1, 0, 1, 0, 0, 2, 0, 2},
-			{1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 2, 2}
+		{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+		{1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 2, 2},
+		{1, 0, 1, 0, 1, 0, 1, 0, 0, 2, 0, 2},
+		{1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 2, 2}
 	};
 
 	public static final int[][] MAP_2 = new int[][] {
-			{2, 1, 1, 2, 1, 1, 2},
-			{1, 2, 2, 2, 2, 2, 1},
-			{1, 2, 2, 2, 2, 2, 1},
-			{2, 1, 2, 2, 2, 1, 2},
-			{2, 2, 1, 2, 1, 2, 2},
-			{2, 2, 2, 1, 2, 2, 2}
+		{2, 1, 1, 2, 1, 1, 2},
+		{1, 2, 2, 2, 2, 2, 1},
+		{1, 2, 2, 2, 2, 2, 1},
+		{2, 1, 2, 2, 2, 1, 2},
+		{2, 2, 1, 2, 1, 2, 2},
+		{2, 2, 2, 1, 2, 2, 2}
 	};
 
 	public static void main3(String[] args) {
 		BiomeDevice device = new BiomeDevice(MCVersion.v1_16_2);
 
-		for (int i = 0; i < MAP_2.length; i++) {
-			for (int j = 0; j < MAP_2[i].length; j++) {
+		for(int i = 0; i < MAP_2.length; i++) {
+			for(int j = 0; j < MAP_2[i].length; j++) {
 				int v = MAP_2[i][j];
-				if (v == 2) continue;
+				if(v == 2) continue;
 
-				if (v == 1) {
+				if(v == 1) {
 					device.add(Restrictions.CONTINENT, j - 3, i - 1);
 				} else {
 					// device.add(NO_PLAINS, j, i);
@@ -136,8 +132,8 @@ public class Main {
         device.add(CLIMATE_DESERT, -1, 1);
         device.add(CLIMATE_DESERT, 1, 1);*/
 
-		for (int x = 0; x < 3; x++) {
-			for (int z = 0; z < 2; z++) {
+		for(int x = 0; x < 3; x++) {
+			for(int z = 0; z < 2; z++) {
 				device.add(Restrictions.MUSHROOM, x, z);
 			}
 		}
@@ -149,11 +145,11 @@ public class Main {
 		BiomeDevice device = new BiomeDevice(MCVersion.v1_16_2);
 
 		int bound = 2;
-        for (int x = -bound; x <= bound; x++) {
-            for (int z = -bound; z <= bound; z++) {
-				device.add(Restrictions.MUTATED,x,z);
-            }
-        }
+		for(int x = -bound; x <= bound; x++) {
+			for(int z = -bound; z <= bound; z++) {
+				device.add(Restrictions.MUTATED, x, z);
+			}
+		}
 //		device.add(Restrictions.SAVANNAH_BIOME, 0, 0);
 //		device.add(Restrictions.HILLS_PLATEAU, 0, 0);
 //		device.add(Restrictions.MUTATED_SECOND, 0, 0);

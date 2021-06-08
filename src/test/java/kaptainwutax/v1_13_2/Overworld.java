@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import static kaptainwutax.TestFramework.randomBiomeGen;
 
-
 @DisplayName("Minecraft v1.13.2 Overworld")
 @Tag("v1.13.2")
 @TestFramework.Overworld

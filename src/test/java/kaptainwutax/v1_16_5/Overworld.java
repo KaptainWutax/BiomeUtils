@@ -1,7 +1,6 @@
 package kaptainwutax.v1_16_5;
 
 import kaptainwutax.TestFramework;
-import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.mcutils.version.MCVersion;
