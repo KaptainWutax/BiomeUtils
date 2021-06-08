@@ -11,7 +11,7 @@ public class BoolLayerCache {
 	private final int mask;
 
 	public BoolLayerCache(int capacity) {
-		if (capacity < 1 || !Mth.isPowerOf2(capacity)) {
+		if(capacity < 1 || !Mth.isPowerOf2(capacity)) {
 			throw new UnsupportedOperationException("capacity must be a power of 2");
 		}
 
@@ -25,7 +25,7 @@ public class BoolLayerCache {
 		long key = this.uniqueHash(x, y, z);
 		int id = this.murmur64(key) & this.mask;
 
-		if (this.keys[id] == key) {
+		if(this.keys[id] == key) {
 			return this.values[id];
 		}
 

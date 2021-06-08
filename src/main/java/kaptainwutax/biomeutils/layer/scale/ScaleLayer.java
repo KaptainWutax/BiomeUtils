@@ -24,17 +24,17 @@ public class ScaleLayer extends IntBiomeLayer {
 		this.setSeed(x & -2, z & -2);
 		int xb = x & 1, zb = z & 1;
 
-		if (xb == 0 && zb == 0) return center;
+		if(xb == 0 && zb == 0) return center;
 
 		int s = parent.get(x >> 1, y, (z + 1) >> 1);
 		int zPlus = this.choose(center, s);
 
-		if (xb == 0) return zPlus;
+		if(xb == 0) return zPlus;
 
 		int e = parent.get((x + 1) >> 1, y, z >> 1);
 		int xPlus = this.choose(center, e);
 
-		if (zb == 0) return xPlus;
+		if(zb == 0) return xPlus;
 
 		int se = parent.get((x + 1) >> 1, y, (z + 1) >> 1);
 		return this.sample(center, e, s, se);
@@ -43,17 +43,17 @@ public class ScaleLayer extends IntBiomeLayer {
 	public int sample(int center, int e, int s, int se) {
 		int ret = this.choose(center, e, s, se);
 
-		if (this.type == Type.FUZZY) {
+		if(this.type == Type.FUZZY) {
 			return ret;
 		}
 
-		if (e == s && e == se) return e;
-		if (center == e && s != se) return center;
-		if (center == s && e != se) return center;
-		if (center == se && e != s) return center;
-		if (e == s && center != se) return e;
-		if (e == se && center != s) return e;
-		if (s == se && center != e) return s;
+		if(e == s && e == se) return e;
+		if(center == e && s != se) return center;
+		if(center == s && e != se) return center;
+		if(center == se && e != s) return center;
+		if(e == s && center != se) return e;
+		if(e == se && center != s) return e;
+		if(s == se && center != e) return s;
 		return ret;
 	}
 
@@ -64,7 +64,6 @@ public class ScaleLayer extends IntBiomeLayer {
 	// (center == e && s != se) ||
 	// (center == se && s != e))
 	// with the precondition s!=se if e==s or e==se
-
 
 	public enum Type {
 		NORMAL, FUZZY

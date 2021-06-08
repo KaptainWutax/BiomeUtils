@@ -14,8 +14,8 @@ public class OldRiverInBiomes extends IntBiomeLayer {
 	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
 		int center = this.getParent(IntBiomeLayer.class).get(x, y, z);
-		if ((center != Biomes.SWAMP.getId() || this.nextInt(6) != 0)
-				&& (center != Biomes.JUNGLE.getId() && center != Biomes.JUNGLE_HILLS.getId() || this.nextInt(8) != 0)) {
+		if((center != Biomes.SWAMP.getId() || this.nextInt(6) != 0)
+			&& (center != Biomes.JUNGLE.getId() && center != Biomes.JUNGLE_HILLS.getId() || this.nextInt(8) != 0)) {
 			return center;
 		}
 		return Biomes.RIVER.getId();

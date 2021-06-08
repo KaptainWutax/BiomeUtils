@@ -1,6 +1,5 @@
 package kaptainwutax.biomeutils.source;
 
-import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
@@ -12,25 +11,30 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public abstract class BiomeSource extends VersionedGen {
+public abstract class BiomeSource {
 
+	private final MCVersion version;
 	private final long worldSeed;
 
 	public BiomeSource(MCVersion version, long worldSeed) {
-		super(version);
+		this.version = version;
 		this.worldSeed = worldSeed;
 	}
 
 	public static Factory factory(Dimension dimension) {
-		if (dimension == Dimension.OVERWORLD) return OverworldBiomeSource::new;
-		else if (dimension == Dimension.NETHER) return NetherBiomeSource::new;
-		else if (dimension == Dimension.END) return EndBiomeSource::new;
+		if(dimension == Dimension.OVERWORLD) return OverworldBiomeSource::new;
+		else if(dimension == Dimension.NETHER) return NetherBiomeSource::new;
+		else if(dimension == Dimension.END) return EndBiomeSource::new;
 		return null;
 	}
 
 	public static BiomeSource of(Dimension dimension, MCVersion version, long worldSeed) {
 		Factory factory = factory(dimension);
 		return factory == null ? null : factory.create(version, worldSeed);
+	}
+
+	public MCVersion getVersion() {
+		return this.version;
 	}
 
 	public long getWorldSeed() {
@@ -58,17 +62,17 @@ public abstract class BiomeSource extends VersionedGen {
 
 		Set<Integer> set = new HashSet<>();
 
-		for (int r = 0; r < q; ++r) {
-			for (int s = 0; s < o; ++s) {
-				for (int t = 0; t < p; ++t) {
+		for(int r = 0; r < q; ++r) {
+			for(int s = 0; s < o; ++s) {
+				for(int t = 0; t < p; ++t) {
 					int u = i + s;
 					int v = j + t;
 					int w = k + r;
 
 					Biome b = this.getBiomeForNoiseGen(u, v, w);
 
-					if (!set.contains(b.getId())) {
-						if (!shouldContinue.test(b)) return false;
+					if(!set.contains(b.getId())) {
+						if(!shouldContinue.test(b)) return false;
 					}
 
 					set.add(b.getId());
@@ -89,15 +93,15 @@ public abstract class BiomeSource extends VersionedGen {
 
 		Set<Integer> set = new HashSet<>();
 
-		for (int r = 0; r < q; ++r) {
-			for (int s = 0; s < o; ++s) {
+		for(int r = 0; r < q; ++r) {
+			for(int s = 0; s < o; ++s) {
 				int u = i + s;
 				int w = k + r;
 
 				Biome b = this.getBiomeForNoiseGen(u, 0, w);
 
-				if (!set.contains(b.getId())) {
-					if (!shouldContinue.test(b)) return false;
+				if(!set.contains(b.getId())) {
+					if(!shouldContinue.test(b)) return false;
 				}
 
 				set.add(b.getId());
@@ -116,7 +120,7 @@ public abstract class BiomeSource extends VersionedGen {
 	}
 
 	public BPos locateBiome(int centerX, int centerY, int centerZ, int radius, int increment,
-							Collection<Biome> biomes, JRand rand, boolean checkByLayer) {
+	                        Collection<Biome> biomes, JRand rand, boolean checkByLayer) {
 		//Since we're looking at the layer before the voronoi zoom...
 		centerX >>= 2;
 		centerZ >>= 2;
@@ -127,23 +131,23 @@ public abstract class BiomeSource extends VersionedGen {
 		int s = checkByLayer ? 0 : radius;
 		int bound = 0;
 
-		for (int depth = s; depth <= radius; depth += increment) {
-			for (int oz = -depth; oz <= depth; oz += increment) {
+		for(int depth = s; depth <= radius; depth += increment) {
+			for(int oz = -depth; oz <= depth; oz += increment) {
 				boolean isZEdge = Math.abs(oz) == depth;
 
-				for (int ox = -depth; ox <= depth; ox += increment) {
-					if (checkByLayer) {
+				for(int ox = -depth; ox <= depth; ox += increment) {
+					if(checkByLayer) {
 						boolean isXEdge = Math.abs(ox) == depth;
-						if (!isXEdge && !isZEdge) continue;
+						if(!isXEdge && !isZEdge) continue;
 					}
 
 					int x = centerX + ox;
 					int z = centerZ + oz;
 
-					if (biomes.contains(this.getBiomeForNoiseGen(x, centerY, z))) {
-						if (pos == null || rand.nextInt(bound + 1) == 0) {
+					if(biomes.contains(this.getBiomeForNoiseGen(x, centerY, z))) {
+						if(pos == null || rand.nextInt(bound + 1) == 0) {
 							pos = new BPos(x << 2, centerY, z << 2);
-							if (checkByLayer) {
+							if(checkByLayer) {
 								return pos;
 							}
 						}
@@ -165,10 +169,10 @@ public abstract class BiomeSource extends VersionedGen {
 		int counter = 0;
 		BPos pos = null;
 
-		for (int z = lowerZ; z <= upperZ; z++) {
-			for (int x = lowerX; x <= upperX; x++) {
+		for(int z = lowerZ; z <= upperZ; z++) {
+			for(int x = lowerX; x <= upperX; x++) {
 				Biome biome = this.getBiomeForNoiseGen(x, 0, z);
-				if (biomes.contains(biome) && (pos == null || rand.nextInt(counter + 1) == 0)) {
+				if(biomes.contains(biome) && (pos == null || rand.nextInt(counter + 1) == 0)) {
 					pos = new BPos(x << 2, 0, z << 2);
 					++counter;
 				}

@@ -13,11 +13,11 @@ import kaptainwutax.mcutils.version.MCVersion;
 public class NetherBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 	private static final BiomePoint[] DEFAULT_BIOME_POINTS = {
-			new BiomePoint(Biomes.NETHER_WASTES, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
-			new BiomePoint(Biomes.SOUL_SAND_VALLEY, 0.0F, -0.5F, 0.0F, 0.0F, 0.0F),
-			new BiomePoint(Biomes.CRIMSON_FOREST, 0.4F, 0.0F, 0.0F, 0.0F, 0.0F),
-			new BiomePoint(Biomes.WARPED_FOREST, 0.0F, 0.5F, 0.0F, 0.0F, 0.375F),
-			new BiomePoint(Biomes.BASALT_DELTAS, -0.5F, 0.0F, 0.0F, 0.0F, 0.175F)
+		new BiomePoint(Biomes.NETHER_WASTES, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
+		new BiomePoint(Biomes.SOUL_SAND_VALLEY, 0.0F, -0.5F, 0.0F, 0.0F, 0.0F),
+		new BiomePoint(Biomes.CRIMSON_FOREST, 0.4F, 0.0F, 0.0F, 0.0F, 0.0F),
+		new BiomePoint(Biomes.WARPED_FOREST, 0.0F, 0.5F, 0.0F, 0.0F, 0.375F),
+		new BiomePoint(Biomes.BASALT_DELTAS, -0.5F, 0.0F, 0.0F, 0.0F, 0.175F)
 	};
 	private final BiomePoint[] biomePoints;
 	public NetherLayer full;
@@ -48,7 +48,7 @@ public class NetherBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	protected void build() {
-		if (this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
 			this.layers.add(this.full = new NetherLayer(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints));
 			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), true, this.full));
 		} else {

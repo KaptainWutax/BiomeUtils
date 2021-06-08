@@ -45,10 +45,10 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
 		super(version, worldSeed);
 
-		if (this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
+		if(this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
 			throw new UnsupportedVersion(this.getVersion(), "overworld biomes");
 		}
-		if (this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
+		if(this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
 			System.out.println("WARNING USING TEMPORARY BIOME STACK (NOT VERIFIED)");
 		}
 
@@ -76,16 +76,16 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2001L, ScaleLayer.Type.NORMAL, this.base));
 		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 
-		if (is1_7up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 50L, this.base));
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 70L, this.base));
 			this.layers.add(this.base = new IslandLayer(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
-		if (is_1_0_up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_0)) {
 			this.layers.add(this.base = new ClimateLayer.Cold(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 		}
 
-		if (is1_7up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
 			this.layers.add(this.base = new ClimateLayer.Temperate(this.getVersion(), this.getWorldSeed(), 2L, this.base));
 			this.layers.add(this.base = new ClimateLayer.Cool(this.getVersion(), this.getWorldSeed(), 2L, this.base));
@@ -94,39 +94,43 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 		//512
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2002L, ScaleLayer.Type.NORMAL, this.base));
-		if (is1_6down.call()) {
+
+		if(this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4)) {
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
 		}
 
 		//256
 		this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2003L, ScaleLayer.Type.NORMAL, this.base));
-		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), is_1_0_up.call() ? 4L : 3L, this.base));
+		this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), this.getVersion().isNewerOrEqualTo(MCVersion.v1_0) ? 4L : 3L, this.base));
 
-		if (is_1_0_up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_0)) {
 			this.layers.add(this.base = new MushroomLayer(this.getVersion(), this.getWorldSeed(), 5L, this.base));
 		} else {
 			this.layers.add(this.base = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 2004L, ScaleLayer.Type.NORMAL, this.base));
 			this.layers.add(this.base = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.base));
 		}
 
-		if (is1_7up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
 			this.layers.add(this.base = new DeepOceanLayer(this.getVersion(), this.getWorldSeed(), 4L, this.base));
 		}
 
 		// new biomes chain
 		this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
 
-		if (is1_14up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_14)) {
 			this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));
 		}
+
 		this.biomes = this.stack(1000L, NORMAL_SCALE, this.biomes, 2);
-		if (is1_7up.call()) {
+
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
 			this.layers.add(this.biomes = new EaseEdgeLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes));
 		}
 
 		// noise generation for variant and river
 		this.layers.add(this.noise = new NoiseLayer(this.getVersion(), this.getWorldSeed(), 100L, this.base));
-		if (is1_12down.call()) {
+
+		if(this.getVersion().isOlderThan(MCVersion.v1_13)) {
 			// this line needs an explanation : basically back when the stack was recursively initialized, only one parent was
 			// initialized with its world seed but the hills layer had 2 parents so the noise was never initialized recursively,
 			// we simulate this stuff here by scaling with world seed equals to 0
@@ -141,31 +145,32 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		}
 
 		// hills and variants chain
-		if (is1_1up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_1)) {
 			this.layers.add(this.variants = new HillsLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.biomes, this.noise));
 		} else {
 			this.variants = this.biomes;
 		}
-		if (is1_7up.call()) {
+
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2)) {
 			this.layers.add(this.variants = new SunflowerPlainsLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.variants));
 		}
 
 		// TODO add the temperature and rainfall layers here
-		for (int i = 0; i < this.biomeSize; i++) {
+		for(int i = 0; i < this.biomeSize; i++) {
 			this.layers.add(this.variants = new ScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L + i, ScaleLayer.Type.NORMAL, this.variants));
-			if (i == 0) {
+			if(i == 0) {
 				this.layers.add(this.variants = new LandLayer(this.getVersion(), this.getWorldSeed(), 3L, this.variants));
 			}
 
-			if ((is1_1up.call() && (i == 1 || (this.biomeSize == 1 && is1_8up.call())))
-					|| (is1_0down.call() && i == 0 && is_1_0_up.call())) {
+			if((this.getVersion().isNewerOrEqualTo(MCVersion.v1_1) && (i == 1 || (this.biomeSize == 1 && this.getVersion().isNewerOrEqualTo(MCVersion.v1_8))))
+				|| (this.getVersion().isOlderOrEqualTo(MCVersion.v1_0) && i == 0 && this.getVersion().isNewerOrEqualTo(MCVersion.v1_0))) {
 				// this will trigger for i==1 for 1.1+
 				// or for biomesize=1 if 1.8+
 				// or for i==0 for 1.0 only
 				this.layers.add(this.variants = new EdgeBiomesLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 
 			}
-			if (i == 1 && is1_6down.call() && is1_1up.call()) {
+			if(i == 1 && this.getVersion().isBetween(MCVersion.v1_1, MCVersion.v1_6_4)) {
 				// 1.6.4- rivers (introduced in 1.1)
 				this.layers.add(this.variants = new OldRiverInBiomes(this.getVersion(), this.getWorldSeed(), 1000L, this.variants));
 			}
@@ -178,17 +183,18 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		// for 1.7 they don't have the notion of river size so biome size was used
 		// for 1.6.4- we have a stack of 6 so here 2+4 that we offset by 2
 		this.river = this.stack(
-				is1_7up.call() ? 1000L : 1002L, NORMAL_SCALE,
-				is1_12down.call() ? this.river : this.noise,
-				is1_8up.call() ? riverSize : biomeSize
+			this.getVersion().isNewerOrEqualTo(MCVersion.v1_7_2) ? 1000L : 1002L, NORMAL_SCALE,
+			this.getVersion().isOlderThan(MCVersion.v1_13) ? this.river : this.noise,
+			this.getVersion().isNewerOrEqualTo(MCVersion.v1_8) ? riverSize : biomeSize
 		);
+
 		this.layers.add(this.river = new NoiseToRiverLayer(this.getVersion(), this.getWorldSeed(), 1L, this.river));
 		this.layers.add(this.river = new SmoothScaleLayer(this.getVersion(), this.getWorldSeed(), 1000L, this.river));
 
 		// mixing of the river with the hills and variants
 		this.layers.add(this.full = new RiverLayer(this.getVersion(), this.getWorldSeed(), 100L, this.variants, this.river));
 
-		if (is1_13up.call()) {
+		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_13)) {
 			// ocean chains
 			this.layers.add(this.ocean = new OceanTemperatureLayer(this.getVersion(), this.getWorldSeed(), 2L));
 			this.ocean = this.stack(2001L, NORMAL_SCALE, this.ocean, 6);
@@ -201,7 +207,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	public IntBiomeLayer stack(long salt, BiFunction<Long, IntBiomeLayer, IntBiomeLayer> layer, IntBiomeLayer parent, int count) {
-		for (int i = 0; i < count; i++) {
+		for(int i = 0; i < count; i++) {
 			this.layers.add(parent = layer.apply(salt + i, parent));
 		}
 
@@ -224,7 +230,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	public BPos getSpawnPoint(Collection<Biome> spawnBiomes) {
-		if (this.getVersion().isOlderThan(MCVersion.v1_13)) {
+		if(this.getVersion().isOlderThan(MCVersion.v1_13)) {
 			return getSpawnPoint12(spawnBiomes, false);
 		}
 		JRand rand = new JRand(this.getWorldSeed());
@@ -233,55 +239,55 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	public double getGrassStats(Biome biome) {
-		if (Biomes.PLAINS.equals(biome)) {
+		if(Biomes.PLAINS.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.MOUNTAINS.equals(biome)) {
+		} else if(Biomes.MOUNTAINS.equals(biome)) {
 			return 0.8; // height dependent
-		} else if (Biomes.FOREST.equals(biome)) {
+		} else if(Biomes.FOREST.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.TAIGA.equals(biome)) {
+		} else if(Biomes.TAIGA.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.SWAMP.equals(biome)) {
+		} else if(Biomes.SWAMP.equals(biome)) {
 			return 0.6; // height dependent
-		} else if (Biomes.RIVER.equals(biome)) {
+		} else if(Biomes.RIVER.equals(biome)) {
 			return 0.2;
-		} else if (Biomes.BEACH.equals(biome)) {
+		} else if(Biomes.BEACH.equals(biome)) {
 			return 0.1;
-		} else if (Biomes.WOODED_HILLS.equals(biome)) {
+		} else if(Biomes.WOODED_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.TAIGA_HILLS.equals(biome)) {
+		} else if(Biomes.TAIGA_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.MOUNTAIN_EDGE.equals(biome)) {
+		} else if(Biomes.MOUNTAIN_EDGE.equals(biome)) {
 			return 1.0; // height dependent
-		} else if (Biomes.JUNGLE.equals(biome)) {
+		} else if(Biomes.JUNGLE.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.JUNGLE_HILLS.equals(biome)) {
+		} else if(Biomes.JUNGLE_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.JUNGLE_EDGE.equals(biome)) {
+		} else if(Biomes.JUNGLE_EDGE.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.BIRCH_FOREST.equals(biome)) {
+		} else if(Biomes.BIRCH_FOREST.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.BIRCH_FOREST_HILLS.equals(biome)) {
+		} else if(Biomes.BIRCH_FOREST_HILLS.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.DARK_FOREST.equals(biome)) {
+		} else if(Biomes.DARK_FOREST.equals(biome)) {
 			return 0.9;
-		} else if (Biomes.SNOWY_TAIGA.equals(biome)) {
+		} else if(Biomes.SNOWY_TAIGA.equals(biome)) {
 			return 0.1; // below trees
-		} else if (Biomes.SNOWY_TAIGA_HILLS.equals(biome)) {
+		} else if(Biomes.SNOWY_TAIGA_HILLS.equals(biome)) {
 			return 0.1; // below trees
-		} else if (Biomes.GIANT_TREE_TAIGA.equals(biome)) {
+		} else if(Biomes.GIANT_TREE_TAIGA.equals(biome)) {
 			return 0.6;
-		} else if (Biomes.GIANT_TREE_TAIGA_HILLS.equals(biome)) {
+		} else if(Biomes.GIANT_TREE_TAIGA_HILLS.equals(biome)) {
 			return 0.6;
-		} else if (Biomes.MODIFIED_GRAVELLY_MOUNTAINS.equals(biome)) {
+		} else if(Biomes.MODIFIED_GRAVELLY_MOUNTAINS.equals(biome)) {
 			return 0.2; // height dependent
-		} else if (Biomes.SAVANNA.equals(biome)) {
+		} else if(Biomes.SAVANNA.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.SAVANNA_PLATEAU.equals(biome)) {
+		} else if(Biomes.SAVANNA_PLATEAU.equals(biome)) {
 			return 1.0;
-		} else if (Biomes.BADLANDS.equals(biome)) {
+		} else if(Biomes.BADLANDS.equals(biome)) {
 			return 0.1; // height dependent
-		} else if (Biomes.BADLANDS_PLATEAU.equals(biome)) {
+		} else if(Biomes.BADLANDS_PLATEAU.equals(biome)) {
 			return 0.1; // height dependent
 			// NOTE: in rare circumstances you can get also get grass islands that are
 			// completely ocean variants...
@@ -294,7 +300,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 		// void check not usable
 		// for now lets just do the proba tables then we can move to full terrain for true spawn (see terrainUtils)
-		if (!trueSpawn) {
+		if(!trueSpawn) {
 			return getGrassStats(this.getBiome(x, 0, z)) >= 0.5;
 		} else {
 			throw new UnsupportedVersion(getVersion(), "The true spawn is not yet implemented");
@@ -306,17 +312,17 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		BPos spawnPos = this.locateBiome12(0, 0, 256, spawnBiomes, rand);
 		int x = 8;
 		int z = 8;
-		if (spawnPos != null) {
+		if(spawnPos != null) {
 			x = spawnPos.getX();
 			z = spawnPos.getZ();
 		}
 		int counter = 0;
 		// wiggle
-		while (!isValidPos(x, z, trueSpawn)) {
+		while(!isValidPos(x, z, trueSpawn)) {
 			x += rand.nextInt(64) - rand.nextInt(64);
 			z += rand.nextInt(64) - rand.nextInt(64);
 			++counter;
-			if (counter == 1000) {
+			if(counter == 1000) {
 				break;
 			}
 		}

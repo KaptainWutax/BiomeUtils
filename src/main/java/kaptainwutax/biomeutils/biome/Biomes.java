@@ -6,7 +6,6 @@ import kaptainwutax.mcutils.version.MCVersion;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public class Biomes {
 
 	public static Map<Integer, Biome> REGISTRY = new HashMap<>();
@@ -91,9 +90,9 @@ public class Biomes {
 	public static final Biome WARPED_FOREST = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 172, "warped_forest", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.2F, 0.1F, null));
 	public static final Biome BASALT_DELTAS = register(new Biome(MCVersion.v1_16, Dimension.NETHER, 173, "basalt_deltas", Biome.Category.NETHER, Biome.Precipitation.NONE, 2.0F, 0.2F, 0.1F, null));
 
-
 	public static Biome register(Biome biome) {
 		REGISTRY.put(biome.getId(), biome);
 		return biome;
 	}
+
 }

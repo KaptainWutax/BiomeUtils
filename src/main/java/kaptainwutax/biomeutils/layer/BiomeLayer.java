@@ -1,36 +1,34 @@
 package kaptainwutax.biomeutils.layer;
 
-import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.BaseBiomesLayer;
 import kaptainwutax.biomeutils.layer.land.ContinentLayer;
-import kaptainwutax.biomeutils.layer.land.HillsLayer;
 import kaptainwutax.biomeutils.layer.land.NoiseLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.biomeutils.layer.water.RiverLayer;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;
 import kaptainwutax.mcutils.version.MCVersion;
 
-@SuppressWarnings("unused")
-public abstract class BiomeLayer extends VersionedGen {
+public abstract class BiomeLayer {
 
+	private final MCVersion version;
 	private final BiomeLayer[] parents;
+
 	public long salt;
 	public long layerSeed;
 	public long localSeed;
 	protected int hintSize = 1;
 
-
 	protected int scale = -1;
 	protected int layerId = -1;
 
 	public BiomeLayer(MCVersion version, BiomeLayer... parents) {
-		super(version);
+		this.version = version;
 		this.parents = parents;
 	}
 
 	public BiomeLayer(MCVersion version) {
-		this(version, (BiomeLayer) null);
+		this(version, (BiomeLayer)null);
 	}
 
 	public BiomeLayer(MCVersion version, long worldSeed, long salt, BiomeLayer... parents) {
@@ -40,7 +38,11 @@ public abstract class BiomeLayer extends VersionedGen {
 	}
 
 	public BiomeLayer(MCVersion version, long worldSeed, long salt) {
-		this(version, worldSeed, salt, (BiomeLayer) null);
+		this(version, worldSeed, salt, (BiomeLayer)null);
+	}
+
+	public MCVersion getVersion() {
+		return this.version;
 	}
 
 	public int getScale() {
@@ -76,26 +78,25 @@ public abstract class BiomeLayer extends VersionedGen {
 	}
 
 	public void setHintSize(int size, boolean recursive) {
-		if (recursive) {
+		if(recursive) {
 			setRecursiveHintSize(this, size);
-		}
-		else {
+		} else {
 			this.hintSize = size;
 		}
 	}
 
 	public void setRecursiveHintSize(BiomeLayer last, int hintSize) {
-		if (last == null) return;
+		if(last == null) return;
 		int max = 0;
 
-		for (BiomeLayer biomeLayer : last.getParents()) {
+		for(BiomeLayer biomeLayer : last.getParents()) {
 			int shift = 0;
 			// TODO check new version
-			int offset = last instanceof BaseBiomesLayer || last instanceof NoiseLayer || last instanceof ContinentLayer || last instanceof RiverLayer ?0:2;
-			if (last instanceof ScaleLayer) {
+			int offset = last instanceof BaseBiomesLayer || last instanceof NoiseLayer || last instanceof ContinentLayer || last instanceof RiverLayer ? 0 : 2;
+			if(last instanceof ScaleLayer) {
 				shift = 1;
 				offset = 3;
-			} else if (last instanceof VoronoiLayer) {
+			} else if(last instanceof VoronoiLayer) {
 				shift = 2;
 				offset = 3;
 			}
@@ -108,7 +109,7 @@ public abstract class BiomeLayer extends VersionedGen {
 
 	@SuppressWarnings("unchecked")
 	public <T extends BiomeLayer> T getParent(Class<T> type) {
-		return (T) this.getParent(0);
+		return (T)this.getParent(0);
 	}
 
 	public BiomeLayer getParent(int id) {
@@ -117,7 +118,7 @@ public abstract class BiomeLayer extends VersionedGen {
 
 	@SuppressWarnings("unchecked")
 	public <T extends BiomeLayer> T getParent(int id, Class<T> type) {
-		return (T) this.getParent(id);
+		return (T)this.getParent(id);
 	}
 
 	public boolean isMergingLayer() {
@@ -175,17 +176,6 @@ public abstract class BiomeLayer extends VersionedGen {
 	public int choose(int a, int b, int c, int d) {
 		int i = this.nextInt(4);
 		return i == 0 ? a : i == 1 ? b : i == 2 ? c : d;
-	}
-
-	public int getBiome(int x, int y, int z) {
-		if (this instanceof FloatBiomeLayer) {
-			return Float.floatToIntBits(((FloatBiomeLayer) this).get(x, y, z));
-		} else if (this instanceof BoolBiomeLayer) {
-			return ((BoolBiomeLayer) this).get(x, y, z) ? 1 : 0;
-		} else if (this instanceof IntBiomeLayer) {
-			return ((IntBiomeLayer) this).get(x, y, z);
-		}
-		return -1;
 	}
 
 }

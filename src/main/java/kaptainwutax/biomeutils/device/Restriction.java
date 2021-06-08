@@ -44,8 +44,8 @@ public abstract class Restriction {
 	protected static IntBiomeLayer getLayer(MCVersion version, Class<? extends IntBiomeLayer> layerClass) {
 		OverworldBiomeSource source = new OverworldBiomeSource(version, 0L);
 
-		for (int i = 0; i < source.getLayers().size(); i++) {
-			if (source.getLayer(i).getClass().equals(layerClass)) return source.getLayer(i);
+		for(int i = 0; i < source.getLayers().size(); i++) {
+			if(source.getLayer(i).getClass().equals(layerClass)) return source.getLayer(i);
 		}
 
 		return null;
