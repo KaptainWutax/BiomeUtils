@@ -11,7 +11,7 @@ public class IntLayerCache {
 	private final int mask;
 
 	public IntLayerCache(int capacity) {
-		if(capacity < 1 || !Mth.isPowerOf2(capacity)) {
+		if (capacity < 1 || !Mth.isPowerOf2(capacity)) {
 			throw new UnsupportedOperationException("capacity must be a power of 2");
 		}
 
@@ -25,7 +25,7 @@ public class IntLayerCache {
 		long key = this.uniqueHash(x, y, z);
 		int id = this.murmur64(key) & this.mask;
 
-		if(this.keys[id] == key) {
+		if (this.keys[id] == key) {
 			return this.values[id];
 		}
 
@@ -35,18 +35,18 @@ public class IntLayerCache {
 		return value;
 	}
 
-	public int getWithoutStore(int x, int y, int z, Sampler sampler) {
+	public int getWithoutStore(int x, int y, int z, Sampler sampler){
 		long key = this.uniqueHash(x, y, z);
 		int id = this.murmur64(key) & this.mask;
 
-		if(this.keys[id] == key) {
+		if (this.keys[id] == key) {
 			return this.values[id];
 		}
 
 		return sampler.sample(x, y, z);
 	}
 
-	public int forceStoreAndGet(int x, int y, int z, Sampler sampler) {
+	public int forceStoreAndGet(int x, int y, int z, Sampler sampler){
 		long key = this.uniqueHash(x, y, z);
 		int id = this.murmur64(key) & this.mask;
 		int value = sampler.sample(x, y, z);

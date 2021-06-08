@@ -14,7 +14,7 @@ public class NoiseLayer extends IntBiomeLayer {
 	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
 		int i = this.getParent(IntBiomeLayer.class).get(x, y, z);
-		return Biome.isShallowOcean(i, this.getVersion()) ? i : this.nextInt(this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4) ? 2 : 299999) + 2;
+		return Biome.isShallowOcean(i, this) ? i : this.nextInt(is1_6down.call() ? 2 : 299999) + 2;
 	}
 
 }

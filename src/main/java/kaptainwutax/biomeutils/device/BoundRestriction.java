@@ -25,12 +25,12 @@ public abstract class BoundRestriction extends Restriction {
 	public BoundRestriction(String name, int x, int z, long salt, long bound, long min, long max) {
 		super(name, x, z);
 
-		if(max >= bound) {
+		if (max >= bound) {
 			System.err.println("Using " + max + " as maximum for bound " + bound + "? Go Fix.");
 			max = bound - 1;
 		}
 
-		if(min < 0) {
+		if (min < 0) {
 			System.err.println("Using " + min + " as minimum for bound " + bound + "? Go Fix.");
 			min = 0;
 		}
@@ -49,7 +49,7 @@ public abstract class BoundRestriction extends Restriction {
 
 	@Override
 	public List<Integer> getBitPoints() {
-		if(this.shortBound == 0) return super.getBitPoints();
+		if (this.shortBound == 0) return super.getBitPoints();
 		return Arrays.asList(24 + this.shortBound, 64);
 	}
 
@@ -57,10 +57,10 @@ public abstract class BoundRestriction extends Restriction {
 	public boolean testSeed(long seed, long bits) {
 		long localSeed = IntBiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
 
-		if(bits == 64) {
+		if (bits == 64) {
 			int val = (int) Math.floorMod(localSeed >> 24, this.bound);
 			return val >= this.min && val <= this.max;
-		} else if(bits >= 24 + this.shortBound) {
+		} else if (bits >= 24 + this.shortBound) {
 			int val = (int) Mth.mask(localSeed >> 24, this.shortBound);
 			return val >= this.shortMin && val <= this.shortMax;
 		}

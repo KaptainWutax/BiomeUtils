@@ -46,7 +46,7 @@ public class MushroomCondition {
 	}
 
 	private long inverse32Bit(long a) {
-		if(a % 2 == 0)
+		if (a % 2 == 0)
 			System.err.println("a is not invertible");
 		long x = (((a << 2) ^ (a << 1)) & 8) ^ a; // this can be removed and replaced with one more copy of the later lines
 		//4 bits known
@@ -62,10 +62,10 @@ public class MushroomCondition {
 		long m0 = m;
 		long y = 0, x = 1;
 
-		if(m == 1)
+		if (m == 1)
 			return 0;
 
-		while(a > 1) {
+		while (a > 1) {
 			long q = a / m;
 			long t = m;
 			m = a % m;
@@ -74,7 +74,7 @@ public class MushroomCondition {
 			y = x - q * y;
 			x = t;
 		}
-		if(x < 0)
+		if (x < 0)
 			x += m0;
 
 		return x;
@@ -86,7 +86,6 @@ public class MushroomCondition {
 	 * @param ws the world seed
 	 * @param x  the x coordinate to be checked (scale = 256)
 	 * @param z  the z coordinate to be checked (scale = 256)
-	 *
 	 * @return a number used to choose mushroom islands. If the returned value (retval >> 24) % 100 == 0
 	 */
 	static long getShroomSeed(long ws, int x, int z) {
@@ -140,10 +139,10 @@ public class MushroomCondition {
 		System.out.println(c.getUpperSeedMultiplier());
 		System.out.println(c.getNumValidSeeds());
 
-		for(long lowerBits = 0; lowerBits < 1L << 32; lowerBits++) {
+		for (long lowerBits = 0; lowerBits < 1L << 32; lowerBits++) {
 			c = new MushroomCondition(lowerBits, 0, 0);
 
-			for(long i = 0; i < c.getNumValidSeeds(); i++) {
+			for (long i = 0; i < c.getNumValidSeeds(); i++) {
 				long seed = MushroomCondition.getShroomSeed(((c.getUpperSeedAddend() + i * c.getUpperSeedMultiplier()) << 32) + 10, 0, 0);
 				//System.out.println(seed + ": " + (seed >>> 24) % ARG);
 			}

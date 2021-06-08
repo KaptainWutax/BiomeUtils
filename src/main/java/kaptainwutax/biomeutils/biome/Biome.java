@@ -1,5 +1,6 @@
 package kaptainwutax.biomeutils.biome;
 
+import kaptainwutax.biomeutils.VersionedGen;
 import kaptainwutax.biomeutils.layer.cache.FloatLayerCache;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.mcutils.rand.ChunkRand;
@@ -13,7 +14,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-public class Biome {
+public class Biome extends VersionedGen {
 
 	// use mainly for snow and lava stuff
 	public static final OctaveSimplexNoiseSampler TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(1234L), IntStream.of(0));
@@ -23,10 +24,7 @@ public class Biome {
 	public static final OctaveSimplexNoiseSampler BIOME_INFO_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(2345L), IntStream.of(0));
 
 	public static final FloatLayerCache TEMPERATURE_CACHE = new FloatLayerCache(1024);
-	//TODO: move all this somewhere else ^
 
-	private final MCVersion version;
-	private final Dimension dimension;
 	private final int id;
 	private final String name;
 	private final Category category;
@@ -37,11 +35,12 @@ public class Biome {
 	private final float depth;
 
 	private final Biome parent;
+	private final Dimension dimension;
 	private Biome child;
 
 	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
-	             float temperature, float scale, float depth, Biome parent) {
-		this.version = version;
+				 float temperature, float scale, float depth, Biome parent) {
+		super(version);
 		this.dimension = dimension;
 		this.id = id;
 		this.name = name;
@@ -51,14 +50,7 @@ public class Biome {
 		this.scale = scale;
 		this.depth = depth;
 		this.parent = parent;
-
-		if(this.parent != null) {
-			this.parent.child = this;
-		}
-	}
-
-	public MCVersion getVersion() {
-		return this.version;
+		if (this.parent != null) this.parent.child = this;
 	}
 
 	public Dimension getDimension() {
@@ -86,16 +78,17 @@ public class Biome {
 	}
 
 	public Temperature getTemperatureGroup() {
-		if(this.category == Biome.Category.OCEAN) {
+		if (this.category == Biome.Category.OCEAN) {
 			return Temperature.OCEAN;
-		} else if(this.getTemperature() < 0.2F) {
+		} else if (this.getTemperature() < 0.2F) {
 			return Temperature.COLD;
-		} else if(this.getTemperature() < 1.0F) {
+		} else if (this.getTemperature() < 1.0F) {
 			return Temperature.MEDIUM;
 		}
 
 		return Temperature.WARM;
 	}
+
 
 	public float getScale() {
 		return scale;
@@ -121,49 +114,46 @@ public class Biome {
 		return this.child;
 	}
 
-	public static boolean isShallowOcean(int id, MCVersion version) {
-		// TODO validate me **CRITICAL** (this is an undiscovered bug, frozen ocean was dormant)
-		if(version.isOlderThan(MCVersion.v1_13)) {
+	public static boolean isShallowOcean(int id, VersionedGen versionedGen) {
+		if (versionedGen.is1_12down.call()) { // TODO validate me **CRITICAL** (this is an undiscovered bug, frozen ocean was dormant)
 			return id == Biomes.OCEAN.getId();
 		}
-
-		return id == Biomes.OCEAN.getId() || id == Biomes.WARM_OCEAN.getId() || id == Biomes.LUKEWARM_OCEAN.getId()
-			|| id == Biomes.COLD_OCEAN.getId() || id == Biomes.FROZEN_OCEAN.getId();
+		return id == Biomes.WARM_OCEAN.getId() || id == Biomes.LUKEWARM_OCEAN.getId() || id == Biomes.OCEAN.getId()
+				|| id == Biomes.COLD_OCEAN.getId() || id == Biomes.FROZEN_OCEAN.getId();
 	}
 
 	public static boolean isOcean(int id) {
 		return id == Biomes.WARM_OCEAN.getId() || id == Biomes.LUKEWARM_OCEAN.getId() || id == Biomes.OCEAN.getId()
-			|| id == Biomes.COLD_OCEAN.getId() || id == Biomes.FROZEN_OCEAN.getId()
-			|| id == Biomes.DEEP_WARM_OCEAN.getId() || id == Biomes.DEEP_LUKEWARM_OCEAN.getId()
-			|| id == Biomes.DEEP_OCEAN.getId() || id == Biomes.DEEP_COLD_OCEAN.getId()
-			|| id == Biomes.DEEP_FROZEN_OCEAN.getId();
+				|| id == Biomes.COLD_OCEAN.getId() || id == Biomes.FROZEN_OCEAN.getId()
+				|| id == Biomes.DEEP_WARM_OCEAN.getId() || id == Biomes.DEEP_LUKEWARM_OCEAN.getId()
+				|| id == Biomes.DEEP_OCEAN.getId() || id == Biomes.DEEP_COLD_OCEAN.getId()
+				|| id == Biomes.DEEP_FROZEN_OCEAN.getId();
 	}
+
 
 	public static boolean isRiver(int id) {
 		return id == Biomes.RIVER.getId() || id == Biomes.FROZEN_RIVER.getId();
 	}
 
-	public static boolean areSimilar(int id, Biome b2, MCVersion version) {
-		if(b2 == null)return false;
-		if(id == b2.getId())return true;
+	public static boolean areSimilar(int id, Biome b2, VersionedGen versionedGen) {
+		if (b2 == null) return false;
+		if (id == b2.getId()) return true;
 
 		Biome b = Biomes.REGISTRY.get(id);
-		if(b == null)return false;
-
-		if(version.isNewerOrEqualTo(MCVersion.v1_16_2)) {
+		if (b == null) return false;
+		if (versionedGen.is1_16_2up.call()) {
 			// special check for the new badlands_plateau category
-			if(b == Biomes.WOODED_BADLANDS_PLATEAU || b == Biomes.BADLANDS_PLATEAU) {
+			if (b == Biomes.WOODED_BADLANDS_PLATEAU || b == Biomes.BADLANDS_PLATEAU) {
 				return b2 == Biomes.WOODED_BADLANDS_PLATEAU || b2 == Biomes.BADLANDS_PLATEAU;
-			} else if(b2 == Biomes.WOODED_BADLANDS_PLATEAU || b2 == Biomes.BADLANDS_PLATEAU) {
+			} else if (b2 == Biomes.WOODED_BADLANDS_PLATEAU || b2 == Biomes.BADLANDS_PLATEAU) {
 				return false; // very important check (non commutativity)
 			}
-
 			return b.getCategory() == b2.getCategory();
 		}
 
-		if(id != Biomes.WOODED_BADLANDS_PLATEAU.getId() && id != Biomes.BADLANDS_PLATEAU.getId()) {
-			if(b.getCategory() != Biome.Category.NONE && b2.getCategory()
-				!= Biome.Category.NONE && b.getCategory() == b2.getCategory()) {
+		if (id != Biomes.WOODED_BADLANDS_PLATEAU.getId() && id != Biomes.BADLANDS_PLATEAU.getId()) {
+			if (b.getCategory() != Biome.Category.NONE && b2.getCategory()
+					!= Biome.Category.NONE && b.getCategory() == b2.getCategory()) {
 				return true;
 			}
 
@@ -174,8 +164,8 @@ public class Biome {
 	}
 
 	public static boolean applyAll(Function<Integer, Boolean> function, int... ints) {
-		for(int i : ints) {
-			if(!function.apply(i)) {
+		for (int i : ints) {
+			if (!function.apply(i)) {
 				return false;
 			}
 		}
@@ -193,8 +183,8 @@ public class Biome {
 
 	@Override
 	public boolean equals(Object o) {
-		if(this == o) return true;
-		if(!(o instanceof Biome)) return false;
+		if (this == o) return true;
+		if (!(o instanceof Biome)) return false;
 		Biome biome = (Biome) o;
 		return id == biome.id;
 	}
@@ -207,17 +197,17 @@ public class Biome {
 	@Override
 	public String toString() {
 		return "Biome{" +
-			"id=" + this.id +
-			", name='" + this.name + '\'' +
-			", category=" + this.category +
-			", precipitation=" + this.precipitation +
-			", temperature=" + this.temperature +
-			", scale=" + this.scale +
-			", depth=" + this.depth +
-			", parent=" + (this.parent == null ? null : this.parent.name) +
-			", dimension=" + dimension +
-			", child=" + (this.child == null ? null : this.child.name) +
-			'}';
+				"id=" + id +
+				", name='" + name + '\'' +
+				", category=" + category +
+				", precipitation=" + precipitation +
+				", temperature=" + temperature +
+				", scale=" + scale +
+				", depth=" + depth +
+				", parent=" + (parent == null ? null : parent.name) +
+				", dimension=" + dimension +
+				", child=" + (child == null ? null : child.name) +
+				'}';
 	}
 
 	public enum Category {
@@ -304,18 +294,18 @@ public class Biome {
 
 	private float getTemperature(int x, int y, int z) {
 		float temperature = this.temperature;
-		if(this.equals(Biomes.FROZEN_OCEAN) || this.equals(Biomes.DEEP_FROZEN_OCEAN)) {
+		if (this.equals(Biomes.FROZEN_OCEAN) || this.equals(Biomes.DEEP_FROZEN_OCEAN)) {
 			double d0 = Biome.FROZEN_TEMPERATURE_NOISE.sample((double) x * 0.05D, (double) z * 0.05D, false) * 7.0D;
 			double d1 = Biome.BIOME_INFO_NOISE.sample((double) x * 0.2D, (double) z * 0.2D, false);
 			double d2 = d0 + d1;
-			if(d2 < 0.3D) {
+			if (d2 < 0.3D) {
 				double d3 = Biome.BIOME_INFO_NOISE.sample((double) x * 0.09D, (double) z * 0.09D, false);
-				if(d3 < 0.8D) {
+				if (d3 < 0.8D) {
 					temperature = 0.2F;
 				}
 			}
 		}
-		if(y > 64) {
+		if (y > 64) {
 			float f1 = (float) (TEMPERATURE_NOISE.sample((float) x / 8.0F, (float) z / 8.0F, false) * 4.0D);
 			return temperature - (f1 + (float) y - 64.0F) * 0.05F / 30.0F;
 		}

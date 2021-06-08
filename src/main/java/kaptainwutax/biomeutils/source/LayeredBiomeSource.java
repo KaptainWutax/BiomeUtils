@@ -23,8 +23,8 @@ public abstract class LayeredBiomeSource<T extends BiomeLayer> extends BiomeSour
 	}
 
 	public T getLayer(Class<? extends BiomeLayer> layerClass) {
-		for(T layer : getLayers()) {
-			if(layer.getClass() == layerClass) {
+		for(T layer:getLayers()){
+			if (layer.getClass()==layerClass){
 				return layer;
 			}
 		}

@@ -33,7 +33,7 @@ public class BiomeDevice {
 
 		BitGroup entry = groups.get(0);
 
-		if(entry.bits < 64) {
+		if (entry.bits < 64) {
 			search(entry, 0, 0, onSeedFound);
 		} else {
 			long worldSeed = 0;
@@ -41,33 +41,33 @@ public class BiomeDevice {
 			do {
 				boolean valid = true;
 
-				for(BitGroup group : groups) {
-					if(!group.testSeed(worldSeed)) {
+				for (BitGroup group : groups) {
+					if (!group.testSeed(worldSeed)) {
 						valid = false;
 						break;
 					}
 				}
 
-				if(valid && groups.get(groups.size() - 1).testSource(worldSeed)) {
+				if (valid && groups.get(groups.size() - 1).testSource(worldSeed)) {
 					onSeedFound.accept(worldSeed);
 				}
 
 				worldSeed++;
-			} while(worldSeed != 0);
+			} while (worldSeed != 0);
 		}
 	}
 
 	public void search(BitGroup group, long baseSeed, int bits, LongConsumer onSeedFound) {
 		long searchSpace = Mth.getPow2(group.bits - bits);
-		//System.out.println("[" + baseSeed + "] is good for the lowest " + bits + " bits! Lifting the next " + (group.bits - bits) + " bits...");
+		System.out.println("[" + baseSeed + "] is good for the lowest " + bits + " bits! Lifting the next " + (group.bits - bits) + " bits...");
 
-		for(long i = 0; i < searchSpace; i++) {
+		for (long i = 0; i < searchSpace; i++) {
 			long seed = baseSeed | (i << bits);
 
-			if(!group.testSeed(seed)) continue;
+			if (!group.testSeed(seed)) continue;
 
-			if(group.next == null) {
-				if(group.testSource(seed)) onSeedFound.accept(seed);
+			if (group.next == null) {
+				if (group.testSource(seed)) onSeedFound.accept(seed);
 			} else {
 				this.search(group.next, seed, group.bits, onSeedFound);
 			}
@@ -77,15 +77,15 @@ public class BiomeDevice {
 	private List<BitGroup> groupRestrictions() {
 		Map<Integer, BitGroup> raw = new TreeMap<>(Integer::compare);
 
-		for(Restriction restriction : this.restrictions) {
-			for(int bitPoint : restriction.getBitPoints()) {
+		for (Restriction restriction : this.restrictions) {
+			for (int bitPoint : restriction.getBitPoints()) {
 				raw.computeIfAbsent(bitPoint, i -> new BitGroup(i, new ArrayList<>())).restrictions.add(restriction);
 			}
 		}
 
 		List<BitGroup> result = new ArrayList<>(raw.values());
 
-		for(int i = 0; i < result.size() - 1; i++) {
+		for (int i = 0; i < result.size() - 1; i++) {
 			result.get(i).next = result.get(i + 1);
 		}
 
@@ -103,8 +103,8 @@ public class BiomeDevice {
 		}
 
 		public boolean testSeed(long seed) {
-			for(Restriction restriction : this.restrictions) {
-				if(!restriction.testSeed(seed, this.bits)) return false;
+			for (Restriction restriction : this.restrictions) {
+				if (!restriction.testSeed(seed, this.bits)) return false;
 			}
 
 			return true;
@@ -113,8 +113,8 @@ public class BiomeDevice {
 		public boolean testSource(long seed) {
 			OverworldBiomeSource source = new OverworldBiomeSource(MCVersion.v1_16_2, seed);
 
-			for(Restriction restriction : this.restrictions) {
-				if(!restriction.testSource(source)) return false;
+			for (Restriction restriction : this.restrictions) {
+				if (!restriction.testSource(source)) return false;
 			}
 
 			return true;

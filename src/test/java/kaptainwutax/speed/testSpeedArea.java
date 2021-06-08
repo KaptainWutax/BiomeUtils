@@ -11,6 +11,7 @@ import org.junitpioneer.jupiter.CartesianProductTest;
 
 import java.util.concurrent.TimeUnit;
 
+
 @DisplayName("Measure speed")
 @Tag("Speed")
 @TestFramework.Overworld
@@ -18,11 +19,11 @@ import java.util.concurrent.TimeUnit;
 @TestFramework.End
 public class testSpeedArea {
 
+
 	private BiomeSource biomesource;
 
 	@BeforeEach
-	public void setup(TestInfo info) {
-	}
+	public void setup(TestInfo info) {}
 
 	@AfterEach
 	public void tearDown(TestInfo info) {
@@ -36,9 +37,9 @@ public class testSpeedArea {
 	public long run(int size, int offset) {
 		long start = System.nanoTime();
 		int sum = 0;
-		for(int x = 0; x < size; x++) {
-			for(int y = 0; y < 256; y++) {
-				for(int z = 0; z < size; z++) {
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < 256; y++) {
+				for (int z = 0; z < size; z++) {
 					Biome biome = this.biomesource.getBiomeForNoiseGen(x + offset, y, z + offset);
 					sum += biome.getId();
 				}
@@ -54,7 +55,7 @@ public class testSpeedArea {
 	@CartesianEnumSource(MCVersion.class)
 	@CartesianEnumSource(Dimension.class)
 	public void speedArea(MCVersion version, Dimension dimension, TestInfo info) {
-		if(version.isNewerOrEqualTo(MCVersion.vb1_8_1)) {
+		if (version.isNewerOrEqualTo(MCVersion.vb1_8_1)) {
 			init(dimension, version, info);
 			long elapsed = run(64, 0);
 			System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);
@@ -69,7 +70,7 @@ public class testSpeedArea {
 	@CartesianEnumSource(MCVersion.class)
 	@CartesianEnumSource(Dimension.class)
 	public void speedSingleBlock(MCVersion version, Dimension dimension, TestInfo info) {
-		if(version.isNewerOrEqualTo(MCVersion.vb1_8_1)) {
+		if (version.isNewerOrEqualTo(MCVersion.vb1_8_1)) {
 			init(dimension, version, info);
 			long elapsed = run(1, 0);
 			System.out.printf("Took %.2f ms for version %s in dimension %s%n", elapsed / 1e6, version, dimension);

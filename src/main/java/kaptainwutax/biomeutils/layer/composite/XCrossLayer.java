@@ -14,11 +14,11 @@ public abstract class XCrossLayer extends IntBiomeLayer {
 		this.setSeed(x, z);
 
 		return this.sample(
-			this.getParent(IntBiomeLayer.class).get(x - 1, y, z + 1),
-			this.getParent(IntBiomeLayer.class).get(x + 1, y, z + 1),
-			this.getParent(IntBiomeLayer.class).get(x + 1, y, z - 1),
-			this.getParent(IntBiomeLayer.class).get(x - 1, y, z - 1),
-			this.getParent(IntBiomeLayer.class).get(x, y, z)
+				this.getParent(IntBiomeLayer.class).get(x - 1, y, z + 1),
+				this.getParent(IntBiomeLayer.class).get(x + 1, y, z + 1),
+				this.getParent(IntBiomeLayer.class).get(x + 1, y, z - 1),
+				this.getParent(IntBiomeLayer.class).get(x - 1, y, z - 1),
+				this.getParent(IntBiomeLayer.class).get(x, y, z)
 		);
 	}
 

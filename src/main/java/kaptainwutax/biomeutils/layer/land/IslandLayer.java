@@ -14,8 +14,8 @@ public class IslandLayer extends CrossLayer {
 
 	@Override
 	public int sample(int n, int e, int s, int w, int center) {
-		return Biome.applyAll(v -> Biome.isShallowOcean(v, this.getVersion()), center, n, e, s, w)
-			&& this.nextInt(2) == 0 ? Biomes.PLAINS.getId() : center;
+		return Biome.applyAll(v -> Biome.isShallowOcean(v, this), center, n, e, s, w)
+				&& this.nextInt(2) == 0 ? Biomes.PLAINS.getId() : center;
 	}
 
 }

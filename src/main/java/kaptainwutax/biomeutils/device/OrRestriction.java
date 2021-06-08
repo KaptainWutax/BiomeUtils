@@ -22,7 +22,7 @@ public class OrRestriction extends Restriction {
 	public List<Integer> getBitPoints() {
 		Set<Integer> points = new HashSet<>();
 
-		for(Restriction restriction : this.restrictions) {
+		for (Restriction restriction : this.restrictions) {
 			points.addAll(restriction.getBitPoints());
 		}
 
@@ -31,8 +31,8 @@ public class OrRestriction extends Restriction {
 
 	@Override
 	public boolean testSeed(long seed, long bits) {
-		for(Restriction restriction : this.restrictions) {
-			if(restriction.testSeed(seed, bits)) return true;
+		for (Restriction restriction : this.restrictions) {
+			if (restriction.testSeed(seed, bits)) return true;
 		}
 
 		return false;
@@ -41,8 +41,8 @@ public class OrRestriction extends Restriction {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public boolean testSource(LayeredBiomeSource source) {
-		for(Restriction restriction : this.restrictions) {
-			if(restriction.testSource(source)) return true;
+		for (Restriction restriction : this.restrictions) {
+			if (restriction.testSource(source)) return true;
 		}
 
 		return false;
