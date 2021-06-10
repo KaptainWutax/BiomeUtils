@@ -1,4 +1,4 @@
-package kaptainwutax.biomeutils.layer.nether;
+package kaptainwutax.biomeutils.layer.noise;
 
 import kaptainwutax.biomeutils.biome.BiomePoint;
 import kaptainwutax.biomeutils.biome.Biomes;
@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class NetherLayer extends IntBiomeLayer {
+public class MultiNoiseLayer extends IntBiomeLayer {
 
 	private final BiomePoint[] biomePoints;
 	private final boolean is3D;
@@ -20,11 +20,11 @@ public class NetherLayer extends IntBiomeLayer {
 	private DoublePerlinNoiseSampler altitude;
 	private DoublePerlinNoiseSampler weirdness;
 
-	public NetherLayer(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints) {
+	public MultiNoiseLayer(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints) {
 		super(version, (IntBiomeLayer)null);
 		this.is3D = is3D;
 
-		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
+		if(biomePoints != null) {
 			this.temperature = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed), IntStream.rangeClosed(-7, -6));
 			this.humidity = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed + 1L), IntStream.rangeClosed(-7, -6));
 			this.altitude = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed + 2L), IntStream.rangeClosed(-7, -6));
@@ -36,10 +36,7 @@ public class NetherLayer extends IntBiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
-		if(this.getVersion().isOlderThan(MCVersion.v1_16)) {
-			return Biomes.NETHER_WASTES.getId();
-		}
-
+		if(this.biomePoints == null) return Biomes.THE_VOID.getId();
 		y = this.is3D ? y : 0;
 
 		BiomePoint point = new BiomePoint(null,

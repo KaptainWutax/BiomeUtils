@@ -3,7 +3,7 @@ package kaptainwutax.biomeutils.layer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.BaseBiomesLayer;
 import kaptainwutax.biomeutils.layer.land.ContinentLayer;
-import kaptainwutax.biomeutils.layer.land.NoiseLayer;
+import kaptainwutax.biomeutils.layer.noise.NoiseLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.biomeutils.layer.water.RiverLayer;
 import kaptainwutax.mcutils.rand.seed.SeedMixer;

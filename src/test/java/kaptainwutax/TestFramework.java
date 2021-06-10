@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestFramework {
 
 	public static void randomBiomeGen(int size, IntBiomeLayer layer, int[][] biomesMap) {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for(int i = 0; i < size; i++) {
+			for(int j = 0; j < size; j++) {
 				int x = biomesMap[i * size + j][0];
 				int z = biomesMap[i * size + j][1];
 				int id = layer.sample(x, 0, z);
@@ -23,13 +23,13 @@ public class TestFramework {
 		}
 	}
 
-	public static long getHash(IntBiomeLayer layer,int x, int z, int size) {
-		long hash=0;
-		for (int offsetX = 0; offsetX < size; offsetX++) {
-			for (int offsetZ = 0; offsetZ < size; offsetZ++) {
-				int id = layer.sample(x+offsetX, 0, z+offsetZ);
-				hash+=id;
-							}
+	public static long getHash(IntBiomeLayer layer, int x, int z, int size) {
+		long hash = 0;
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetZ = 0; offsetZ < size; offsetZ++) {
+				int id = layer.sample(x + offsetX, 0, z + offsetZ);
+				hash += id;
+			}
 		}
 		return hash;
 	}
@@ -39,8 +39,8 @@ public class TestFramework {
 	}
 
 	public static void viewDebug(IntBiomeLayer layer, int cx, int cz, int size) {
-		for (int x = 0; x < size; x++) {
-			for (int z = 0; z < size; z++) {
+		for(int x = 0; x < size; x++) {
+			for(int z = 0; z < size; z++) {
 				int biome = layer.sample(cx + x, 0, cz + z);
 				System.out.printf("%d,", biome);
 			}

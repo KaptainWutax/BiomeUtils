@@ -1,4 +1,4 @@
-package kaptainwutax.biomeutils.layer.land;
+package kaptainwutax.biomeutils.layer.noise;
 
 import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;

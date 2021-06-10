@@ -3,6 +3,7 @@ package kaptainwutax.biomeutils.device;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.land.*;
+import kaptainwutax.biomeutils.layer.noise.NoiseLayer;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
 import kaptainwutax.biomeutils.source.LayeredBiomeSource;
 

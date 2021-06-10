@@ -5,6 +5,7 @@ import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.*;
+import kaptainwutax.biomeutils.layer.noise.NoiseLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer;
 import kaptainwutax.biomeutils.layer.shore.EaseEdgeLayer;
