@@ -25,6 +25,7 @@ public abstract class MultiNoiseBiomeSource extends LayeredBiomeSource<IntBiomeL
 	@Override
 	public abstract Dimension getDimension();
 
+	// I have no idea what this function is supposed to represent...
 	public MultiNoiseBiomeSource addDimension() {
 		this.threeDimensional = true;
 		this.full = null;
@@ -33,22 +34,7 @@ public abstract class MultiNoiseBiomeSource extends LayeredBiomeSource<IntBiomeL
 		return this;
 	}
 
-	protected void build() {
-		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
-			this.layers.add(this.full = new MultiNoiseLayer(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints));
-			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), true, this.full));
-		} else {
-			this.layers.add(this.full = new MultiNoiseLayer(this.getVersion(), this.getWorldSeed(), false, null));
-			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), false, this.full) {
-				@Override
-				public int sample(int x, int y, int z) {
-					return this.getVersion().isOlderThan(MCVersion.v1_16) ? Biomes.NETHER_WASTES.getId() : super.sample(x, y, z);
-				}
-			});
-		}
-
-		this.layers.setScales();
-	}
+	protected abstract void build();
 
 	public boolean is3D() {
 		return threeDimensional;

@@ -26,15 +26,6 @@ public class NetherBiomeSource extends MultiNoiseBiomeSource {
 		return Dimension.NETHER;
 	}
 
-	// I have no idea what this function is supposed to represent...
-	public NetherBiomeSource addDimension() {
-		this.threeDimensional = true;
-		this.full = null;
-		this.layers.clear();
-		this.build();
-		return this;
-	}
-
 	protected void build() {
 		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
 			this.layers.add(this.full = new MultiNoiseLayer(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints));
