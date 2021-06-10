@@ -17,7 +17,7 @@ public class VoronoiLayer extends IntBiomeLayer {
 	}
 
 	private static double calcContribution(double[] d, int x, int z) {
-		return ((double) x - d[1]) * ((double) x - d[1]) + ((double) z - d[0]) * ((double) z - d[0]);
+		return ((double)x - d[1]) * ((double)x - d[1]) + ((double)z - d[0]) * ((double)z - d[0]);
 	}
 
 	private static double[] calcOffset(long layerSeed, int x, int z, int offX, int offZ) {
@@ -25,9 +25,9 @@ public class VoronoiLayer extends IntBiomeLayer {
 		mixedSeed = SeedMixer.mixSeed(mixedSeed, z + offZ);
 		mixedSeed = SeedMixer.mixSeed(mixedSeed, x + offX);
 		mixedSeed = SeedMixer.mixSeed(mixedSeed, z + offZ);
-		double d1 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D + offX;
+		double d1 = (((double)((int)Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D + offX;
 		mixedSeed = SeedMixer.mixSeed(mixedSeed, layerSeed);
-		double d2 = (((double) ((int) Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D + offZ;
+		double d2 = (((double)((int)Math.floorMod(mixedSeed >> 24, 1024L)) / 1024.0D) - 0.5D) * 3.6D + offZ;
 		return new double[] {d1, d2};
 	}
 
@@ -47,7 +47,7 @@ public class VoronoiLayer extends IntBiomeLayer {
 	}
 
 	private static double distribute(long seed) {
-		double d = (double) ((int) Math.floorMod(seed >> 24, 1024L)) / 1024.0D;
+		double d = (double)((int)Math.floorMod(seed >> 24, 1024L)) / 1024.0D;
 		return (d - 0.5D) * 0.9D;
 	}
 
@@ -113,9 +113,9 @@ public class VoronoiLayer extends IntBiomeLayer {
 		int l = i >> 2;
 		int m = j >> 2;
 		int n = k >> 2;
-		double d = (double) (i & 3) / 4.0D;
-		double e = (double) (j & 3) / 4.0D;
-		double f = (double) (k & 3) / 4.0D;
+		double d = (double)(i & 3) / 4.0D;
+		double e = (double)(j & 3) / 4.0D;
+		double f = (double)(k & 3) / 4.0D;
 		double[] ds = new double[8];
 
 		for(int cell = 0; cell < 8; ++cell) {

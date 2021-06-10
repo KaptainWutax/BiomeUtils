@@ -99,10 +99,10 @@ public class HillsLayer extends IntBiomeLayer {
 			if(l != i) {
 				int m = 0;
 				Biome b = Biomes.REGISTRY.get(i);
-				if(Biome.areSimilar(biomesLayer.get(x, y, z - 1), b, this.getVersion()))m++;
-				if(Biome.areSimilar(biomesLayer.get(x + 1, y, z), b, this.getVersion()))m++;
-				if(Biome.areSimilar(biomesLayer.get(x - 1, y, z), b, this.getVersion()))m++;
-				if(Biome.areSimilar(biomesLayer.get(x, y, z + 1), b, this.getVersion()))m++;
+				if(Biome.areSimilar(biomesLayer.get(x, y, z - 1), b, this.getVersion())) m++;
+				if(Biome.areSimilar(biomesLayer.get(x + 1, y, z), b, this.getVersion())) m++;
+				if(Biome.areSimilar(biomesLayer.get(x - 1, y, z), b, this.getVersion())) m++;
+				if(Biome.areSimilar(biomesLayer.get(x, y, z + 1), b, this.getVersion())) m++;
 				if(this.getVersion().isOlderOrEqualTo(MCVersion.v1_6_4)) {
 					if(m == 4) return l;
 				} else if(m >= 3) return l;

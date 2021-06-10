@@ -86,7 +86,6 @@ public class MushroomCondition {
 	 * @param ws the world seed
 	 * @param x  the x coordinate to be checked (scale = 256)
 	 * @param z  the z coordinate to be checked (scale = 256)
-	 *
 	 * @return a number used to choose mushroom islands. If the returned value (retval >> 24) % 100 == 0
 	 */
 	static long getShroomSeed(long ws, int x, int z) {

@@ -18,7 +18,7 @@ public class OceanTemperatureLayer extends IntBiomeLayer {
 
 	@Override
 	public int sample(int x, int y, int z) {
-		double normalizedNoise = this.perlin.sample((double) x / 8.0D, (double) z / 8.0D, 0.0D, 0.0D, 0.0D);
+		double normalizedNoise = this.perlin.sample((double)x / 8.0D, (double)z / 8.0D, 0.0D, 0.0D, 0.0D);
 
 		if(normalizedNoise > 0.4D) {
 			return Biomes.WARM_OCEAN.getId();

@@ -20,7 +20,7 @@ public class EndSimplexLayer extends BoolBiomeLayer {
 
 	@Override
 	public boolean sample(int x, int y, int z) {
-		return this.simplex.sample2D(x, z) < (double) -0.9F;
+		return this.simplex.sample2D(x, z) < (double)-0.9F;
 	}
 
 }

@@ -120,7 +120,7 @@ public abstract class BiomeSource {
 	}
 
 	public BPos locateBiome(int centerX, int centerY, int centerZ, int radius, int increment,
-	                        Collection<Biome> biomes, JRand rand, boolean checkByLayer) {
+							Collection<Biome> biomes, JRand rand, boolean checkByLayer) {
 		//Since we're looking at the layer before the voronoi zoom...
 		centerX >>= 2;
 		centerZ >>= 2;

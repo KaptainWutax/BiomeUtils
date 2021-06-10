@@ -21,7 +21,7 @@ public class NetherLayer extends IntBiomeLayer {
 	private DoublePerlinNoiseSampler weirdness;
 
 	public NetherLayer(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints) {
-		super(version, (IntBiomeLayer) null);
+		super(version, (IntBiomeLayer)null);
 		this.is3D = is3D;
 
 		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
@@ -43,10 +43,10 @@ public class NetherLayer extends IntBiomeLayer {
 		y = this.is3D ? y : 0;
 
 		BiomePoint point = new BiomePoint(null,
-			(float) this.temperature.sample(x, y, z),
-			(float) this.humidity.sample(x, y, z),
-			(float) this.altitude.sample(x, y, z),
-			(float) this.weirdness.sample(x, y, z), 0.0F);
+			(float)this.temperature.sample(x, y, z),
+			(float)this.humidity.sample(x, y, z),
+			(float)this.altitude.sample(x, y, z),
+			(float)this.weirdness.sample(x, y, z), 0.0F);
 
 		return Stream.of(this.biomePoints).min(Comparator.comparing(m -> m.distanceTo(point)))
 			.map(BiomePoint::getBiome).orElse(Biomes.THE_VOID).getId();

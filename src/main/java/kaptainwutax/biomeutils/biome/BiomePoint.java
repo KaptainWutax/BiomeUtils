@@ -34,8 +34,8 @@ public class BiomePoint {
 
 	@Override
 	public boolean equals(Object o) {
-		if(this == o)return true;
-		if(!(o instanceof BiomePoint))return false;
+		if(this == o) return true;
+		if(!(o instanceof BiomePoint)) return false;
 		BiomePoint other = (BiomePoint)o;
 		return this.biome == other.biome && this.temperature == other.temperature && this.humidity == other.humidity
 			&& this.altitude == other.altitude && this.weirdness == other.weirdness && this.weight == other.weight;

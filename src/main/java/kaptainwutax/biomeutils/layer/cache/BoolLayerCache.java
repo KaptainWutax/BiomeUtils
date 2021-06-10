@@ -18,7 +18,7 @@ public class BoolLayerCache {
 		this.keys = new long[capacity];
 		Arrays.fill(this.keys, -1);
 		this.values = new boolean[capacity];
-		this.mask = (int) Mth.getMask(Long.numberOfTrailingZeros(capacity));
+		this.mask = (int)Mth.getMask(Long.numberOfTrailingZeros(capacity));
 	}
 
 	public boolean get(int x, int y, int z, Sampler sampler) {
@@ -36,9 +36,9 @@ public class BoolLayerCache {
 	}
 
 	public long uniqueHash(int x, int y, int z) {
-		long hash = (long) x & Mth.getMask(26);
-		hash |= ((long) z & Mth.getMask(26)) << 26;
-		hash |= ((long) y & Mth.getMask(8)) << 52;
+		long hash = (long)x & Mth.getMask(26);
+		hash |= ((long)z & Mth.getMask(26)) << 26;
+		hash |= ((long)y & Mth.getMask(8)) << 52;
 		return hash;
 	}
 
@@ -48,7 +48,7 @@ public class BoolLayerCache {
 		value ^= value >>> 33;
 		value *= 0xC4CEB9FE1A85EC53L;
 		value ^= value >>> 33;
-		return (int) value;
+		return (int)value;
 	}
 
 	@FunctionalInterface

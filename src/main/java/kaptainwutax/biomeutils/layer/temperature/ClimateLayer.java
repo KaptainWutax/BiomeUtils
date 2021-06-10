@@ -29,7 +29,7 @@ public class ClimateLayer {
 			}
 
 			int i = this.nextInt(6);
-			if(i == 0)return Biomes.FOREST.getId();
+			if(i == 0) return Biomes.FOREST.getId();
 			return i == 1 ? Biomes.MOUNTAINS.getId() : Biomes.PLAINS.getId();
 		}
 	}
@@ -71,7 +71,7 @@ public class ClimateLayer {
 		public int sample(int x, int y, int z) {
 			int i = this.getParent(IntBiomeLayer.class).get(x, y, z);
 
-			if(Biome.isShallowOcean(i, this.getVersion()))return i;
+			if(Biome.isShallowOcean(i, this.getVersion())) return i;
 			this.setSeed(x, z);
 
 			if(this.nextInt(13) == 0) {

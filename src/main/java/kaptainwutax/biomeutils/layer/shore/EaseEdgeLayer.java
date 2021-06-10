@@ -42,7 +42,7 @@ public class EaseEdgeLayer extends CrossLayer {
 
 	public static boolean anyMatch(Biome biome, int... values) {
 		for(int value : values) {
-			if(value == biome.getId())return true;
+			if(value == biome.getId()) return true;
 		}
 		return false;
 	}
@@ -57,7 +57,7 @@ public class EaseEdgeLayer extends CrossLayer {
 			return true;
 		}
 
-		if(!Biome.areSimilar(center, biome1, this.getVersion()))return false;
+		if(!Biome.areSimilar(center, biome1, this.getVersion())) return false;
 
 		if(this.canBeNeighbors(n, biome1) && this.canBeNeighbors(e, biome1) && this.canBeNeighbors(w, biome1) && this.canBeNeighbors(s, biome1)) {
 			is[0] = center;
@@ -82,7 +82,7 @@ public class EaseEdgeLayer extends CrossLayer {
 	}
 
 	private boolean canBeNeighbors(int id, Biome b2) {
-		if(Biome.areSimilar(id, b2, this.getVersion()))return true;
+		if(Biome.areSimilar(id, b2, this.getVersion())) return true;
 
 		Biome biome = Biomes.REGISTRY.get(id);
 

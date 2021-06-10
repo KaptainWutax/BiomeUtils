@@ -40,7 +40,7 @@ public class Biome {
 	private Biome child;
 
 	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
-	             float temperature, float scale, float depth, Biome parent) {
+				 float temperature, float scale, float depth, Biome parent) {
 		this.version = version;
 		this.dimension = dimension;
 		this.id = id;
@@ -144,11 +144,11 @@ public class Biome {
 	}
 
 	public static boolean areSimilar(int id, Biome b2, MCVersion version) {
-		if(b2 == null)return false;
-		if(id == b2.getId())return true;
+		if(b2 == null) return false;
+		if(id == b2.getId()) return true;
 
 		Biome b = Biomes.REGISTRY.get(id);
-		if(b == null)return false;
+		if(b == null) return false;
 
 		if(version.isNewerOrEqualTo(MCVersion.v1_16_2)) {
 			// special check for the new badlands_plateau category
@@ -195,7 +195,7 @@ public class Biome {
 	public boolean equals(Object o) {
 		if(this == o) return true;
 		if(!(o instanceof Biome)) return false;
-		Biome biome = (Biome) o;
+		Biome biome = (Biome)o;
 		return id == biome.id;
 	}
 
@@ -305,19 +305,19 @@ public class Biome {
 	private float getTemperature(int x, int y, int z) {
 		float temperature = this.temperature;
 		if(this.equals(Biomes.FROZEN_OCEAN) || this.equals(Biomes.DEEP_FROZEN_OCEAN)) {
-			double d0 = Biome.FROZEN_TEMPERATURE_NOISE.sample((double) x * 0.05D, (double) z * 0.05D, false) * 7.0D;
-			double d1 = Biome.BIOME_INFO_NOISE.sample((double) x * 0.2D, (double) z * 0.2D, false);
+			double d0 = Biome.FROZEN_TEMPERATURE_NOISE.sample((double)x * 0.05D, (double)z * 0.05D, false) * 7.0D;
+			double d1 = Biome.BIOME_INFO_NOISE.sample((double)x * 0.2D, (double)z * 0.2D, false);
 			double d2 = d0 + d1;
 			if(d2 < 0.3D) {
-				double d3 = Biome.BIOME_INFO_NOISE.sample((double) x * 0.09D, (double) z * 0.09D, false);
+				double d3 = Biome.BIOME_INFO_NOISE.sample((double)x * 0.09D, (double)z * 0.09D, false);
 				if(d3 < 0.8D) {
 					temperature = 0.2F;
 				}
 			}
 		}
 		if(y > 64) {
-			float f1 = (float) (TEMPERATURE_NOISE.sample((float) x / 8.0F, (float) z / 8.0F, false) * 4.0D);
-			return temperature - (f1 + (float) y - 64.0F) * 0.05F / 30.0F;
+			float f1 = (float)(TEMPERATURE_NOISE.sample((float)x / 8.0F, (float)z / 8.0F, false) * 4.0D);
+			return temperature - (f1 + (float)y - 64.0F) * 0.05F / 30.0F;
 		}
 		return temperature;
 	}

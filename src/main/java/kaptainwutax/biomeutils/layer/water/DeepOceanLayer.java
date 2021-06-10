@@ -19,10 +19,10 @@ public class DeepOceanLayer extends CrossLayer {
 		}
 
 		int i = 0;
-		if(Biome.isShallowOcean(n, this.getVersion()))i++;
-		if(Biome.isShallowOcean(e, this.getVersion()))i++;
-		if(Biome.isShallowOcean(w, this.getVersion()))i++;
-		if(Biome.isShallowOcean(s, this.getVersion()))i++;
+		if(Biome.isShallowOcean(n, this.getVersion())) i++;
+		if(Biome.isShallowOcean(e, this.getVersion())) i++;
+		if(Biome.isShallowOcean(w, this.getVersion())) i++;
+		if(Biome.isShallowOcean(s, this.getVersion())) i++;
 
 		if(i > 3) {
 			if(center == Biomes.WARM_OCEAN.getId()) return Biomes.DEEP_WARM_OCEAN.getId();

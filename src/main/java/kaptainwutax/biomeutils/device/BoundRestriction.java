@@ -58,10 +58,10 @@ public abstract class BoundRestriction extends Restriction {
 		long localSeed = IntBiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
 
 		if(bits == 64) {
-			int val = (int) Math.floorMod(localSeed >> 24, this.bound);
+			int val = (int)Math.floorMod(localSeed >> 24, this.bound);
 			return val >= this.min && val <= this.max;
 		} else if(bits >= 24 + this.shortBound) {
-			int val = (int) Mth.mask(localSeed >> 24, this.shortBound);
+			int val = (int)Mth.mask(localSeed >> 24, this.shortBound);
 			return val >= this.shortMin && val <= this.shortMax;
 		}
 

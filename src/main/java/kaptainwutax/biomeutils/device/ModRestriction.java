@@ -40,7 +40,7 @@ public abstract class ModRestriction extends Restriction {
 	public boolean testSeed(long seed, long bits) {
 		long localSeed = IntBiomeLayer.getLocalSeed(seed, this.salt, this.getX(), this.getZ());
 
-		int val = (int) Math.floorMod(localSeed >> 24, this.bound);
+		int val = (int)Math.floorMod(localSeed >> 24, this.bound);
 
 		return val % modulo == value;
 	}

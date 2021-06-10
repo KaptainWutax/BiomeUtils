@@ -48,7 +48,7 @@ public abstract class IntBiomeLayer extends BiomeLayer {
 				return;
 			}
 
-			((IntBiomeLayer) biomeLayer)._sample((x >> shift) - 1, (z >> shift) - 1, xSize + 2, zSize + 2);
+			((IntBiomeLayer)biomeLayer)._sample((x >> shift) - 1, (z >> shift) - 1, xSize + 2, zSize + 2);
 			for(int offX = 0; offX < xSize; offX++) {
 				for(int offZ = 0; offZ < zSize; offZ++) {
 					this.layerCache.get(x + offX, 0, z + offZ, this::sample);
