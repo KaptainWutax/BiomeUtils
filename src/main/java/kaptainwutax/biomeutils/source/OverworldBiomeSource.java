@@ -4,28 +4,36 @@ import kaptainwutax.biomeutils.biome.Biome;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
-import kaptainwutax.biomeutils.layer.land.*;
+import kaptainwutax.biomeutils.layer.land.BambooJungleLayer;
+import kaptainwutax.biomeutils.layer.land.BaseBiomesLayer;
+import kaptainwutax.biomeutils.layer.land.ContinentLayer;
+import kaptainwutax.biomeutils.layer.land.HillsLayer;
+import kaptainwutax.biomeutils.layer.land.IslandLayer;
+import kaptainwutax.biomeutils.layer.land.LandLayer;
+import kaptainwutax.biomeutils.layer.land.MushroomLayer;
+import kaptainwutax.biomeutils.layer.land.SunflowerPlainsLayer;
 import kaptainwutax.biomeutils.layer.noise.NoiseLayer;
 import kaptainwutax.biomeutils.layer.scale.ScaleLayer;
 import kaptainwutax.biomeutils.layer.scale.SmoothScaleLayer;
 import kaptainwutax.biomeutils.layer.shore.EaseEdgeLayer;
 import kaptainwutax.biomeutils.layer.shore.EdgeBiomesLayer;
 import kaptainwutax.biomeutils.layer.temperature.ClimateLayer;
-import kaptainwutax.biomeutils.layer.water.*;
+import kaptainwutax.biomeutils.layer.water.DeepOceanLayer;
+import kaptainwutax.biomeutils.layer.water.NoiseToRiverLayer;
+import kaptainwutax.biomeutils.layer.water.OceanTemperatureLayer;
+import kaptainwutax.biomeutils.layer.water.OldRiverInBiomes;
+import kaptainwutax.biomeutils.layer.water.RiverLayer;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;
 import kaptainwutax.mcutils.version.UnsupportedVersion;
-import kaptainwutax.seedutils.rand.JRand;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.function.BiFunction;
 
 public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	public final int biomeSize;
 	public final int riverSize;
+	public final boolean useDefault1_1;
 	public static final int DEFAULT_BIOME_SIZE = 4;
 	public static final int DEFAULT_RIVER_SIZE = 4;
 	public IntBiomeLayer base;
@@ -43,6 +51,10 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	}
 
 	public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize) {
+		this(version, worldSeed, biomeSize, riverSize, false);
+	}
+
+	public OverworldBiomeSource(MCVersion version, long worldSeed, int biomeSize, int riverSize, boolean useDefault1_1) {
 		super(version, worldSeed);
 
 		if(this.getVersion().isOlderThan(MCVersion.vb1_8_1)) {
@@ -54,6 +66,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 
 		this.biomeSize = biomeSize;
 		this.riverSize = riverSize;
+		this.useDefault1_1 = useDefault1_1;
 		this.build();
 	}
 
@@ -115,7 +128,7 @@ public class OverworldBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 		}
 
 		// new biomes chain
-		this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base));
+		this.layers.add(this.biomes = new BaseBiomesLayer(this.getVersion(), this.getWorldSeed(), 200L, this.base).setDefault1_1(this.useDefault1_1));
 
 		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_14)) {
 			this.layers.add(this.biomes = new BambooJungleLayer(this.getVersion(), this.getWorldSeed(), 1001L, this.biomes));

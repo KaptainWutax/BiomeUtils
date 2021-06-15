@@ -6,7 +6,8 @@ import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public class BaseBiomesLayer extends IntBiomeLayer {
-	// TODO introduce Default1_1 back
+	public boolean useDefault1_1 = false;
+
 	public static final Biome[] DRY_BIOMES = new Biome[] {
 		Biomes.DESERT, Biomes.DESERT, Biomes.DESERT, Biomes.SAVANNA, Biomes.SAVANNA, Biomes.PLAINS
 	};
@@ -35,6 +36,11 @@ public class BaseBiomesLayer extends IntBiomeLayer {
 		super(version, worldSeed, salt, parent);
 	}
 
+	public BaseBiomesLayer setDefault1_1(boolean useDefault1_1) {
+		this.useDefault1_1 = useDefault1_1;
+		return this;
+	}
+
 	@Override
 	public int sample(int x, int y, int z) {
 		this.setSeed(x, z);
@@ -55,7 +61,9 @@ public class BaseBiomesLayer extends IntBiomeLayer {
 			if(specialBits > 0) {
 				return this.nextInt(3) == 0 ? Biomes.BADLANDS_PLATEAU.getId() : Biomes.WOODED_BADLANDS_PLATEAU.getId();
 			}
-
+			if(this.useDefault1_1) {
+				return OLD_BIOMES_DEFAULT_1_1[this.nextInt(OLD_BIOMES_DEFAULT_1_1.length)].getId();
+			}
 			return DRY_BIOMES[this.nextInt(DRY_BIOMES.length)].getId();
 		} else if(center == Biomes.DESERT.getId()) {
 			if(specialBits > 0) {
