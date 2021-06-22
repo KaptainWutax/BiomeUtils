@@ -150,9 +150,13 @@ public abstract class BiomeSource {
 							if(checkByLayer) {
 								return pos;
 							}
+							if (getVersion().isOlderOrEqualTo(MCVersion.v1_12_2)){
+								bound++;
+							}
 						}
-
-						++bound;
+						if (getVersion().isNewerOrEqualTo(MCVersion.v1_13)){
+							++bound;
+						}
 					}
 				}
 			}
