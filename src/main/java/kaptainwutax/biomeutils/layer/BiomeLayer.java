@@ -1,5 +1,6 @@
 package kaptainwutax.biomeutils.layer;
 
+import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
 import kaptainwutax.biomeutils.layer.land.BaseBiomesLayer;
 import kaptainwutax.biomeutils.layer.land.ContinentLayer;
@@ -176,6 +177,24 @@ public abstract class BiomeLayer {
 	public int choose(int a, int b, int c, int d) {
 		int i = this.nextInt(4);
 		return i == 0 ? a : i == 1 ? b : i == 2 ? c : d;
+	}
+
+	/**
+	 * Utility to sample any type of layer cache for that layer (useful for biome stack that mix a lot of those)
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param z the z coordinate
+	 * @return the biome at this layer or The void
+	 */
+	public int getBiome(int x, int y, int z) {
+		if(this instanceof FloatBiomeLayer) {
+			return Float.floatToIntBits(((FloatBiomeLayer)this).get(x, y, z));
+		} else if(this instanceof BoolBiomeLayer) {
+			return ((BoolBiomeLayer)this).get(x, y, z) ? 1 : 0;
+		} else if(this instanceof IntBiomeLayer) {
+			return ((IntBiomeLayer)this).get(x, y, z);
+		}
+		return Biomes.THE_VOID.getId();
 	}
 
 }
