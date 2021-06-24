@@ -1,30 +1,19 @@
 package kaptainwutax.biomeutils.biome;
 
-import kaptainwutax.biomeutils.layer.cache.FloatLayerCache;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
-import kaptainwutax.mcutils.rand.ChunkRand;
+import kaptainwutax.biomeutils.source.StaticNoiseSource;
+import kaptainwutax.mcutils.block.Block;
+import kaptainwutax.mcutils.block.Blocks;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;
-import kaptainwutax.noiseutils.simplex.OctaveSimplexNoiseSampler;
 
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
+@SuppressWarnings("unused")
 public class Biome {
-
-	// use mainly for snow and lava stuff
-	public static final OctaveSimplexNoiseSampler TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(1234L), IntStream.of(0));
-	// used for frozen ocean
-	public static final OctaveSimplexNoiseSampler FROZEN_TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(3456L), IntStream.of(-2, -1, 0));
-	// used for flowers
-	public static final OctaveSimplexNoiseSampler BIOME_INFO_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(2345L), IntStream.of(0));
-
-	public static final FloatLayerCache TEMPERATURE_CACHE = new FloatLayerCache(1024);
-	//TODO: move all this somewhere else ^
-
 	private final MCVersion version;
 	private final Dimension dimension;
 	private final int id;
@@ -37,10 +26,16 @@ public class Biome {
 	private final float depth;
 
 	private final Biome parent;
+	private final Block topBlock;
 	private Biome child;
 
 	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
 				 float temperature, float scale, float depth, Biome parent) {
+		this(version, dimension, id, name, category, precipitation, temperature, scale, depth, parent, Blocks.GRASS);
+	}
+
+	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
+				 float temperature, float scale, float depth, Biome parent, Block topBlock) {
 		this.version = version;
 		this.dimension = dimension;
 		this.id = id;
@@ -51,6 +46,7 @@ public class Biome {
 		this.scale = scale;
 		this.depth = depth;
 		this.parent = parent;
+		this.topBlock = topBlock;
 
 		if(this.parent != null) {
 			this.parent.child = this;
@@ -119,6 +115,10 @@ public class Biome {
 
 	public Biome getChild() {
 		return this.child;
+	}
+
+	public Block getTopBlock() {
+		return topBlock;
 	}
 
 	public static boolean isShallowOcean(int id, MCVersion version) {
@@ -294,29 +294,28 @@ public class Biome {
 	}
 
 	public float getTempAt(int x, int y, int z) {
-		return TEMPERATURE_CACHE.get(x, y, z, this::getTemperature);
-
+		return StaticNoiseSource.TEMPERATURE_CACHE.get(x, y, z, this::getTemperature);
 	}
 
 	public float getTempAt(BPos pos) {
-		return TEMPERATURE_CACHE.get(pos.getX(), pos.getY(), pos.getZ(), this::getTemperature);
+		return StaticNoiseSource.TEMPERATURE_CACHE.get(pos.getX(), pos.getY(), pos.getZ(), this::getTemperature);
 	}
 
 	private float getTemperature(int x, int y, int z) {
 		float temperature = this.temperature;
 		if(this.equals(Biomes.FROZEN_OCEAN) || this.equals(Biomes.DEEP_FROZEN_OCEAN)) {
-			double d0 = Biome.FROZEN_TEMPERATURE_NOISE.sample((double)x * 0.05D, (double)z * 0.05D, false) * 7.0D;
-			double d1 = Biome.BIOME_INFO_NOISE.sample((double)x * 0.2D, (double)z * 0.2D, false);
+			double d0 = StaticNoiseSource.FROZEN_TEMPERATURE_NOISE.sample((double)x * 0.05D, (double)z * 0.05D, false) * 7.0D;
+			double d1 = StaticNoiseSource.BIOME_INFO_NOISE.sample((double)x * 0.2D, (double)z * 0.2D, false);
 			double d2 = d0 + d1;
 			if(d2 < 0.3D) {
-				double d3 = Biome.BIOME_INFO_NOISE.sample((double)x * 0.09D, (double)z * 0.09D, false);
+				double d3 = StaticNoiseSource.BIOME_INFO_NOISE.sample((double)x * 0.09D, (double)z * 0.09D, false);
 				if(d3 < 0.8D) {
 					temperature = 0.2F;
 				}
 			}
 		}
 		if(y > 64) {
-			float f1 = (float)(TEMPERATURE_NOISE.sample((float)x / 8.0F, (float)z / 8.0F, false) * 4.0D);
+			float f1 = (float)(StaticNoiseSource.TEMPERATURE_NOISE.sample((float)x / 8.0F, (float)z / 8.0F, false) * 4.0D);
 			return temperature - (f1 + (float)y - 64.0F) * 0.05F / 30.0F;
 		}
 		return temperature;
