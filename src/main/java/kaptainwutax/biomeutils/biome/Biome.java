@@ -31,7 +31,7 @@ public class Biome {
 
 	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
 				 float temperature, float scale, float depth, Biome parent) {
-		this(version, dimension, id, name, category, precipitation, temperature, scale, depth, parent, Blocks.GRASS);
+		this(version, dimension, id, name, category, precipitation, temperature, scale, depth, parent, Blocks.GRASS_BLOCK);
 	}
 
 	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
