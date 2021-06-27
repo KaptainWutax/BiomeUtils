@@ -12,13 +12,18 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public abstract class BiomeSource {
-
+	private final StaticNoiseSource staticNoiseSource;
 	private final MCVersion version;
 	private final long worldSeed;
 
 	public BiomeSource(MCVersion version, long worldSeed) {
 		this.version = version;
 		this.worldSeed = worldSeed;
+		this.staticNoiseSource = new StaticNoiseSource(worldSeed);
+	}
+
+	public StaticNoiseSource getStaticNoiseSource() {
+		return staticNoiseSource;
 	}
 
 	public static Factory factory(Dimension dimension) {

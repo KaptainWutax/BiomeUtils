@@ -27,7 +27,7 @@ dependencies {
 	implementation('com.github.KaptainWutax:MathUtils:5531c4a87b0f1bb85d1dab2bdd18ce375400626a') { transitive = false }
 	implementation('com.github.KaptainWutax:SeedUtils:b6a383113ce5d8d09a59e91b28ff064fb97c0709') { transitive = false }
 	implementation('com.github.KaptainWutax:MCUtils:ada314031f913553ed23f3fc466082418e95b3bb') { transitive = false }
-	implementation('com.github.KaptainWutax:NoiseUtils:4e17e706b685f717782e0bc270c31ea99816b4ec') { transitive = false }
+	implementation('com.github.KaptainWutax:NoiseUtils:d440e5edfb46801e5cc2448576bb0e621aad7de2') { transitive = false }
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
