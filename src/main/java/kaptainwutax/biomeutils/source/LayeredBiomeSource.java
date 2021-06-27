@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class LayeredBiomeSource<T extends BiomeLayer> extends BiomeSource {
 
-	protected LayerStack<T> layers = new LayerStack<>();
+	protected final LayerStack<T> layers = new LayerStack<>();
 
 	public LayeredBiomeSource(MCVersion version, long worldSeed) {
 		super(version, worldSeed);

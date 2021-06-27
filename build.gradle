@@ -88,7 +88,7 @@ publishing {
 			pom {
 				name = "$project.name"
 				description = 'An efficient library to simulate Minecraft Biome Generation for all dimension and all versions'
-				url = 'http://www.kaptainwutax.seedfinding.com'
+				url = 'https://www.kaptainwutax.seedfinding.com'
 				licenses {
 					license {
 						name = 'MIT License'

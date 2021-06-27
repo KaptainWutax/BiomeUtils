@@ -36,11 +36,11 @@ public class StaticNoiseSource {
 	public static final FloatLayerCache TEMPERATURE_CACHE = new FloatLayerCache(1024);
 	// since valley noise are computed as seed + 1,2,3,4 we need to cache those generator to avoid making them again
 	// for that we do so incrementally by invalidating olds seeds (we assume an order for each BiomeSource)
-	private static final int TRESHOLD_VALLEY = Runtime.getRuntime().availableProcessors() * 4 * 2;
-	private static final HashMap<Long, OctavePerlinNoiseSampler> CACHED_VALLEY_NOISE = new HashMap<>(TRESHOLD_VALLEY);
+	private static final int THRESHOLD_VALLEY = Runtime.getRuntime().availableProcessors() * 4 * 2;
+	private static final HashMap<Long, OctavePerlinNoiseSampler> CACHED_VALLEY_NOISE = new HashMap<>(THRESHOLD_VALLEY);
 	// patch noise are either + 4 or + 5 either way we cache those since they aren't fixed to a seed.
-	private static final int TRESHOLD_PATCH = Runtime.getRuntime().availableProcessors() * 2 * 2;
-	private static final HashMap<Long, OctavePerlinNoiseSampler> CACHED_PATCH_NOISE = new HashMap<>(TRESHOLD_PATCH);
+	private static final int THRESHOLD_PATCH = Runtime.getRuntime().availableProcessors() * 2 * 2;
+	private static final HashMap<Long, OctavePerlinNoiseSampler> CACHED_PATCH_NOISE = new HashMap<>(THRESHOLD_PATCH);
 
 	private final long worldSeed;
 	private Quad<Block[], OctaveSimplexNoiseSampler, OctaveSimplexNoiseSampler, OctaveSimplexNoiseSampler> badlandsSurface = null;
@@ -79,7 +79,7 @@ public class StaticNoiseSource {
 				OctavePerlinNoiseSampler sampler = CACHED_VALLEY_NOISE.computeIfAbsent(this.getWorldSeed() + i, key -> new OctavePerlinNoiseSampler(new JRand(key), Collections.singletonList(-4)));
 				valleyNoise.add(sampler);
 			}
-			this.purgeCache(TRESHOLD_VALLEY);
+			this.purgeCache(THRESHOLD_VALLEY);
 		}
 		return this.valleyNoise;
 	}
@@ -91,7 +91,7 @@ public class StaticNoiseSource {
 			this.patchNoise = new ArrayList<>();
 			this.patchNoise.add(CACHED_PATCH_NOISE.computeIfAbsent(this.getWorldSeed() + souldSandSize, key -> new OctavePerlinNoiseSampler(new JRand(key), Collections.singletonList(0))));
 			this.patchNoise.add(CACHED_PATCH_NOISE.computeIfAbsent(this.getWorldSeed() + basaltSize, key -> new OctavePerlinNoiseSampler(new JRand(key), Collections.singletonList(0))));
-			this.purgeCache(TRESHOLD_PATCH);
+			this.purgeCache(THRESHOLD_PATCH);
 		}
 		return this.valleyNoise;
 	}

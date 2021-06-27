@@ -10,7 +10,7 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public class Biomes {
 
-	public static Map<Integer, Biome> REGISTRY = new HashMap<>();
+	public final static Map<Integer, Biome> REGISTRY = new HashMap<>();
 	public static final Biome OCEAN = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 0, "ocean",
 		Biome.Category.OCEAN, Biome.Precipitation.RAIN, 0.5F, 0.100F, -1.000F, null, ConfiguredSurfaceBuilders.GRASS));
 	public static final Biome PLAINS = register(new Biome(MCVersion.vb1_8_1, Dimension.OVERWORLD, 1, "plains",
