@@ -181,6 +181,7 @@ public abstract class BiomeLayer {
 
 	/**
 	 * Utility to sample any type of layer cache for that layer (useful for biome stack that mix a lot of those)
+	 *
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 * @param z the z coordinate

@@ -45,7 +45,7 @@ public class MultiNoiseLayer extends IntBiomeLayer {
 			this.temperature = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed), noiseSettings.temperatureNoise);
 			this.humidity = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed + 1L), noiseSettings.humidityNoise);
 			this.altitude = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed + 2L), noiseSettings.altitudeNoise);
-			this.weirdness = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed + 3L),noiseSettings.weirdnessNoise);
+			this.weirdness = new DoublePerlinNoiseSampler(new ChunkRand(worldSeed + 3L), noiseSettings.weirdnessNoise);
 		}
 
 		this.biomePoints = biomePoints;

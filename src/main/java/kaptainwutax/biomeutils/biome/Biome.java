@@ -1,9 +1,9 @@
 package kaptainwutax.biomeutils.biome;
 
+import kaptainwutax.biomeutils.biome.surface.SurfaceConfig;
+import kaptainwutax.biomeutils.biome.surface.builder.SurfaceBuilder;
 import kaptainwutax.biomeutils.source.OverworldBiomeSource;
 import kaptainwutax.biomeutils.source.StaticNoiseSource;
-import kaptainwutax.mcutils.block.Block;
-import kaptainwutax.mcutils.block.Blocks;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;
@@ -26,16 +26,11 @@ public class Biome {
 	private final float depth;
 
 	private final Biome parent;
-	private final Block topBlock;
+	private final SurfaceBuilder surfaceBuilder;
 	private Biome child;
 
 	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
-				 float temperature, float scale, float depth, Biome parent) {
-		this(version, dimension, id, name, category, precipitation, temperature, scale, depth, parent, Blocks.GRASS_BLOCK);
-	}
-
-	public Biome(MCVersion version, Dimension dimension, int id, String name, Category category, Precipitation precipitation,
-				 float temperature, float scale, float depth, Biome parent, Block topBlock) {
+				 float temperature, float scale, float depth, Biome parent, SurfaceBuilder surfaceBuilder) {
 		this.version = version;
 		this.dimension = dimension;
 		this.id = id;
@@ -46,7 +41,7 @@ public class Biome {
 		this.scale = scale;
 		this.depth = depth;
 		this.parent = parent;
-		this.topBlock = topBlock;
+		this.surfaceBuilder = surfaceBuilder;
 
 		if(this.parent != null) {
 			this.parent.child = this;
@@ -117,8 +112,12 @@ public class Biome {
 		return this.child;
 	}
 
-	public Block getTopBlock() {
-		return topBlock;
+	public SurfaceConfig getSurfaceConfig() {
+		return surfaceBuilder.getSurfaceConfig();
+	}
+
+	public SurfaceBuilder getSurfaceBuilder() {
+		return surfaceBuilder;
 	}
 
 	public static boolean isShallowOcean(int id, MCVersion version) {
