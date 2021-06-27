@@ -36,10 +36,10 @@ public class StaticNoiseSource {
 	public static final FloatLayerCache TEMPERATURE_CACHE = new FloatLayerCache(1024);
 	// since valley noise are computed as seed + 1,2,3,4 we need to cache those generator to avoid making them again
 	// for that we do so incrementally by invalidating olds seeds (we assume an order for each BiomeSource)
-	private static final int TRESHOLD_VALLEY = 20;
+	private static final int TRESHOLD_VALLEY = Runtime.getRuntime().availableProcessors() * 4 * 2;
 	private static final HashMap<Long, OctavePerlinNoiseSampler> CACHED_VALLEY_NOISE = new HashMap<>(TRESHOLD_VALLEY);
 	// patch noise are either + 4 or + 5 either way we cache those since they aren't fixed to a seed.
-	private static final int TRESHOLD_PATCH = 5;
+	private static final int TRESHOLD_PATCH = Runtime.getRuntime().availableProcessors() * 2 * 2;
 	private static final HashMap<Long, OctavePerlinNoiseSampler> CACHED_PATCH_NOISE = new HashMap<>(TRESHOLD_PATCH);
 
 	private final long worldSeed;
