@@ -6,8 +6,8 @@ import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.mcutils.block.Block;
 import kaptainwutax.mcutils.rand.ChunkRand;
 
-public class ShatteredSavannaSurfaceBuilder extends SurfaceBuilder {
-	public ShatteredSavannaSurfaceBuilder(SurfaceConfig surfaceConfig) {
+public abstract class ValleySurfaceBuilder extends SurfaceBuilder {
+	public ValleySurfaceBuilder(SurfaceConfig surfaceConfig) {
 		super(surfaceConfig);
 	}
 	@Override

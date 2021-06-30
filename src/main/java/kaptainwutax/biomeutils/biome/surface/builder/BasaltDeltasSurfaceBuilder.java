@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class BasaltDeltasSurfaceBuilder extends SurfaceBuilder {
+public class BasaltDeltasSurfaceBuilder extends ValleySurfaceBuilder {
 	public static final List<Block> FLOOR_BLOCK_STATES = Arrays.asList(Blocks.BASALT, Blocks.BLACKSTONE);
 	public static final List<Block> CEILING_BLOCK_STATES = Collections.singletonList(Blocks.BASALT);
 
