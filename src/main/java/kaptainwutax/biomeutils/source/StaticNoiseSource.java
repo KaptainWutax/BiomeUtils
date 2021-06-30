@@ -5,7 +5,6 @@ import kaptainwutax.biomeutils.biome.surface.builder.BasaltDeltasSurfaceBuilder;
 import kaptainwutax.biomeutils.biome.surface.builder.SoulSandValleySurfaceBuilder;
 import kaptainwutax.biomeutils.layer.cache.FloatLayerCache;
 import kaptainwutax.mcutils.block.Block;
-import kaptainwutax.mcutils.rand.ChunkRand;
 import kaptainwutax.mcutils.util.data.Pair;
 import kaptainwutax.mcutils.util.data.Quad;
 import kaptainwutax.mcutils.util.data.Triplet;
@@ -27,11 +26,11 @@ import java.util.stream.IntStream;
 @SuppressWarnings("unused")
 public class StaticNoiseSource {
 	// use mainly for snow and lava stuff
-	public static final OctaveSimplexNoiseSampler TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(1234L), IntStream.of(0));
+	public static final OctaveSimplexNoiseSampler TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new JRand(1234L), IntStream.of(0));
 	// used for frozen ocean
-	public static final OctaveSimplexNoiseSampler FROZEN_TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(3456L), IntStream.of(-2, -1, 0));
+	public static final OctaveSimplexNoiseSampler FROZEN_TEMPERATURE_NOISE = new OctaveSimplexNoiseSampler(new JRand(3456L), IntStream.of(-2, -1, 0));
 	// used for flowers
-	public static final OctaveSimplexNoiseSampler BIOME_INFO_NOISE = new OctaveSimplexNoiseSampler(new ChunkRand(2345L), IntStream.of(0));
+	public static final OctaveSimplexNoiseSampler BIOME_INFO_NOISE = new OctaveSimplexNoiseSampler(new JRand(2345L), IntStream.of(0));
 
 	public static final FloatLayerCache TEMPERATURE_CACHE = new FloatLayerCache(1024);
 	// since valley noise are computed as seed + 1,2,3,4 we need to cache those generator to avoid making them again
