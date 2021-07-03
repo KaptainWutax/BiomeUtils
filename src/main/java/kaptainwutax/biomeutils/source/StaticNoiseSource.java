@@ -13,9 +13,11 @@ import kaptainwutax.noiseutils.simplex.OctaveSimplexNoiseSampler;
 import kaptainwutax.seedutils.rand.JRand;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -92,7 +94,7 @@ public class StaticNoiseSource {
 			this.patchNoise.add(CACHED_PATCH_NOISE.computeIfAbsent(this.getWorldSeed() + basaltSize, key -> new OctavePerlinNoiseSampler(new JRand(key), Collections.singletonList(0))));
 			this.purgeCache(THRESHOLD_PATCH);
 		}
-		return this.valleyNoise;
+		return this.patchNoise;
 	}
 
 	private void purgeCache(int treshold) {
@@ -167,10 +169,10 @@ public class StaticNoiseSource {
 	 *
 	 * @return floor noise, ceiling noise and patch noise
 	 */
-	public Triplet<Pair<OctavePerlinNoiseSampler, OctavePerlinNoiseSampler>, OctavePerlinNoiseSampler, OctavePerlinNoiseSampler> getBasaltDeltasNoise() {
+	public Triplet<List<OctavePerlinNoiseSampler>,List<OctavePerlinNoiseSampler>, OctavePerlinNoiseSampler> getBasaltDeltasNoise() {
 		List<OctavePerlinNoiseSampler> valleyNoise = getValleyNoise();
 		List<OctavePerlinNoiseSampler> patchNoise = getPatchNoise();
-		return new Triplet<>(new Pair<>(valleyNoise.get(0), valleyNoise.get(1)), valleyNoise.get(2), patchNoise.get(1));
+		return new Triplet<>(Arrays.asList(valleyNoise.get(0), valleyNoise.get(1)), Collections.singletonList(valleyNoise.get(2)), patchNoise.get(1));
 	}
 
 	/**
@@ -178,10 +180,10 @@ public class StaticNoiseSource {
 	 *
 	 * @return floor noise, ceiling noise and patch noise
 	 */
-	public Triplet<Pair<OctavePerlinNoiseSampler, OctavePerlinNoiseSampler>, Pair<OctavePerlinNoiseSampler, OctavePerlinNoiseSampler>, OctavePerlinNoiseSampler> getSoulSandValleyNoise() {
+	public Triplet<List<OctavePerlinNoiseSampler>,List<OctavePerlinNoiseSampler>, OctavePerlinNoiseSampler> getSoulSandValleyNoise() {
 		List<OctavePerlinNoiseSampler> valleyNoise = getValleyNoise();
 		List<OctavePerlinNoiseSampler> patchNoise = getPatchNoise();
-		return new Triplet<>(new Pair<>(valleyNoise.get(0), valleyNoise.get(1)), new Pair<>(valleyNoise.get(2), valleyNoise.get(3)), patchNoise.get(0));
+		return new Triplet<>(Arrays.asList(valleyNoise.get(0), valleyNoise.get(1)), Arrays.asList(valleyNoise.get(2), valleyNoise.get(3)), patchNoise.get(0));
 	}
 
 }

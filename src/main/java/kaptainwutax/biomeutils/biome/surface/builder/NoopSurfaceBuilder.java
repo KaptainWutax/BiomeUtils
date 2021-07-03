@@ -12,6 +12,6 @@ public class NoopSurfaceBuilder extends SurfaceBuilder {
 	}
 	@Override
 	public Block[] applyToColumn(BiomeSource source, ChunkRand rand, Block[] column, Biome biome, int x, int z, int maxY, int minY, double noise, int seaLevel, Block defaultBlock, Block defaultFluid) {
-		return new Block[0];
+		return null;
 	}
 }

@@ -6,12 +6,13 @@ import kaptainwutax.biomeutils.source.BiomeSource;
 import kaptainwutax.mcutils.block.Block;
 import kaptainwutax.mcutils.rand.ChunkRand;
 
-public class WoodedBadlandsSurfaceBuilder extends SurfaceBuilder {
+public class WoodedBadlandsSurfaceBuilder extends BadlandsSurfaceBuilder {
 	public WoodedBadlandsSurfaceBuilder(SurfaceConfig surfaceConfig) {
 		super(surfaceConfig);
 	}
+
 	@Override
-	public Block[] applyToColumn(BiomeSource source, ChunkRand rand, Block[] column, Biome biome, int x, int z, int maxY, int minY, double noise, int seaLevel, Block defaultBlock, Block defaultFluid) {
-		return new Block[0];
+	protected boolean highContion(int y, int elevation) {
+		return y > 86 + elevation * 2;
 	}
 }

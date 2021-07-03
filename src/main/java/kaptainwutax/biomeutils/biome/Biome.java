@@ -292,11 +292,11 @@ public class Biome {
 		}
 	}
 
-	public float getTempAt(int x, int y, int z) {
+	public float getTemperatureAt(int x, int y, int z) {
 		return StaticNoiseSource.TEMPERATURE_CACHE.get(x, y, z, this::getTemperature);
 	}
 
-	public float getTempAt(BPos pos) {
+	public float getTemperatureAt(BPos pos) {
 		return StaticNoiseSource.TEMPERATURE_CACHE.get(pos.getX(), pos.getY(), pos.getZ(), this::getTemperature);
 	}
 

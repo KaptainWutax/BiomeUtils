@@ -27,14 +27,14 @@ public class BadlandsSurfaceBuilder extends SurfaceBuilder {
 		Block underBlock = config.getUnderBlock();
 		Block topBlock = config.getTopBlock();
 		Block trackedUnderBlock = underBlock;
-		int sizeB = (int)(noise / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
+		int elevation = (int)(noise / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
 		boolean shouldBeSimple = Math.cos(noise / 3.0D * Math.PI) > 0.0D;
 		int trackedY = -1;
 		boolean isOrangeTerracotta = false;
 		int topLayers = 0;
 
-		for(int Y = maxY; Y >= minY; --Y) {
-			Block block=getBaseBlock(Y,column,source,defaultBlock);
+		for(int y = maxY; y >= minY; --y) {
+			Block block=this.getBaseBlock(y,column,source,defaultBlock);
 
 			if (topLayers < 15 || shouldBypass()) {
 				if (Block.IS_AIR.test(source.getVersion(),block)) {
@@ -42,29 +42,35 @@ public class BadlandsSurfaceBuilder extends SurfaceBuilder {
 				} else if (block==defaultBlock) {
 					if (trackedY == -1) {
 						isOrangeTerracotta = false;
-						if (sizeB <= 0) {
+						if (elevation <= 0) {
 							trackedTopBlock = Blocks.AIR;
 							trackedUnderBlock = defaultBlock;
-						} else if (Y >= seaLevel - 4 && Y <= seaLevel + 1) {
+						} else if (y >= seaLevel - 4 && y <= seaLevel + 1) {
 							trackedTopBlock = Blocks.WHITE_TERRACOTTA;
 							trackedUnderBlock = underBlock;
 						}
 
-						if (Y < seaLevel && (trackedTopBlock == null || Block.IS_AIR.test(source.getVersion(),trackedTopBlock))) {
+						if (y < seaLevel && (trackedTopBlock == null || Block.IS_AIR.test(source.getVersion(),trackedTopBlock))) {
 							trackedTopBlock = defaultFluid;
 						}
 
-						trackedY = sizeB + Math.max(0, Y - seaLevel);
-						if (Y >= seaLevel - 1) {
-							if(Y <= seaLevel + 3 + sizeB) {
+						trackedY = elevation + Math.max(0, y - seaLevel);
+						if (y >= seaLevel - 1) {
+							if (this.highContion(y,elevation)){
+								if (shouldBeSimple) {
+									block = Blocks.COARSE_DIRT;
+								} else {
+									block =  Blocks.GRASS_BLOCK;
+								}
+							} else if(y <= seaLevel + 3 + elevation) {
 								block=topBlock;
 								isOrangeTerracotta = true;
 							} else {
-								if (Y >= 64 && Y <= 127) {
+								if (y >= 64 && y <= 127) {
 									if (shouldBeSimple) {
 										block = Blocks.TERRACOTTA;
 									} else {
-										block = badlandsSurface.getFirst()[this.getBandY(x, Y, z,badlandsSurface.getFourth())];;
+										block = badlandsSurface.getFirst()[this.getBandY(x, y, z,badlandsSurface.getFourth())];;
 									}
 								} else {
 									block = Blocks.ORANGE_TERRACOTTA;
@@ -72,14 +78,7 @@ public class BadlandsSurfaceBuilder extends SurfaceBuilder {
 							}
 						} else {
 							block=trackedUnderBlock;
-							if (block == Blocks.WHITE_TERRACOTTA || block == Blocks.ORANGE_TERRACOTTA
-								|| block == Blocks.MAGENTA_TERRACOTTA || block == Blocks.LIGHT_BLUE_TERRACOTTA
-								|| block == Blocks.YELLOW_TERRACOTTA || block == Blocks.LIME_TERRACOTTA
-								|| block == Blocks.PINK_TERRACOTTA || block == Blocks.GRAY_TERRACOTTA
-								|| block == Blocks.LIGHT_GRAY_TERRACOTTA || block == Blocks.CYAN_TERRACOTTA
-								|| block == Blocks.PURPLE_TERRACOTTA || block == Blocks.BLUE_TERRACOTTA
-								|| block == Blocks.BROWN_TERRACOTTA || block == Blocks.GREEN_TERRACOTTA
-								|| block == Blocks.RED_TERRACOTTA || block == Blocks.BLACK_TERRACOTTA) {
+							if (this.orangeTerracottaCondition(block)) {
 								block=Blocks.ORANGE_TERRACOTTA;
 							}
 						}
@@ -88,13 +87,13 @@ public class BadlandsSurfaceBuilder extends SurfaceBuilder {
 						if (isOrangeTerracotta) {
 							block=Blocks.ORANGE_TERRACOTTA;
 						} else {
-							block=badlandsSurface.getFirst()[this.getBandY(x, Y, z,badlandsSurface.getFourth())];
+							block=badlandsSurface.getFirst()[this.getBandY(x, y, z,badlandsSurface.getFourth())];
 						}
 					}
 					++topLayers;
 				}
 			}
-			column[Y]=block;
+			column[y]=block;
 		}
 		return column;
 	}
@@ -103,8 +102,23 @@ public class BadlandsSurfaceBuilder extends SurfaceBuilder {
 		return column[y];
 	}
 
+	protected boolean highContion(int y,int elevation){
+		return false;
+	}
+
 	protected boolean shouldBypass(){
 		return false;
+	}
+
+	protected boolean orangeTerracottaCondition(Block block){
+		return block == Blocks.WHITE_TERRACOTTA || block == Blocks.ORANGE_TERRACOTTA
+			|| block == Blocks.MAGENTA_TERRACOTTA || block == Blocks.LIGHT_BLUE_TERRACOTTA
+			|| block == Blocks.YELLOW_TERRACOTTA || block == Blocks.LIME_TERRACOTTA
+			|| block == Blocks.PINK_TERRACOTTA || block == Blocks.GRAY_TERRACOTTA
+			|| block == Blocks.LIGHT_GRAY_TERRACOTTA || block == Blocks.CYAN_TERRACOTTA
+			|| block == Blocks.PURPLE_TERRACOTTA || block == Blocks.BLUE_TERRACOTTA
+			|| block == Blocks.BROWN_TERRACOTTA || block == Blocks.GREEN_TERRACOTTA
+			|| block == Blocks.RED_TERRACOTTA || block == Blocks.BLACK_TERRACOTTA;
 	}
 
 	protected int getBandY(int x, int y, int z, OctaveSimplexNoiseSampler clayBandsOffsetNoise) {
