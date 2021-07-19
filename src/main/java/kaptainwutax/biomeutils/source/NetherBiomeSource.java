@@ -3,7 +3,7 @@ package kaptainwutax.biomeutils.source;
 import kaptainwutax.biomeutils.biome.BiomePoint;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
-import kaptainwutax.biomeutils.layer.noise.MultiNoiseLayer;
+import kaptainwutax.biomeutils.layer.noise.MultiNoiseLayer17;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.version.MCVersion;
 
@@ -28,10 +28,10 @@ public class NetherBiomeSource extends MultiNoiseBiomeSource {
 
 	protected void build() {
 		if(this.getVersion().isNewerOrEqualTo(MCVersion.v1_16)) {
-			this.layers.add(this.full = new MultiNoiseLayer(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints));
+			this.layers.add(this.full = new MultiNoiseLayer17(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints));
 			this.layers.add(this.voronoi = new VoronoiLayer(this.getVersion(), this.getWorldSeed(), true, this.full));
 		} else {
-			this.layers.add(this.full = new MultiNoiseLayer(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints) {
+			this.layers.add(this.full = new MultiNoiseLayer17(this.getVersion(), this.getWorldSeed(), this.threeDimensional, this.biomePoints) {
 				@Override
 				public int sample(int x, int y, int z) {
 					return Biomes.NETHER_WASTES.getId();

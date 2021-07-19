@@ -5,14 +5,14 @@ import kaptainwutax.biomeutils.biome.BiomePoint;
 import kaptainwutax.biomeutils.biome.Biomes;
 import kaptainwutax.biomeutils.layer.IntBiomeLayer;
 import kaptainwutax.biomeutils.layer.composite.VoronoiLayer;
-import kaptainwutax.biomeutils.layer.noise.MultiNoiseLayer;
+import kaptainwutax.biomeutils.layer.noise.MultiNoiseLayer17;
 import kaptainwutax.mcutils.state.Dimension;
 import kaptainwutax.mcutils.util.pos.BPos;
 import kaptainwutax.mcutils.version.MCVersion;
 
 public abstract class MultiNoiseBiomeSource extends LayeredBiomeSource<IntBiomeLayer> {
 	protected final BiomePoint[] biomePoints;
-	public MultiNoiseLayer full;
+	public MultiNoiseLayer17 full;
 	public VoronoiLayer voronoi;
 	protected boolean threeDimensional;
 

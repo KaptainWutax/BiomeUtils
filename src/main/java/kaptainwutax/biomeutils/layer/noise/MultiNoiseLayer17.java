@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class MultiNoiseLayer extends IntBiomeLayer {
+public class MultiNoiseLayer17 extends IntBiomeLayer {
 
 	private final BiomePoint[] biomePoints;
 	private final boolean is3D;
@@ -23,7 +23,7 @@ public class MultiNoiseLayer extends IntBiomeLayer {
 	private DoublePerlinNoiseSampler altitude;
 	private DoublePerlinNoiseSampler weirdness;
 
-	public MultiNoiseLayer(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints) {
+	public MultiNoiseLayer17(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints) {
 		super(version, (IntBiomeLayer)null);
 		this.is3D = is3D;
 
@@ -37,7 +37,7 @@ public class MultiNoiseLayer extends IntBiomeLayer {
 		this.biomePoints = biomePoints;
 	}
 
-	public MultiNoiseLayer(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints, NoiseSettings noiseSettings) {
+	public MultiNoiseLayer17(MCVersion version, long worldSeed, boolean is3D, BiomePoint[] biomePoints, NoiseSettings noiseSettings) {
 		super(version, (IntBiomeLayer)null);
 		this.is3D = is3D;
 
