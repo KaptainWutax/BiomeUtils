@@ -26,8 +26,8 @@ repositories {
 dependencies {
 	implementation('com.github.KaptainWutax:MathUtils:5531c4a87b0f1bb85d1dab2bdd18ce375400626a') { transitive = false }
 	implementation('com.github.KaptainWutax:SeedUtils:b6a383113ce5d8d09a59e91b28ff064fb97c0709') { transitive = false }
-	implementation('com.github.KaptainWutax:MCUtils:b9f7d97930d7f1c588382f3c7db0585c1f4146f9') { transitive = false }
-	implementation('com.github.KaptainWutax:NoiseUtils:49d64c336a099086c627d2391760134ebd81292f') { transitive = false }
+	implementation('com.github.KaptainWutax:MCUtils:1e5785a648a04454461ef02ee27cbc63e3599bff') { transitive = false }
+	implementation('com.github.KaptainWutax:NoiseUtils:2cf64e1d2e7e674fbf5b7247f16e8dc56ae2a31c') { transitive = false }
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
